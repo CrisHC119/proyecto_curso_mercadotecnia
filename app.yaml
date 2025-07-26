@@ -1,0 +1,31 @@
+runtime: php81
+entrypoint: serve index.php
+
+handlers:
+  # Archivos estáticos
+  - url: /assets
+    static_dir: assets
+
+  # Página principal
+  - url: /index\.php
+    script: index.php
+
+  # Página de temas principal
+  - url: /temas_curso\.php
+    script: temas_curso.php
+
+  # Página de login
+  - url: /login\.php
+    script: login.php
+
+  # Página para alumnos (en subcarpeta)
+  - url: /alumnos/temas/index_alumnos\.php
+    script: assets/code/alumnos/temas/index_alumnos.php
+
+  # Handler general al final (solo si no coincide con nada anterior)
+  - url: /.*
+    script: auto
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1
