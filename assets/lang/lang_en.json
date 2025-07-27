@@ -47,6 +47,8 @@
   "login_error": "Incorrect control number or password.",
   "login_error_2": "Server under maintenance. Please try again later.",
   "login_error_3": "Incorrect registration or password.",
+  "cargando": "Loading...",
+  "error_iniciar_sesion": "Login error.",
 
   "_comment_3": "temas_curso.php",
 

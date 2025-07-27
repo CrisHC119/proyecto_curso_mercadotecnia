@@ -47,6 +47,8 @@
   "login_error": "Número de control o contraseña incorrectos.",
   "login_error_2": "Servidor en Mantenimiento. Intenta de nuevo más tarde.",
   "login_error_3": "Matrícula o contraseña incorrectos.",
+  "cargando": "Cargando...",
+  "error_iniciar_sesion": "Error al iniciar sesión.",
 
   "_comment_3": "temas_curso.php",
 
