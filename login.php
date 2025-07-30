@@ -130,12 +130,12 @@
           color: #000;
         }
 
-        #switchFormBtn {
-          position: absolute;
-          top: 15px;
-          right: 15px;
-          z-index: 100;
-        }
+#switchFormBtn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 100;
+}
        @media (max-width: 576px) {
   html, body {
     height: 100%;
@@ -210,10 +210,9 @@
     font-size: 0.75rem;
     padding: 0.35rem 0.8rem;
   }
-
   #switchFormBtn {
-    font-size: 0.65rem;
-    padding: 2px 5px;
+    position: static;
+    margin-bottom: 10px;
   }
 
   #loadingOverlay {
@@ -233,8 +232,9 @@
       </style>
     </head>
     <body>
-    <button id="switchFormBtn" class="btn btn-outline-light"><?php echo $textos['login_profesor']; ?></button>
-    <div id="loadingOverlay">
+<div class="w-100 text-end mb-3 d-md-none">
+  <button id="switchFormBtn" class="btn btn-outline-light btn-sm"><?php echo $textos['login_profesor']; ?></button>
+</div>    <div id="loadingOverlay">
       <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
         <span class="visually-hidden"><?php echo $textos['cargando']; ?></span>
       </div>
