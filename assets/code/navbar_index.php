@@ -297,6 +297,22 @@
   .nav-tabs .dropdown-menu {
     font-size: 0.75rem !important;
   }
+  
+
+    .nav-item.dropdown .nav-link {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+
+  .dropdown-menu-end {
+    min-width: 90px;
+    font-size: 0.75rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
 }
 
       </style>
