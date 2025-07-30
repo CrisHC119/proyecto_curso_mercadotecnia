@@ -121,47 +121,50 @@
       margin-bottom: 0.7rem;
     }
     @media (max-width: 768px) {
-  #mainContent {
-    padding: 1rem;
+#mainContent {
+    padding: 0.8rem;
     max-width: 100%;
-    margin: 20px 10px;
+    margin: 15px 8px;
   }
 
   .accordion {
     max-width: 100%;
-    margin: 0 5px;
+    margin: 0 4px;
   }
 
   .accordion-button,
   .sub-accordion-button {
-    font-size: 0.7rem; /* reducido */
-    padding: 0.5rem 0.7rem;
+    font-size: 0.65rem; /* más pequeño */
+    padding: 0.45rem 0.6rem;
   }
 
   .accordion-button::after,
   .sub-accordion-button::after {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
   }
 
   .nivel-3 {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
   }
 
   .subtema-text {
-    font-size: 0.65rem; /* reducido */
+    font-size: 0.6rem;
+    margin-bottom: 0.5rem;
   }
 
   h1.text-center {
-    font-size: 1.1rem; /* título más pequeño */
+    font-size: 1rem;
+    margin-bottom: 1rem;
   }
 
   .btn.btn-success {
-    font-size: 0.85rem; /* botón de descarga */
-    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
   }
 
   .text-muted.small {
-    font-size: 0.6rem !important; /* duración más chica */
+    font-size: 0.55rem !important;
   }
     }
     body.light-mode #mainContent {
