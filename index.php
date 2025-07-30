@@ -82,10 +82,6 @@
       margin-top: 1rem; /* antes: 2rem o más */
       margin-bottom: 1rem;
     }
-    .contenedor-lateral {
-      margin-top: 1rem; /* antes: 2rem o más */
-      margin-bottom: 1rem;
-    }
     .justificado {
       font-size: 0.75rem; /* antes: 0.8rem */
       text-align: justify;
@@ -110,7 +106,8 @@
       font-size: 1.1rem;
     }
     .contenedor-lateral {
-      margin-top: 1.5rem; /* antes: 2rem */
+      margin-top: 1rem; /* antes: 2rem o más */
+      margin-bottom: 1rem;
       gap: 1rem; /* reducir separación entre tarjetas */
     }
 
