@@ -58,7 +58,6 @@
         </div>
       <div class="tarjeta-curso">
         <h2 class="text-center"><?php echo $textos['total_horas'];?></h2>
-        <div class="border-top border-primary my-3" style="height: 3px; width: 80%; margin: 0 auto;"></div>
         <p class="text-center display-6 fw-bold"><?php echo $horas['total'];?> hrs</p>
         <p class="text-center"><?php echo $textos['texto_horas'];?></p>
       </div>
