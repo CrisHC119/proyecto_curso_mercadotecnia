@@ -79,9 +79,8 @@
       display: flex;
       padding: 0 8px;
       gap: 1rem; /* antes: 2rem */
-      margin-top: 1rem; /* antes: 2rem o más */
-      margin-bottom: 1rem;
     }
+
     .justificado {
       font-size: 0.75rem; /* antes: 0.8rem */
       text-align: justify;
@@ -90,24 +89,22 @@
 
     .tarjeta-curso {
       font-size: 0.8rem; /* antes: 0.85rem */
+      padding: 0.6rem 0.9rem; /* más compacto */
       margin-bottom: 0.8rem;
       width: 100%;
       box-sizing: border-box;
-      padding: 0.5rem 0.7rem;
     }
 
     h1 {
       font-size: 1rem; /* antes: 1.1rem */
-      text-align: center;
     }
 
     h2 {
-      text-align: center;
       font-size: 1.1rem;
     }
+
     .contenedor-lateral {
-      margin-top: 1rem; /* antes: 2rem o más */
-      margin-bottom: 1rem;
+      margin-top: 1.5rem; /* antes: 2rem */
       gap: 1rem; /* reducir separación entre tarjetas */
     }
 
