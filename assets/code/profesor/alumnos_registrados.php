@@ -164,7 +164,7 @@ body.light-mode .btn-danger {
             <?php endif; ?>
 <div class="text-end mt-3">
     <!-- Ver detalles con href -->
-    <a href="/assets/code/profesor/perfil_alumnos_detalle.php?id=<?php echo $alumno['id_usuario']; ?>"
+    <a href="/assets/code/profesor/lost_page_profesor.php?id=<?php echo $alumno['id_usuario']; ?>"
        class="btn btn-outline-primary btn-sm me-2 d-inline-flex align-items-center gap-1 shadow-sm">
       <i class="bi bi-person-vcard"></i> <?php echo $textos['ver_detalles']; ?>
     </a>
