@@ -156,15 +156,40 @@
             padding: 10px;
             box-sizing: border-box;
           }
+.formulario {
+  max-width: 320px; /* más angosto */
+  padding: 1rem !important;
+}
 
-          .formulario {
-            width: 100%;
-            max-width: 360px; /* Más angosto para móviles */
-            transition: all 0.4s ease-in-out;
-            opacity: 0;
-            transform: translateX(100%);
-            z-index: 0;
-          }
+.card {
+  padding: 1rem !important;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+}
+
+.logo-text {
+  font-size: 1rem;
+}
+
+.mensaje_1, .mensaje_2 {
+  font-size: 0.7rem;
+}
+
+.form-control {
+  font-size: 0.8rem;
+  padding: 0.45rem 0.7rem;
+}
+
+.btn {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+#switchFormBtn {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+}
+
 
           .formulario.active-form {
             opacity: 1;
@@ -197,13 +222,7 @@
             font-size: 1.2rem;
           }
 
-          #switchFormBtn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-          }
+
 
           .btn {
             font-size: 0.85rem;
