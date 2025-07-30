@@ -13,8 +13,8 @@ SELECT
   P.matricula,
   U.campus,
   'Profesor' AS rol
-FROM Usuarios U
-INNER JOIN Profesores P ON U.id_usuario = P.id_usuario
+FROM usuarios U
+INNER JOIN profesores P ON U.id_usuario = P.id_usuario
 
 ORDER BY
   CASE id_tipo_usuario
