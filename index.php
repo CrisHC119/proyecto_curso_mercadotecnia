@@ -76,23 +76,27 @@
   @media (max-width: 768px) {
     .contenedor-cursos {
       flex-direction: column;
+      display: flex;
+      padding: 0 10px;
     }
+
     .justificado {
-      font-size: 0.95rem;
+      font-size: 0.85rem; /* antes: 0.95rem */
       text-align: justify;
       padding: 0 10px;
     }
+
     .tarjeta-curso {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       padding: 1rem;
     }
-    h1, h2 {
-      font-size: 1.4rem;
+
+    h1 {
+      font-size: 1.2rem; /* antes: 1.4rem */
     }
-    .contenedor-cursos {
-      display: flex;
-      flex-direction: column;
-      padding: 0 10px;
+
+    h2 {
+      font-size: 1.3rem;
     }
 
     .contenedor-lateral {
@@ -100,13 +104,13 @@
     }
 
     .btn {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       padding: 0.5rem 1rem;
     }
 
     footer p,
     footer small {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   }
 </style>
