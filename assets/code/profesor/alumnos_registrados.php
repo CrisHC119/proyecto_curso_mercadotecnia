@@ -21,36 +21,6 @@ SELECT
   'Estudiante' AS rol
 FROM usuarios U
 INNER JOIN alumnos A ON U.id_usuario = A.id_usuario
-
-UNION
-
-SELECT 
-  U.id_usuario,
-  U.nombres,
-  U.apellido_paterno,
-  U.apellido_materno,
-  U.avatar,
-  U.id_tipo_usuario,
-  P.matricula,
-  NULL AS semestre,
-  NULL AS horas_U1,
-  NULL AS horas_U2,
-  NULL AS horas_U3,
-  NULL AS horas_U4,
-  NULL AS horas_U5,
-  U.campus,
-  'Profesor' AS rol
-FROM usuarios U
-INNER JOIN profesores P ON U.id_usuario = P.id_usuario
-
-ORDER BY
-  CASE id_tipo_usuario
-    WHEN 1 THEN 1
-    WHEN 2 THEN 2
-    WHEN 3 THEN 3
-    ELSE 4
-  END,
-  nombres ASC
 ";
 
 $result = $conn->query($sql);
@@ -151,29 +121,15 @@ body.light-mode .btn-danger {
 <main class="flex-fill">
 <div class="container mt-4">
   <div class="mb-3">
-    <input type="text" id="buscador" class="form-control" placeholder="Buscar por nombre, apellidos o matrícula...">
+    <input type="text" id="buscador" class="form-control" placeholder="<?php echo $textos['buscar_alumno']; ?>">
   </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 g-4">
     <?php while ($alumno = $result->fetch_assoc()): ?>
       <?php
   $clave = $alumno['campus'];
-  $nombre_instituto = isset($instituto_data[$clave]) ? $instituto_data[$clave] : 'Instituto desconocido';
-
-  switch ((int)$alumno['id_tipo_usuario']) {
-    case 1:
-      $color = 'bg-purple';
-      $rol = 'Root';
-      break;
-    case 2:
-      $color = 'bg-primary';
-      $rol = 'Profesor';
-      break;
-    case 3:
-    default:
-      $color = 'bg-success';
-      $rol = 'Estudiante';
-      break;
-  }
+  $nombre_instituto = isset($instituto_data[$clave]) ? $instituto_data[$clave] : $textos['no_instituto'];
+  $color = 'bg-success';
+  $rol = 'Estudiante';
 
   // Si es alumno, calcula total de horas
   $totalHorasTexto = '';
@@ -198,33 +154,26 @@ body.light-mode .btn-danger {
           <div class="card-body alumno-info">
             <div class="badge <?php echo $color; ?>"><?php echo $rol; ?></div>
             <h5><?php echo htmlspecialchars($alumno['nombres'] . ' ' . $alumno['apellido_paterno'] . ' ' . $alumno['apellido_materno']); ?></h5>
-            <p class="mb-1"><strong>Matrícula:</strong> <?php echo $alumno['matricula']; ?></p>
+            <p class="mb-1"><strong><?php echo $textos['login_matricula']; ?>:</strong> <?php echo $alumno['matricula']; ?></p>
             <?php if (!empty($alumno['semestre'])): ?>
-              <p class="mb-1"><strong>Semestre:</strong> <?php echo $alumno['semestre']; ?></p>
+              <p class="mb-1"><strong><?php echo $textos['semestre']; ?>:</strong> <?php echo $alumno['semestre']; ?></p>
             <?php endif; ?>
-            <p class="mb-1"><strong>Instituto:</strong> <?php echo $nombre_instituto; ?></p>
+            <p class="mb-1"><strong><?php echo $textos['instituto']; ?>:</strong> <?php echo $nombre_instituto; ?></p>
             <?php if (!empty($totalHorasTexto)): ?>
-              <p class="mb-1"><strong>Total de Horas: </strong><?php echo $totalHorasTexto; ?></p>
+              <p class="mb-1"><strong><?php echo $textos['total_de_horas']; ?>: </strong><?php echo $totalHorasTexto; ?></p>
             <?php endif; ?>
 <div class="text-end mt-3">
-  <?php if ((int)$alumno['id_tipo_usuario'] === 3): ?>
     <!-- Ver detalles con href -->
     <a href="/assets/code/profesor/perfil_alumnos_detalle.php?id=<?php echo $alumno['id_usuario']; ?>"
        class="btn btn-outline-primary btn-sm me-2 d-inline-flex align-items-center gap-1 shadow-sm">
-      <i class="bi bi-person-vcard"></i> Ver detalles
+      <i class="bi bi-person-vcard"></i> <?php echo $textos['ver_detalles']; ?>
     </a>
 
     <!-- Dar de baja -->
     <button class="btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-1 shadow-sm">
-      <i class="fas fa-user-slash"></i> Dar de baja
+      <i class="fas fa-user-slash"></i> <?php echo $textos['expulsar_alumno']; ?>
     </button>
 
-  <?php else: ?>
-    <a href="/assets/code/profesor/perfil_alumnos_detalle.php?id=<?php echo $alumno['id_usuario']; ?>"
-       class="btn btn-outline-primary btn-sm d-inline-flex align-items-center gap-1 shadow-sm">
-      <i class="bi bi-person-vcard"></i> Ver detalles
-    </a>
-  <?php endif; ?>
 </div>
 
           </div>

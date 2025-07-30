@@ -1,13 +1,13 @@
 <?php
 
-$servername = "34.71.24.92";
+/*$servername = "34.71.24.92";
 $username = "root";
 $password = "N8516uCCY2gsdfWW7TRa8AF0cnSI9U"; // Usa tu contraseña de MySQL
+*/
 
-/*$servername = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "1234"; // Usa tu contraseña de MySQL
-*/
 
 $database = "curso_mercadotecnia";
 

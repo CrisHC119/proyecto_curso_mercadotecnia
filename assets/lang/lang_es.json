@@ -18,6 +18,7 @@
   "objetivo_2": "•  El alumno/a Identificará los mercados en línea que existen.",
   "objetivo_3": "•  El alumno/a distinguirá la diferencia entre comercio y negocio electrónico.",
   "total_horas" : "⏱️ Total de Horas",
+  "total_de_horas" : "Total de Horas",
   "horas" : "60 hrs",
   "texto_horas": "Incluye teoría y práctica distribuida en módulos semanales",
   "copyright": "Todos los derechos reservados",
@@ -534,5 +535,28 @@
   "U1P15_R1": "Un enfoque intuitivo",
   "U1P15_R2": "Un análisis meticuloso",
   "U1P15_R3": "Una estrategia de marketing agresiva",
-  "U1P15_R4": "Un aumento en los costos"
+  "U1P15_R4": "Un aumento en los costos",
+
+  "_comment_20": "lost_page.php",
+  "title_lost": "Pagina no Disponible",
+  "pagina_no_disponible": "La página no se encuentra disponible.",
+  "pagina_desarrollo": "Esta pagina aún está en desarrollo",
+  "disculpa_lost": "Sentimos las molestias. ¡Gracias por tu comprensión!",
+
+  "comment_21": "index_profesor.php",
+  "mensajes": "Mensajes",
+  "alumnos_registrados": "Alumnos Registrados",
+  "profesores_registrados": "Profesores Registrados",
+  "actividades": "Actividades",
+  "calificaciones": "Calificaciones",
+  "examenes": "Examenes",
+  "panel_navegacion": "Panel de Navegación",
+  "alumnos": "Alumnos",
+
+  "comment_22": "alumnos_registrados.php",
+  "buscar_alumno": "Buscar por nombre, apellidos o matrícula...",
+  "no_instituto": "Instituto Desconocido",
+  "instituto": "Instituto",
+  "ver_detalles": "Ver Detalles",
+  "expulsar_alumno": "Expulsar Alumno"
 }

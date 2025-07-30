@@ -28,13 +28,12 @@
   }
 include_once __DIR__ . '/verificar_alumno.php';
 
-  $rutaArchivo = __DIR__ . "/../../../lang/lang_{$idioma}.json";
-
+  $rutaArchivo = $_SERVER['DOCUMENT_ROOT'] . "/assets/lang/lang_{$idioma}.json";
   if (file_exists($rutaArchivo)) {
     $json = file_get_contents($rutaArchivo);
     $textos = json_decode($json, true);
   } else {
-    $json = file_get_contents(__DIR__ . "/../../../lang/lang_es.json");
+    $rutaArchivo = $_SERVER['DOCUMENT_ROOT'] . "/assets/lang/lang_es.json";
     $textos = json_decode($json, true);
   }
   $horas = [
@@ -416,7 +415,7 @@ include_once __DIR__ . '/verificar_alumno.php';
               <img src="/assets/images/avatar/<?php echo htmlspecialchars($_SESSION['avatar']); ?>" alt="avatar" width="55" height="55" class="rounded-circle shadow border border-2">
             </a>
             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="avatarDropdown" style="min-width: 200px;">
-              <li><a class="dropdown-item" href="/assets/code/alumnos/temas/index_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['temas']; ?></a></li>
+              <li><a class="dropdown-item" href="/assets/code/alumnos/temas_curso.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['temas']; ?></a></li>
               <li><a class="dropdown-item" href="/assets/code/alumnos/calificacion.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['calificacion']; ?></a></li>
               <li><a class="dropdown-item" href="/assets/code/alumnos/temas/perfil_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['perfil']; ?></a></li>
               <li><hr class="dropdown-divider"></li>
@@ -433,7 +432,7 @@ include_once __DIR__ . '/verificar_alumno.php';
 <a class="nav-link <?php echo $page_1; ?>" href="/assets/code/alumnos/temas/index_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['home']; ?></a>
     </li>
     <li class="nav-item">
-<a class="nav-link <?php echo $page_2; ?>" href="/assets/code/alumnos/temas/temas_unidad.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['temas']; ?></a><!-- Pendiente -->
+<a class="nav-link <?php echo $page_2; ?>" href="/assets/code/alumnos/temas_curso.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['temas']; ?></a><!-- Pendiente -->
     </li>
     <li class="nav-item">
 <a class="nav-link <?php echo $page_2; ?>" href="/assets/code/alumnos/calificacion.php?lang=<?php echo $_SESSION['idioma'];?>"><?php echo $textos['calificacion']; ?></a>

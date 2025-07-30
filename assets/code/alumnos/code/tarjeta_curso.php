@@ -107,7 +107,7 @@ $fechaISO = $fechaExamen ? (new DateTime($fechaExamen, new DateTimeZone('America
         <a href="/assets/code/alumnos/temas/tema_1/1.G.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?>
         </a>
-        <a href="?" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u1']; ?>
         </a>        
 <a href="<?php 
@@ -135,28 +135,28 @@ $fechaISO = $fechaExamen ? (new DateTime($fechaExamen, new DateTimeZone('America
         <div class="list-group-item titulo-tema">
             <i class="bi bi-diagram-3-fill me-2"></i><?php echo $textos['tema_2']; ?>
         </div>
-        <a href="<?php echo $uno_uno; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-lightbulb-fill me-2"></i><?php echo $textos['tema_2.1']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-ui-checks-grid me-2"></i><?php echo $textos['tema_2.2']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-building me-2"></i><?php echo $textos['tema_2.2.1']; ?>
         </a>
-        <a href="tema_1_2_2.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-person-badge me-2"></i><?php echo $textos['tema_2.2.2']; ?>
         </a>
-        <a href="tema_1_2_3.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bank me-2"></i><?php echo $textos['tema_2.2.3']; ?>
         </a>
-        <a href="tema_1_2_3.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bar-chart-line me-2"></i><?php echo $textos['tema_2.2.4']; ?>
         </a>
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u2']; ?>
         </a>        
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u2']; ?>
         </a>
     </div>
@@ -167,31 +167,31 @@ $fechaISO = $fechaExamen ? (new DateTime($fechaExamen, new DateTimeZone('America
         <div class="list-group-item titulo-tema">
             <i class="bi bi-cpu-fill me-2"></i><?php echo $textos['tema_3']; ?>
         </div>
-        <a href="<?php echo $uno_uno; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-wifi me-2"></i><?php echo $textos['tema_3.1']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-phone me-2"></i><?php echo $textos['tema_3.2']; ?>
         </a>
-        <a href="<?php echo $uno_dos_uno; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-gear-wide-connected me-2"></i><?php echo $textos['tema_3.3']; ?>
         </a>
-        <a href="<?php echo $uno_dos_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-telephone-fill me-2"></i><?php echo $textos['tema_3.4']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_3.5']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-person-lines-fill me-2"></i><?php echo $textos['tema_3.6']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-person-video3 me-2"></i><?php echo $textos['tema_3.7']; ?>
         </a>
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u3']; ?>
         </a>        
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u3']; ?>
         </a>
     </div>
@@ -202,40 +202,40 @@ $fechaISO = $fechaExamen ? (new DateTime($fechaExamen, new DateTimeZone('America
         <div class="list-group-item titulo-tema">
             <i class="bi bi-shield-lock-fill me-2"></i><?php echo $textos['tema_4']; ?>
         </div>
-        <a href="<?php echo $uno_uno; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-file-earmark-text me-2"></i><?php echo $textos['tema_4.1']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-pencil-square me-2"></i><?php echo $textos['tema_4.2']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-diagram-3-fill me-2"></i><?php echo $textos['tema_4.2.2']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-journal-check me-2"></i><?php echo $textos['tema_4.2.3']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-arrow-repeat me-2"></i><?php echo $textos['tema_4.2.4']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-shield-shaded me-2"></i><?php echo $textos['tema_4.3']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-emoji-neutral-fill me-2"></i><?php echo $textos['tema_4.4']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><?php echo $textos['tema_4.5']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-hdd-network-fill me-2"></i><?php echo $textos['tema_4.5.1']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bug-fill me-2"></i><?php echo $textos['tema_4.5.2']; ?>
         </a>
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u4']; ?>
         </a>        
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u4']; ?>
         </a>
     </div>
@@ -247,28 +247,28 @@ $fechaISO = $fechaExamen ? (new DateTime($fechaExamen, new DateTimeZone('America
         <div class="list-group-item titulo-tema">
             <i class="bi bi-graph-up-arrow me-2"></i><?php echo $textos['tema_5_alt']; ?>
         </div>
-        <a href="<?php echo $uno_uno; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-lightbulb me-2"></i><?php echo $textos['tema_5.1']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-tools me-2"></i><?php echo $textos['tema_5.2']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-diagram-3 me-2"></i><?php echo $textos['tema_5.3']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-database-check me-2"></i><?php echo $textos['tema_5.3.1']; ?>
         </a>
-        <a href="tema_1_2_1.php" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-speedometer2 me-2"></i><?php echo $textos['tema_5.3.2']; ?>
         </a>
-        <a href="<?php echo $uno_dos; ?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-bar-chart-fill me-2"></i><?php echo $textos['tema_5.4']; ?>
         </a>
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u5']; ?>
         </a>        
-        <a href="tema_1_6.php" class="list-group-item list-group-item-action">
+        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u5']; ?>
         </a>
     </div>

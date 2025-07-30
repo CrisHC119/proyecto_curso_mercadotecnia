@@ -18,6 +18,7 @@
   "objetivo_2": "•  The student will identify the online markets that exist.",
   "objetivo_3": "•  The student will distinguish the difference between e-commerce and e-business.",
   "total_horas" : "⏱️ Total Hours",
+  "total_de_horas" : "Total Hours",
   "horas" : "60 hrs",
   "texto_horas": "Includes theory and practice distributed in weekly modules",
   "copyright": "All rights reserved",
@@ -534,5 +535,28 @@
   "U1P15_R1": "An intuitive approach",
   "U1P15_R2": "A meticulous analysis",
   "U1P15_R3": "An aggressive marketing strategy",
-  "U1P15_R4": "An increase in costs"
+  "U1P15_R4": "An increase in costs",
+
+  "_comment_20": "lost_page.php",
+  "title_lost": "Page Unavailable",
+  "pagina_no_disponible": "The page is not available.",
+  "pagina_desarrollo": "This page is still under development",
+  "disculpa_lost": "We apologize for the inconvenience. Thank you for your understanding!",
+
+  "comment_21": "index_profesor.php",
+  "mensajes": "Messages",
+  "alumnos_registrados": "Registered Students",
+  "profesores_registrados": "Registered Teachers",
+  "actividades": "Activities",
+  "calificaciones": "Student grades",
+  "examenes": "Exams",
+  "panel_navegacion": "Navigation Panel",
+  "alumnos": "Students",
+  
+  "comment_22": "alumnos_registrados.php",
+  "buscar_alumno": "Search by first name, last name, or license plate number...",
+  "no_instituto": "Unknown Institute",
+  "instituto": "Institute",
+  "ver_detalles": "See Details",
+  "expulsar_alumno": "Expel Student"
 }

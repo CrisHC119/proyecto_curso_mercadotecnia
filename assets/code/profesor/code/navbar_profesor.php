@@ -460,11 +460,11 @@ body.light-mode .tema-lista-custom .list-group-item:focus {
     <img src="/assets/images/avatar/<?php echo htmlspecialchars($_SESSION['avatar']); ?>" alt="avatar" width="55" height="55" class="rounded-circle shadow border border-2">
   </a>
   <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="avatarDropdown" style="min-width: 200px;">
-    <li><a class="dropdown-item" href="/assets/code/alumnos/temas/index_alumnos.php">Temas</a></li>
-    <li><a class="dropdown-item" href="/assets/code/alumnos/calificaciones.php">Calificaciones</a></li>
-    <li><a class="dropdown-item" href="/assets/code/alumnos/temas/perfil_alumnos.php">Perfil</a></li>
+    <li><a class="dropdown-item" href="/assets/code/alumnos/temas/index_alumnos.php"><?php echo $textos['temas']; ?></a></li>
+    <li><a class="dropdown-item" href="/assets/code/alumnos/calificaciones.php"><?php echo $textos['calificacion']; ?></a></li>
+    <li><a class="dropdown-item" href="/assets/code/alumnos/temas/perfil_alumnos.php"><?php echo $textos['perfil']; ?></a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item text-danger" href="/assets/code/modelo/logout.php">Cerrar sesión</a></li>
+    <li><a class="dropdown-item text-danger" href="/assets/code/modelo/logout.php"><?php echo $textos['cerrar_sesion']; ?></a></li>
   </ul>
 </div>      
 </div>
@@ -475,16 +475,16 @@ body.light-mode .tema-lista-custom .list-group-item:focus {
 <div class="container-fluid mt-3">
   <ul class="nav nav-tabs px-3 fs-5 align-items-center">
     <li class="nav-item">
-<a class="nav-link <?php echo $page_1; ?>" href="index_profesor.php?lang=<?php echo $idioma; ?>">Inicio</a>
+<a class="nav-link <?php echo $page_1; ?>" href="index_profesor.php?lang=<?php echo $idioma; ?>"><?php echo $textos['home']; ?></a>
     </li>
     <li class="nav-item">
-<a class="nav-link <?php echo $page_2; ?>" href="temas_curso.php?lang=<?php echo $idioma; ?>">Temas</a>
+<a class="nav-link <?php echo $page_2; ?>" href="temas_curso.php?lang=<?php echo $idioma; ?>"><?php echo $textos['temas']; ?></a>
     </li>
     <li class="nav-item">
-<a class="nav-link <?php echo $page_2; ?>" href="/assets/code/profesor/alumnos_registrados.php?lang=<?php echo $idioma; ?>">Alumnos</a>
+<a class="nav-link <?php echo $page_2; ?>" href="/assets/code/profesor/alumnos_registrados.php?lang=<?php echo $idioma; ?>"><?php echo $textos['alumnos']; ?></a>
     </li>
     <li class="nav-item">
-<a class="nav-link <?php echo $page_2; ?>" href="examenes.php?lang=<?php echo $idioma; ?>">Examen</a>
+<a class="nav-link <?php echo $page_2; ?>" href="examenes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['examenes']; ?></a>
     </li>
 
     <!-- Menú de idioma -->

@@ -1,4 +1,11 @@
   <?php
+    session_start();
+    if (isset($_SESSION['id_usuario'])) {
+      session_unset(); 
+      session_destroy(); 
+      header("Location: index.php");
+      exit;
+    }
     $page_1 = 'active';
     $page_2 = '';
     include_once __DIR__ . '/assets/code/navbar_index.php';

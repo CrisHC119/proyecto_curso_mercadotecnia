@@ -1,6 +1,12 @@
 <?php
   session_start();
 
+  if (isset($_SESSION['id_usuario'])) {
+      session_unset(); 
+      session_destroy(); 
+      header("Location: login.php");
+      exit;
+  }
   $idioma = $_GET['lang'] ?? $_SESSION['lang'] ?? 'es';
   $_SESSION['lang'] = $idioma; 
 
