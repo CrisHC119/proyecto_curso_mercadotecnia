@@ -77,42 +77,45 @@
     .contenedor-cursos {
       flex-direction: column;
       display: flex;
-      padding: 0 10px;
+      padding: 0 8px;
+      gap: 1rem; /* antes: 2rem */
     }
 
     .justificado {
-      font-size: 0.8rem; /* antes: 0.85rem */
+      font-size: 0.75rem; /* antes: 0.8rem */
       text-align: justify;
-      padding: 0 10px;
+      padding: 0 8px;
     }
 
     .tarjeta-curso {
-      font-size: 0.85rem; /* ajustamos un poco más */
-      padding: 0.75rem 1rem;
-      width: 100%; /* asegurar visibilidad completa */
+      font-size: 0.8rem; /* antes: 0.85rem */
+      padding: 0.6rem 0.9rem; /* más compacto */
+      margin-bottom: 0.8rem;
+      width: 100%;
       box-sizing: border-box;
     }
 
     h1 {
-      font-size: 1.1rem; /* más pequeño aún para pantallas chicas */
+      font-size: 1rem; /* antes: 1.1rem */
     }
 
     h2 {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .contenedor-lateral {
-      margin-top: 2rem;
+      margin-top: 1.5rem; /* antes: 2rem */
+      gap: 1rem; /* reducir separación entre tarjetas */
     }
 
     .btn {
-      font-size: 0.85rem;
-      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
     }
 
     footer p,
     footer small {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
   }
 </style>
