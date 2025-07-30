@@ -121,35 +121,48 @@
       margin-bottom: 0.7rem;
     }
     @media (max-width: 768px) {
-      #mainContent {
-        padding: 1rem;
-        max-width: 100%;
-        margin: 20px 10px;
-      }
+  #mainContent {
+    padding: 1rem;
+    max-width: 100%;
+    margin: 20px 10px;
+  }
 
-      .accordion {
-        max-width: 100%;
-        margin: 0 5px;
-      }
+  .accordion {
+    max-width: 100%;
+    margin: 0 5px;
+  }
 
-      .accordion-button,
-      .sub-accordion-button {
-        font-size: 0.75rem;
-        padding: 0.6rem 0.8rem;
-      }
+  .accordion-button,
+  .sub-accordion-button {
+    font-size: 0.7rem; /* reducido */
+    padding: 0.5rem 0.7rem;
+  }
 
-      .subtema-text {
-        font-size: 0.65rem;
-      }
+  .accordion-button::after,
+  .sub-accordion-button::after {
+    font-size: 0.6rem;
+  }
 
-      .sub-accordion-button {
-        margin-left: 0.5rem;
-      }
+  .nivel-3 {
+    font-size: 0.65rem;
+  }
 
-      .sub-accordion-content {
-        margin-left: 0.8rem;
-        padding-left: 0.8rem;
-      }
+  .subtema-text {
+    font-size: 0.65rem; /* reducido */
+  }
+
+  h1.text-center {
+    font-size: 1.1rem; /* título más pequeño */
+  }
+
+  .btn.btn-success {
+    font-size: 0.85rem; /* botón de descarga */
+    padding: 0.5rem 1rem;
+  }
+
+  .text-muted.small {
+    font-size: 0.6rem !important; /* duración más chica */
+  }
     }
     body.light-mode #mainContent {
       background-color: #ffffff;
