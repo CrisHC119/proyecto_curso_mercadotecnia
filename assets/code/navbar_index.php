@@ -219,14 +219,6 @@
       .btn-pdf:hover {
         background-color: #218838;
       }
-      @media (max-width: 768px) {
-        #temasCurso {
-          display: none;
-        }
-        .contenedor-lateral {
-          display: none;
-        }
-      }
       @media (max-width: 576px) {
         body {
           padding-top: 60px;
