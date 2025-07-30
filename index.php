@@ -81,22 +81,24 @@
     }
 
     .justificado {
-      font-size: 0.85rem; /* antes: 0.95rem */
+      font-size: 0.8rem; /* antes: 0.85rem */
       text-align: justify;
       padding: 0 10px;
     }
 
     .tarjeta-curso {
-      font-size: 0.9rem;
-      padding: 1rem;
+      font-size: 0.85rem; /* ajustamos un poco más */
+      padding: 0.75rem 1rem;
+      width: 100%; /* asegurar visibilidad completa */
+      box-sizing: border-box;
     }
 
     h1 {
-      font-size: 1.2rem; /* antes: 1.4rem */
+      font-size: 1.1rem; /* más pequeño aún para pantallas chicas */
     }
 
     h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
 
     .contenedor-lateral {
@@ -104,13 +106,13 @@
     }
 
     .btn {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       padding: 0.5rem 1rem;
     }
 
     footer p,
     footer small {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
   }
 </style>
