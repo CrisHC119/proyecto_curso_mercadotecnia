@@ -160,9 +160,18 @@
   .formulario {
     max-width: 300px;
     padding: 0.8rem !important;
-    opacity: 1 !important;
-    transform: none !important;
+    transition: opacity 0.4s ease-in-out;
+    position: absolute;
+  }
+
+  .formulario.active-form {
+    opacity: 1;
     z-index: 1;
+  }
+
+  .formulario:not(.active-form) {
+    opacity: 0;
+    z-index: 0;
   }
 
   .card {
