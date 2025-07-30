@@ -219,86 +219,86 @@
       .btn-pdf:hover {
         background-color: #218838;
       }
-@media (max-width: 576px) {
-  body {
-    padding-top: 60px;
-    font-size: 0.95rem;
-  }
+      @media (max-width: 576px) {
+        body {
+          padding-top: 60px;
+          font-size: 0.95rem;
+        }
 
-  .navbar {
-    height: 55px !important; /* Reducido */
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-  }
+        .navbar {
+          height: auto;
+          flex-wrap: wrap;
+        }
 
-  .navbar-brand {
-    font-size: 0.85rem !important;
-  }
+        .navbar-brand {
+          font-size: 1rem;
+        }
 
-  .navbar-brand img {
-    max-width: 80px;
-    height: auto;
-  }
+        .navbar-brand img {
+          max-width: 100px;
+          height: auto;
+        }
 
-  .btn {
-    font-size: 0.75rem !important;
-    padding: 0.3rem 0.6rem !important;
-  }
+        .btn {
+          font-size: 0.85rem;
+          padding: 0.4rem 0.8rem;
+        }
 
-  .btn-pdf {
-    font-size: 0.9rem;
-    padding: 8px 16px;
-  }
+        .btn-pdf {
+          font-size: 0.9rem;
+          padding: 8px 16px;
+        }
 
-  #mainContent {
-    padding: 1rem;
-    max-width: 100%;
-  }
+        #mainContent {
+          padding: 1rem;
+          max-width: 100%;
+        }
 
-  iframe, video {
-    width: 100%;
-    height: auto;
-  }
+        iframe, video {
+          width: 100%;
+          height: auto;
+        }
 
-  .tarjeta-curso {
-    padding: 1rem;
-    font-size: 0.9rem;
-  }
+        .tarjeta-curso {
+          padding: 1rem;
+          font-size: 0.9rem;
+        }
 
-  footer {
-    font-size: 0.85rem;
-    text-align: center;
-  }
+        footer {
+          font-size: 0.85rem;
+          text-align: center;
+        }
 
-  footer i {
-    font-size: 1.2rem;
-  }
+        footer i {
+          font-size: 1.2rem;
+        }
 
-  .mode-toggle {
-    font-size: 1rem;
-  }
+        .mode-toggle {
+          font-size: 1rem;
+        }
 
-  .contenedor-cursos {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 0 10px;
-  }
+        .contenedor-cursos {
+          flex-direction: column;
+          gap: 1.5rem;
+          padding: 0 10px;
+        }
+          .nav-tabs {
+        margin-top: -10px;
+          font-size: 0.8rem !important;
+        }
 
-  .nav-tabs {
-    margin-top: -10px;
-    font-size: 0.75rem !important;
-  }
+        .nav-tabs .nav-link {
+          font-size: 0.8rem !important;
+          padding: 6px 10px !important;
+        }
 
-  .nav-tabs .nav-link {
-    font-size: 0.75rem !important;
-    padding: 5px 8px !important;
-  }
-
-  .nav-tabs .dropdown-menu {
-    font-size: 0.75rem !important;
-  }
-  
-
+        .nav-tabs .dropdown-menu {
+          font-size: 0.75rem !important;
+        }
+        .navbar-brand {
+          font-size: 0.9rem;
+        }
+        
     .nav-item.dropdown .nav-link {
     font-size: 0.8rem;
     padding: 4px 8px;
@@ -313,8 +313,7 @@
     font-size: 0.75rem;
     padding: 5px 10px;
   }
-}
-
+      }
       </style>
   </head>
 <body class="d-flex flex-column min-vh-100">
