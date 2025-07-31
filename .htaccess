@@ -6,11 +6,12 @@ RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # 2. Si el archivo o directorio existe, no hacer nada (dejar que Apache lo sirva)
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]
 
 # 3. URLs limpias para archivos PHP en assets/code/alumnos/
 # Por ejemplo: dominio.com/tema1  ->  assets/code/alumnos/tema1.php
-RewriteRule ^([a-zA-Z0-9_-]+)$ assets/code/alumnos/$1.php [L,QSA]
-RewriteRule ^login$ login.php [L,QSA]
+RewriteEngine On
+RewriteRule ^login$ login.php [L]
+RewriteRule ^index$ index.php [L]
