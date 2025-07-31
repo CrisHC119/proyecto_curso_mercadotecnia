@@ -15,7 +15,7 @@ RewriteRule ^login$ login.php [L,QSA]
 RewriteRule ^index$ index.php [L,QSA]
 RewriteRule ^index_a$ assets/code/alumnos/temas/index_alumno.php [L,QSA]
 RewriteRule ^index_p$ assets/code/profesor/index_profesor.php [L,QSA]
-
+Redirect /prueba https://www.google.com
 # 5. Regla general para ocultar .php en la raíz
 RewriteCond %{DOCUMENT_ROOT}/$1.php -f
 RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L,QSA]
