@@ -319,7 +319,7 @@
 <body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" title="<?php echo $textos['title_home']; ?>" href="/index?lang=<?php echo $_SESSION['lang']; ?>">
+      <a class="navbar-brand" title="<?php echo $textos['title_home']; ?>" href="/index.php?lang=<?php echo $_SESSION['lang']; ?>">
         <i class="bi bi-mortarboard-fill me-2"></i>ITCV - <?php echo $textos['titulo']; ?>  
       </a>
       <button class="navbar-toggler p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation" style="font-size: 0.9rem; transform: scale(0.9);">
@@ -358,7 +358,7 @@
   <div class="container-fluid mt-3">
     <ul class="nav nav-tabs px-3 fs-5 align-items-center">
       <li class="nav-item">
-        <a class="nav-link <?php echo $page_1; ?>" title="<?php echo $textos['title_home']; ?>" aria-current="page" href="/index?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['home']; ?></a>
+        <a class="nav-link <?php echo $page_1; ?>" title="<?php echo $textos['title_home']; ?>" aria-current="page" href="/index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['home']; ?></a>
       </li>
       <li class="nav-item">
         <a class="nav-link <?php echo $page_2; ?>" title="<?php echo $textos['title_temas']; ?>" href="/temas_curso.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['temas']; ?></a>
