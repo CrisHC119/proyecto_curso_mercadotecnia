@@ -1,7 +1,9 @@
 <?php
   $idioma = $_GET['lang'] ?? 'es';
 
-  session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
   $_SESSION['lang'] = $idioma;
 
   $idiomas = [
