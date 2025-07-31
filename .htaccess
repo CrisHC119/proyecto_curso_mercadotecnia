@@ -5,17 +5,17 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# 3. Reglas personalizadas primero (se procesan antes que la regla genérica)
-RewriteRule ^login$ login.php [L]
-RewriteRule ^index$ index.php [L]
-RewriteRule ^index_a$ assets/code/alumnos/temas/index_alumno.php [L]
-RewriteRule ^index_p$ assets/code/profesor/index_profesor.php [L]
-
-# 4. Si archivo o directorio real existe, no hacer nada
+# 3. Si archivo o directorio real existe, no hacer nada
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 5. Regla general para ocultar .php
+# 4. Reglas personalizadas para rutas específicas
+RewriteRule ^login$ login.php [L,QSA]
+RewriteRule ^index$ index.php [L,QSA]
+RewriteRule ^index_a$ assets/code/alumnos/temas/index_alumno.php [L,QSA]
+RewriteRule ^index_p$ assets/code/profesor/index_profesor.php [L,QSA]
+
+# 5. Regla general para ocultar .php en la raíz
 RewriteCond %{DOCUMENT_ROOT}/$1.php -f
-RewriteRule ^(.+)$ $1.php [L]
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L,QSA]
