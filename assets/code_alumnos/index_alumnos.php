@@ -40,7 +40,7 @@
             </a>
         </div>
         <div class="text-center mt-4">
-            <a href="tema_1/1.1.php" class="btn btn-tema text-white">
+            <a href="temas_unidad/tema_1/T_1.1.php" class="btn btn-tema text-white">
                 <i class="bi bi-play-circle-fill"></i><?php echo $textos['inicio_curso']; ?>
             </a>
         </div>
