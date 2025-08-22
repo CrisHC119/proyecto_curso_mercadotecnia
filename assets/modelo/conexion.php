@@ -3,13 +3,13 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-    /*$servername = "34.71.24.92";
+    $servername = "34.71.24.92";
     $username = "root";
     $password = "N8516uCCY2gsdfWW7TRa8AF0cnSI9U";
-    */
-    $servername = "localhost";
+    /*$servername = "localhost";
     $username = "root";
     $password = "1234";
+    */
 
     $database = "curso_mercadotecnia";
 
