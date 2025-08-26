@@ -40,7 +40,7 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.7.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_1.7']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/tema_1/1.G.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?>
         </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
@@ -69,19 +69,19 @@
         <div class="list-group-item titulo-tema">
             <i class="bi bi-diagram-3-fill me-2"></i><?php echo $textos['tema_2']; ?>
         </div>
-        <a href="/assets/code/alumnos/temas/tema_2/2.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-lightbulb-fill me-2"></i><?php echo $textos['tema_2.1']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-ui-checks-grid me-2"></i><?php echo $textos['tema_2.2']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-building me-2"></i><?php echo $textos['tema_2.2.1']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-person-badge me-2"></i><?php echo $textos['tema_2.2.2']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bank me-2"></i><?php echo $textos['tema_2.2.3']; ?>
         </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">

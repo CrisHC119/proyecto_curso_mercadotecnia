@@ -36,7 +36,7 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.7.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_1.7']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/tema_1/1.G.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?>
         </a>
     </div>
