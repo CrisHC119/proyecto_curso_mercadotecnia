@@ -84,7 +84,7 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bank me-2"></i><?php echo $textos['tema_2.2.3']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.4.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bar-chart-line me-2"></i><?php echo $textos['tema_2.2.4']; ?>
         </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">

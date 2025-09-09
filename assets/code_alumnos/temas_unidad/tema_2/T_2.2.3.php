@@ -62,6 +62,11 @@
                 </ul>
             </div>
         </div>
+        <div class="ms-4 d-none d-sm-block" style="max-width: 200px; flex-shrink: 0;">
+            <img src="/assets/images/temas/tema_2/image_T_2.2.3.jpg" alt="Descripción" class="img-fluid rounded shadow" />
+            <img src="/assets/images/temas/tema_2/image_T_2.2.3_2.jpg" alt="Descripción" class="img-fluid rounded shadow mt-5" />
+            <img src="/assets/images/temas/tema_2/image_T_2.2.3_3.jpg" alt="Descripción" class="img-fluid rounded shadow mt-5" />
+        </div>
     </div>
 <?php
   include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
