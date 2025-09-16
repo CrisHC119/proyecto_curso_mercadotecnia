@@ -6,8 +6,8 @@
         header("Location: $url");
         exit;
     }
-    $anterior = 'T_2.2.2.php'; 
-    $siguiente = 'T_2.2.4.php'; 
+    $anterior = 'T_2.2.3.php'; 
+    $siguiente = 'T_3.1.php'; 
 ?>
 
 <div class="contenedor-cursos">
