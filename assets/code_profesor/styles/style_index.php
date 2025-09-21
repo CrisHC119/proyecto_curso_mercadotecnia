@@ -58,12 +58,6 @@
     body.light-mode .card-menu.examenes {
         background-color: #fd7e14; 
         color: #ffffff;
-
-        
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
     body.light-mode .card-menu.actividades {
         background-color: #5d0075ff; 
@@ -85,7 +79,7 @@
     body.light-mode .card-menu i {
         color: #ffffff;
     }
-    body:not(.light-mode) .card-menu.examenes, .card-menu.actividades, .card-menu.calificaciones, .card-menu.mensaje, .card-menu.alumnos, .card-menu.profesores {
+    body:not(.light-mode)  .card-menu.actividades, .card-menu.calificaciones, .card-menu.mensaje, .card-menu.alumnos, .card-menu.profesores {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);

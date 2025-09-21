@@ -68,7 +68,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                    <a href="/assets/code_profesor/menu_examenes.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu examenes shadow-sm">
                             <i class="bi bi-pencil-square"></i>
                             <h5><?php echo $textos['examenes']; ?></h5>

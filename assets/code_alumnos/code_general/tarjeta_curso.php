@@ -87,8 +87,14 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.2.4.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bar-chart-line me-2"></i><?php echo $textos['tema_2.2.4']; ?>
         </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_2.3']; ?>
+        </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?>
+        </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
-        <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u2']; ?>
+            <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u2']; ?>
         </a>        
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u2']; ?>
@@ -193,26 +199,32 @@
         <div class="list-group-item titulo-tema">
             <i class="bi bi-graph-up-arrow me-2"></i><?php echo $textos['tema_5_alt']; ?>
         </div>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-lightbulb me-2"></i><?php echo $textos['tema_5.1']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-tools me-2"></i><?php echo $textos['tema_5.2']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-diagram-3 me-2"></i><?php echo $textos['tema_5.3']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.3.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-database-check me-2"></i><?php echo $textos['tema_5.3.1']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.3.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-speedometer2 me-2"></i><?php echo $textos['tema_5.3.2']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.4.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-bar-chart-fill me-2"></i><?php echo $textos['tema_5.4']; ?>
         </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.5.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_5.5']; ?>
+        </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_5/T_5.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_5.G']; ?>
+        </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
-        <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u5']; ?>
+            <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u5']; ?>
         </a>        
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u5']; ?>

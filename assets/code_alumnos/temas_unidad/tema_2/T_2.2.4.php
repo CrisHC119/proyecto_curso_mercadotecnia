@@ -418,10 +418,8 @@
                     <li class="mb-3">
                         <i class="bi bi-arrow-right-circle-fill text-primary me-2"></i><?php echo $textos['parrafo_0348_5']; ?>
                     </li>
-                    <li class="mb-3">
-                        <i class="bi bi-arrow-right-circle-fill text-primary me-2"></i><?php echo $textos['parrafo_0348_6']; ?>
-                    </li>
                 </ul>
+                <p class="justificado"><?php echo $textos['parrafo_0348_6']; ?></p>
             </div>
         </div>
     </div>
