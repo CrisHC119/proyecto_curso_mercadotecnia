@@ -9,8 +9,8 @@
     
     /*$servername = "localhost";
     $username = "root";
-    $password = "1234";
-*/
+    $password = "1234";*/
+
     $database = "curso_mercadotecnia";
 
     try {
