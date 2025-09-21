@@ -151,29 +151,35 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.2.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-diagram-3-fill me-2"></i><?php echo $textos['tema_4.2.2']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.2.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-journal-check me-2"></i><?php echo $textos['tema_4.2.3']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.2.4.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-arrow-repeat me-2"></i><?php echo $textos['tema_4.2.4']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-shield-shaded me-2"></i><?php echo $textos['tema_4.3']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.4.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-emoji-neutral-fill me-2"></i><?php echo $textos['tema_4.4']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.5.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><?php echo $textos['tema_4.5']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.5.1.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-hdd-network-fill me-2"></i><?php echo $textos['tema_4.5.1']; ?>
         </a>
-        <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.5.2.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action ps-5">
             <i class="bi bi-bug-fill me-2"></i><?php echo $textos['tema_4.5.2']; ?>
         </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.6.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_4.6']; ?>
+        </a>
+        <a href="/assets/code_alumnos/temas_unidad/tema_4/T_4.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
+            <i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_4.G']; ?>
+        </a>
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
-        <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u4']; ?>
+            <i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u4']; ?>
         </a>        
         <a href="/assets/code/alumnos/temas/lost_page.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action">
         <i class="bi bi-book me-2"></i><?php echo $textos['test_u4']; ?>

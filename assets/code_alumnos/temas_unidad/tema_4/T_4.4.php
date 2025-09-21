@@ -1,0 +1,56 @@
+<?php
+    include_once __DIR__ . '/../../code_general/navbar.php';
+    include_once __DIR__ . '/../../styles/style_index.php';
+    if (!isset($_GET['lang'])) {
+        $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
+        header("Location: $url");
+        exit;
+    }
+    $anterior = 'T_1.2.4.php'; 
+    $siguiente = 'T_3.1.php'; 
+?>
+<div class="contenedor-cursos">
+    <div id="mainContent">
+        <h2 class="text-center mb-4"><?php echo $textos['tema_4.4']; ?></h2>
+
+        <p class="justificado"><?php echo $textos['parrafo_0583']; ?></p>
+        <p class="justificado"><?php echo $textos['parrafo_0584']; ?></p>
+        <ul class="list-unstyled justificado mt-4">
+            <li class="mb-3">
+                <i class="bi bi-arrow-right-circle-fill text-success me-2"></i><?php echo $textos['parrafo_0584_1']; ?>
+            </li>
+            <li class="mb-3">
+                <i class="bi bi-arrow-right-circle-fill text-success me-2"></i><?php echo $textos['parrafo_0584_2']; ?>
+            </li>
+            <li class="mb-3">
+                <i class="bi bi-arrow-right-circle-fill text-success me-2"></i><?php echo $textos['parrafo_0584_3']; ?>
+            </li>
+        </ul>
+
+        <p class="justificado"><?php echo $textos['parrafo_0585']; ?></p>
+        <p class="justificado"><?php echo $textos['parrafo_0586']; ?></p>
+        <div class="d-flex align-items-start justify-content-between flex-wrap">
+            <div style="flex: 1; min-width: 250px;">
+                <p class="justificado"><?php echo $textos['parrafo_0587']; ?></p>
+                <p class="justificado"><?php echo $textos['parrafo_0588']; ?></p>
+                <p class="justificado"><?php echo $textos['parrafo_0589']; ?></p>
+                <p class="justificado"><?php echo $textos['parrafo_0590']; ?></p>
+            </div>
+            <div class="ms-4 d-none d-sm-block" style="max-width: 200px; flex-shrink: 0;">
+                <img src="/assets/images/temas/tema_4/image_T_4.4.png" alt="Descripción" class="img-fluid rounded shadow" />
+                <img src="/assets/images/temas/tema_4/image_T_4.4_2.png" alt="Descripción" class="img-fluid rounded shadow mt-5" />
+            </div>
+        </div>
+    </div>
+    <?php
+        include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+    ?>
+</div>
+<?php
+    include_once __DIR__ . '/../../../code_general/footer.php';
+?>
+<style>
+  ul.list-unstyled.justificado li {
+  line-height: 1.2;
+}
+</style>

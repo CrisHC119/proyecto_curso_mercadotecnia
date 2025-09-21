@@ -119,3 +119,7 @@
 [2025-09-14 19:08:07] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
 [2025-09-14 20:32:41] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
 [2025-09-15 13:04:30] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
+[2025-09-16 11:57:11] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
+[2025-09-16 19:57:52] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
+[2025-09-18 12:32:08] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
+[2025-09-20 19:06:43] Inicio de sesión (Alumno): Cristian Hernández de la Cruz (Número de control: 21380393)
