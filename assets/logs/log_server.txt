@@ -129,3 +129,4 @@
 [2025-09-21 17:24:48] Inicio de sesión (Alumno): Cristian Yahir Hernández de la Cruz (Número de control: 21380393)
 [2025-09-21 17:25:51] Cierre de sesión (21380393)
 [2025-09-21 17:34:16] Inicio de sesión (Alumno): Cristian Yahir Hernández de la Cruz (Número de control: 21380393)
+[2025-09-21 17:35:20] Cierre de sesión (21380393)
