@@ -92,7 +92,7 @@
     body:not(.light-mode) .card-menu i {
         color: #6f42c1;
     }
-    body:not(.light-mode) .card-menu.registros, .card-menu.logout {
+    body:not(.light-mode) .card-menu.examenes, .card-menu.registros, .card-menu.logout {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);
