@@ -59,6 +59,7 @@
   "aviso_registrar_1": "Don't have an account?",
   "aviso_registrar_2": "Register now",
   "login_profesor": "Login as a teacher",
+  "profesor": "Teacher",
   "login_alumno": "Access as a student",
   "login_frase_profesor": "Log in with your registration number",
   "login_matricula": "Registration number",
@@ -1723,6 +1724,8 @@
   "parrafo_0832": "are extensive and comprehensive documents that offer detailed information on specific topics.",
   "parrafo_0833": "Gamification marketing:",
   "parrafo_0834": "is a strategy that incorporates game elements to motivate customers.",
+
+  "lista_alumnos": "List of Students",
 
   "_comment_60": "menu_examenes",
   "actualizar_fecha_examen_exito": " Exam date successfully updated.",

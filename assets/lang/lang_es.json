@@ -59,6 +59,7 @@
   "aviso_registrar_1": "¿No tienes cuenta?",
   "aviso_registrar_2": "Regístrate ahora",
   "login_profesor": "Acceder como Profesor",
+  "profesor": "Profesor",
   "login_alumno": "Acceder como Alumno",
   "login_frase_profesor": "Ingresa con tu matrícula",
   "login_matricula": "Matricula",
@@ -1725,6 +1726,8 @@
   "parrafo_0832": "son documentos extensos y completos que ofrecen información detallada sobre temas específicos.",
   "parrafo_0833": "Marketing de gamificación:",
   "parrafo_0834": "es una estrategia que incorpora elementos de juego para motivar a los clientes.",
+
+  "lista_alumnos": "Lista de Alumnos",
 
   "_comment_60": "menu_examenes",
   "actualizar_fecha_examen_exito": " Fecha de examen actualizada con éxito.",

@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                    <a href="/assets/code_profesor/menu_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu alumnos shadow-sm">
                             <i class="bi bi-people-fill"></i>
                             <h5><?php echo $textos['alumnos_registrados']; ?></h5>

@@ -84,19 +84,20 @@
 
 <div class="modal fade" id="modalFecha" tabindex="-1" aria-labelledby="modalFechaLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form method="POST" action="../modelo/login_profesor/guardar_fecha_examen.php">
-      <div class="modal-content">
+    <form id="formFecha"> <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalFechaLabel"><?php echo $textos['asignar_fecha_examen']; ?> </h5>
+          <h5 class="modal-title" id="modalFechaLabel"><?php echo $textos['asignar_fecha_examen']; ?></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" name="id_examen" id="modal_id_examen">
           <label for="fecha_disponible" class="form-label"><?php echo $textos['seleccionar_fecha_hora']; ?></label>
-          <input type="datetime-local" class="form-control" name="fecha_disponible" id="fecha_disponible" required>
+          <input type="datetime-local" class="form-control" name="fecha_disponible" id="fecha_disponible">
+          <div id="fechaError" class="text-danger mt-2 small"></div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success"><?php echo $textos['guardar']; ?></button>
+          <button type="button" onclick="solicitarPassword('guardar')" class="btn btn-success"><?php echo $textos['guardar']; ?></button>
+          <button type="button" onclick="solicitarPassword('reiniciar')" class="btn btn-danger">Reiniciar Fecha</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo $textos['cancelar']; ?></button>
         </div>
       </div>
@@ -104,17 +105,100 @@
   </div>
 </div>
 
+<div class="modal fade" id="modalPassword" tabindex="-1" aria-labelledby="modalPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="formPassword">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalPasswordLabel">Confirmar Acción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Para completar esta acción, por favor ingresa tu contraseña.</p>
+          <input type="hidden" name="id_examen" id="password_id_examen">
+          <input type="hidden" name="fecha_disponible" id="password_fecha_disponible">
+          <input type="hidden" name="accion" id="password_accion">
+          <div class="mb-3">
+            <label for="profesor_password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" name="password" id="profesor_password" required>
+          </div>
+          <div id="passwordError" class="text-danger mt-2"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 <script>
-  function prepararModal(id) {
-    document.getElementById('modal_id_examen').value = id;
+    // Función para llenar el modal de fecha
+    function prepararModal(id) {
+        document.getElementById('modal_id_examen').value = id;
+        const input = document.getElementById('fecha_disponible');
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        const localISOTime = now.toISOString().slice(0, 16);
+        input.min = localISOTime;
+        input.value = localISOTime;
+        document.getElementById('fechaError').textContent = '';
+    }
 
-    const input = document.getElementById('fecha_disponible');
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    const localISOTime = now.toISOString().slice(0, 16);
-    input.min = localISOTime;
-    input.value = localISOTime;
-  }
+    // Función para abrir el modal de contraseña
+    function solicitarPassword(accion) {
+        if (accion === 'reiniciar') {
+            if (!confirm('¿Estás seguro de que deseas reiniciar la fecha? Esta acción eliminará la fecha asignada.')) {
+                return; // El usuario canceló la confirmación
+            }
+        }
+
+        const modalFecha = bootstrap.Modal.getInstance(document.getElementById('modalFecha'));
+        const modalPassword = new bootstrap.Modal(document.getElementById('modalPassword'));
+
+        const idExamen = document.getElementById('modal_id_examen').value;
+        const fecha = document.getElementById('fecha_disponible').value;
+
+        if (accion === 'guardar' && !fecha) {
+            document.getElementById('fechaError').textContent = 'Para guardar, debes seleccionar una fecha.';
+            return;
+        }
+
+        document.getElementById('password_id_examen').value = idExamen;
+        document.getElementById('password_fecha_disponible').value = fecha;
+        document.getElementById('password_accion').value = accion;
+        document.getElementById('profesor_password').value = '';
+        document.getElementById('passwordError').textContent = '';
+
+        modalFecha.hide();
+        modalPassword.show();
+    }
+
+    document.getElementById('formPassword').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const errorDiv = document.getElementById('passwordError');
+
+        // ✅ Se envía al nuevo script unificado y seguro
+        fetch('../modelo/login_profesor/actualizar_fecha_seguro.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Éxito, recargamos la página
+            } else {
+                errorDiv.textContent = data.message || 'Ocurrió un error.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorDiv.textContent = 'Error de conexión con el servidor.';
+        });
+    });
 </script>
 <?php
     include_once __DIR__ . '/../code_general/footer.php';

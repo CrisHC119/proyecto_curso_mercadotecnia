@@ -22,11 +22,6 @@
     body.light-mode .card-menu.alumnos {
         background-color: #0d6efd; 
         color: #ffffff;
-
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
     body.light-mode .card-menu.profesores {
         background-color: #20c997; 
@@ -79,7 +74,7 @@
     body.light-mode .card-menu i {
         color: #ffffff;
     }
-    body:not(.light-mode)  .card-menu.actividades, .card-menu.calificaciones, .card-menu.mensaje, .card-menu.alumnos, .card-menu.profesores {
+    body:not(.light-mode)  .card-menu.actividades, .card-menu.calificaciones, .card-menu.mensaje, .card-menu.profesores {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);
@@ -92,7 +87,7 @@
     body:not(.light-mode) .card-menu i {
         color: #6f42c1;
     }
-    body:not(.light-mode) .card-menu.examenes, .card-menu.registros, .card-menu.logout {
+    body:not(.light-mode) .card-menu.examenes, .card-menu.registros, .card-menu.logout, .card-menu.alumnos {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);

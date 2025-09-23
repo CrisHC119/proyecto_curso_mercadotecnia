@@ -1,34 +1,43 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const linkExamen = document.getElementById('link-examen-1');
-    if (!linkExamen) return;
+    
+    const modalEl = document.getElementById('avisoModal');
+    const modalTitle = document.getElementById('avisoModalLabel');
+    const modalBody = document.getElementById('avisoModalBody');
+    const avisoModal = new bootstrap.Modal(modalEl);
 
-    const fechaStr = linkExamen.getAttribute('data-fecha');
-    const fechaExamen = fechaStr ? new Date(fechaStr) : null;
+    const linksExamen = document.querySelectorAll('.link-examen');
 
-    linkExamen.addEventListener('click', function(event) {
-        const ahora = new Date();
+    linksExamen.forEach(link => {
+        link.addEventListener('click', function(event) {
+            
+            // ¡SIEMPRE prevenimos la navegación primero!
+            event.preventDefault(); 
+            
+            const fechaStr = link.getAttribute('data-fecha');
+            const urlDestino = link.getAttribute('data-url'); // Obtenemos la URL
+            const ahora = new Date();
+            
+            if (!fechaStr) {
+                modalTitle.textContent = 'Examen No Disponible';
+                modalBody.textContent = 'Este examen aún no tiene una fecha asignada. Por favor, contacta a tu profesor.';
+                avisoModal.show();
+                return;
+            }
 
-        if (!fechaExamen) {
-            event.preventDefault();
-            mostrarToast("El examen aún no está disponible.");
-            return;
-        }
+            const fechaExamen = new Date(fechaStr);
 
-        if (fechaExamen < ahora) {
-            event.preventDefault();
-            const opciones = { year: 'numeric', month: '2-digit', day: '2-digit', hour:'2-digit', minute:'2-digit' };
-            const fechaFormateada = fechaExamen.toLocaleString('es-MX', opciones);
-            mostrarToast(`El examen expiró el día: ${fechaFormateada}. Contacta con el profesor.`);
-            return;
-        }
+            if (isNaN(fechaExamen.getTime()) || fechaExamen < ahora) {
+                const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+                const fechaFormateada = fechaExamen.toLocaleDateString('es-MX', opciones);
+
+                modalTitle.textContent = 'Acceso Denegado';
+                modalBody.textContent = `La fecha límite para este examen ya pasó (${fechaFormateada}). No puedes acceder.`;
+                avisoModal.show();
+                return;
+            }
+            
+            // ✅ Si todas las validaciones pasan, navegamos manualmente con JavaScript
+            window.location.href = urlDestino;
+        });
     });
-
-    function mostrarToast(mensaje) {
-        const toastEl = document.getElementById('toastAviso');
-        const toastMensaje = document.getElementById('toastMensaje');
-        toastMensaje.textContent = mensaje;
-
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
-    }
 });
