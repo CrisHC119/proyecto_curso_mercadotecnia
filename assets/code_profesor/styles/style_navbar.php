@@ -1,8 +1,8 @@
 <style>
     body {
         padding-top: 70px;
-        background: linear-gradient(135deg, #1a1a1d, #3c3c3c);
-        color: #f1f1f1;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: #212529;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .navbar {
@@ -64,18 +64,18 @@
     }
     #mainContent {
         flex: 1 1 400px;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.85);
         border-radius: 16px;
         padding: 2rem;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         max-width: 900px;
     }
     #temasCurso {
         flex: 1 1 400px;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.85);
         border-radius: 16px;
         padding: 2rem;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         max-width: 500px;
     }
     #temasCurso h2 {
@@ -84,10 +84,10 @@
         text-align: center;
     }
     .tarjeta-curso {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: #ffffff;
         border-radius: 16px;
         padding: 1.5rem;
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
         color: inherit;
         font-size: 0.95rem;
     }
@@ -104,7 +104,7 @@
         font-size: 16px;
         margin-bottom: 10px;
         border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.07);
+        background-color: #f1f1f1;
         transition: background-color 0.3s ease, border-left 0.3s ease;
         cursor: pointer;
     }
@@ -117,7 +117,7 @@
         font-weight: bold;
         background-color: rgba(0, 123, 255, 0.2);
         border-left: 4px solid #007bff;
-        color: #fff;
+        color: #000;
     }
     iframe {
         border-radius: 12px;
@@ -128,24 +128,45 @@
         max-width: 100%;
     }
     .light-mode {
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
-        color: #212529 !important;
+        background: linear-gradient(135deg, #1a1a1d, #3c3c3c) !important;
+        color: #f1f1f1 !important;
     }
     .light-mode #mainContent {
-        background-color: rgba(255, 255, 255, 0.85) !important;
-        color: #212529 !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: #f1f1f1 !important;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    .light-mode #temasCurso {
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    .light-mode .tarjeta-curso {
+        background-color: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    }
+    .light-mode .lista-temas li {
+        background-color: rgba(255, 255, 255, 0.07);
+    }
+    .light-mode .lista-temas li.activo {
+        color: #fff;
     }
     body.light-mode {
-        background-color: #f8f9fa;
-        color: #212529;
+        background-color: #1a1a1d;
+        color: #f1f1f1;
     }
     .mode-toggle {
         background: none;
         border: none;
-        color: #fff;
+        color: #212529;
         font-size: 1.3rem;
     }
     .mode-toggle:hover {
+        color: #0056b3;
+    }
+    .light-mode .mode-toggle {
+        color: #fff;
+    }
+    .light-mode .mode-toggle:hover {
         color: #ffc107;
     }
     .btn-pdf {
@@ -163,16 +184,16 @@
     .tema-lista-custom .titulo-tema {
         font-weight: 700;
         font-size: 1.0rem;
-        color: #0d6efd; /* azul bootstrap */
-        background-color: rgba(255, 255, 255, 0.05);
+        color: #0d6efd;
+        background-color: #e9ecef;
         border: none;
         padding: 10px 15px;
         border-radius: 10px;
         margin-bottom: 10px;
     }
     .tema-lista-custom .list-group-item {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: #ddd;
+        background-color: #fff;
+        color: #212529;
         border: none;
         transition: background-color 0.3s ease, color 0.3s ease;
         cursor: pointer;
@@ -181,7 +202,7 @@
     .tema-lista-custom .list-group-item.ps-5 {
         padding-left: 3rem !important;
         font-style: italic;
-        color: #bbb;
+        color: #495057;
     }
     .tema-lista-custom .list-group-item:hover,
     .tema-lista-custom .list-group-item:focus {
@@ -191,15 +212,15 @@
         outline: none;
     }
     body.light-mode .tema-lista-custom .titulo-tema {
-        background-color: #e9ecef;
+        background-color: rgba(255, 255, 255, 0.05);
         color: #0d6efd;
     }
     body.light-mode .tema-lista-custom .list-group-item {
-        background-color: #fff;
-        color: #212529;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ddd;
     }
     body.light-mode .tema-lista-custom .list-group-item.ps-5 {
-        color: #495057;
+        color: #bbb;
         font-style: italic;
     }
     body.light-mode .tema-lista-custom .list-group-item:hover,
@@ -283,4 +304,9 @@
             height: 40px;
         }
     }
-  </style>
+    body.light-mode .nav-tabs .nav-link.active {
+        background-color: #dee2e6;  
+        color: #212529;
+        border-color: #495057 #495057 #dee2e6; 
+    }
+</style>

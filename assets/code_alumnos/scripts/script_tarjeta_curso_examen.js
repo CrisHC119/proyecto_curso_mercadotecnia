@@ -10,11 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
     linksExamen.forEach(link => {
         link.addEventListener('click', function(event) {
             
-            // ¡SIEMPRE prevenimos la navegación primero!
             event.preventDefault(); 
             
             const fechaStr = link.getAttribute('data-fecha');
-            const urlDestino = link.getAttribute('data-url'); // Obtenemos la URL
+            const urlDestino = link.getAttribute('data-url');
             const ahora = new Date();
             
             if (!fechaStr) {

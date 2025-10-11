@@ -5,13 +5,13 @@ const body = document.body;
 function setMode(isDark) {
     if (isDark) {
         body.classList.remove('light-mode');
-        modeIcon.classList.remove('bi-sun');
-        modeIcon.classList.add('bi-moon');
+        modeIcon.classList.remove('bi-moon');
+        modeIcon.classList.add('bi-sun');
         localStorage.setItem('theme', 'dark');
     } else {
         body.classList.add('light-mode');
-        modeIcon.classList.remove('bi-moon');
-        modeIcon.classList.add('bi-sun');
+        modeIcon.classList.remove('bi-sun');
+        modeIcon.classList.add('bi-moon');
         localStorage.setItem('theme', 'light');
     }
 }

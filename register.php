@@ -2,7 +2,6 @@
     ob_start();
     include_once __DIR__ . '/assets/code_index/navbar.php';
     include_once __DIR__ . '/assets/code_general/verificar_session_encendido.php';
-    include_once __DIR__ . '/assets/code_general/verificar_institucion.php';
     include_once __DIR__ . '/assets/styles/style_transicion.php';
     include_once __DIR__ . '/assets/styles/style_register.php';
     include_once __DIR__ . '/assets/styles/style_botones.php';

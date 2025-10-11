@@ -68,13 +68,19 @@
                 <a class="nav-link <?php echo $page_1; ?>" href="/assets/code_profesor/index_profesor.php?lang=<?php echo $idioma; ?>"><?php echo $textos['home']; ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo $page_2; ?>" href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $idioma; ?>"><?php echo $textos['temas']; ?></a>
+                <a class="nav-link <?php echo $page_2; ?>" href="/assets/code_profesor/menu_calificacion_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['calificacion']; ?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?php echo $page_3; ?>" href="/assets/code_profesor/menu_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['alumnos']; ?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo $page_4; ?>" href="/assets/code_profesor/menu_examenes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['examenes']; ?></a>
+                <a class="nav-link <?php echo $page_4; ?>" href="/assets/code_profesor/menu_profesores.php?lang=<?php echo $idioma; ?>"><?php echo $textos['profesor']; ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $page_5; ?>" href="/assets/code_profesor/menu_examenes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['examenes']; ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $page_6; ?>" href="/assets/code_profesor/menu_ajustes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['ajustes']; ?></a>
             </li>
             <li class="nav-item dropdown ms-auto">
                 <a class="nav-link dropdown-toggle" title="Cambiar Idioma" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">

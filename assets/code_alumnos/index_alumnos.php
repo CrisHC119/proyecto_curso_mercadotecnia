@@ -3,6 +3,7 @@
     include_once __DIR__ . '/code_general/navbar.php';
     include_once __DIR__ . '/code_general/info_icon.php';
     include_once __DIR__ . '/styles/style_index.php';
+    include_once __DIR__ . '/../styles/style_video.php';
     if (!isset($_GET['lang'])) {
         $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
         header("Location: $url");
@@ -19,6 +20,16 @@
 <div class="contenedor-cursos">
     <div id="mainContent">
         <h1 class="text-center mb-4 titulo"><?php echo $textos['titulo']; ?></h1>
+        <div class="video-container text-center mb-4">
+            <video 
+                src="/assets/videos/video_introductorio.mp4" 
+                controls 
+                muted 
+                loop
+                preload="metadata">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+        </div>
         <p class="justificado">
             <?php echo $textos['parrafo_0001']; ?>
         </p>

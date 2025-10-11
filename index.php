@@ -9,6 +9,7 @@
     include_once __DIR__ . '/assets/code_general/horas_establecidas.php';
     include_once __DIR__ . '/assets/code_index/navbar.php';
     include_once __DIR__ . '/assets/code_index/info_icon.php';
+    include_once __DIR__ . '/assets/styles/style_video.php'; 
     include_once __DIR__ . '/assets/styles/style_transicion.php'; 
     include_once __DIR__ . '/assets/styles/styles_responsivo_NL/style_responsivo_index.php';
     if (!isset($_GET['lang'])) {
@@ -23,6 +24,16 @@
         <div class="contenedor-cursos">
         <div id="mainContent">
             <h1 class="text-center mb-4 titulo"><?php echo $textos['titulo']; ?></h1>
+            <div class="video-container text-center mb-4">
+                <video 
+                    src="/assets/videos/video_introductorio.mp4" 
+                    controls 
+                    muted 
+                    loop
+                    preload="metadata">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
             <p class="justificado">
             <?php echo $textos['parrafo_0001']; ?>
             </p>

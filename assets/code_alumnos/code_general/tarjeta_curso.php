@@ -48,7 +48,7 @@
         </a>        
         <?php
             $urlDestino = $examenRealizado_U1 
-                ? '/assets/code_alumnos/temas_unidad/tema_1/T_1.E.php?lang=' . $_SESSION['idioma']
+                ? '/assets/code_alumnos/temas_unidad/tema_1/T_1_confirmar_examen.php?lang=' . $_SESSION['idioma']
                 : '/assets/code_alumnos/temas_unidad/tema_1/T_1_confirmar_examen.php?lang=' . $_SESSION['idioma'];
         ?>
         <a href="#" data-url="<?php echo $urlDestino; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center link-examen"
@@ -314,12 +314,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="avisoModalLabel">Acceso al Examen</h5>
+                <h5 class="modal-title" id="avisoModalLabel"><?php echo $textos['acceso_al_examen']; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body" id="avisoModalBody"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?php echo $textos['entendido']; ?></button>
             </div>
         </div>
     </div>

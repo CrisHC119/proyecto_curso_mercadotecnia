@@ -1,186 +1,182 @@
 <style>
     #mainContent {
         max-width: 1400px;
-        margin: 30px auto 20px auto;
-        background-color: rgba(255,255,255,0.05);
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        margin: 40px auto;
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     }
+
     .accordion {
-        background-color: #222;
-        color: #eee;
-        border-radius: 8px;
+        background-color: transparent;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
         max-width: 1500px;
-        margin: 0 auto; 
-        box-shadow: 0 0 10px rgba(0,0,0,0.7);
+        margin: 0 auto;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .accordion-button {
-        background-color: #333;
-        color: #eee;
-        cursor: pointer;
-        padding: 0.75rem 1rem;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 1.1rem;
-        font-weight: bold;
-        border-bottom: 1px solid #444;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: background-color 0.3s ease;
-    }
-    .accordion-button:hover {
-        background-color: #444;
-    }
-    .accordion-button::after {
-        content: '\25bc';
-        font-size: 0.8rem;
-        transition: transform 0.3s ease;
-    }
-    .accordion-button.active::after {
-        transform: rotate(180deg);
-    }
-    .accordion-content {
-        background-color: #1a1a1a;
-        max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease;
-        padding-left: 1rem;
     }
-    .accordion-content.show {
-        max-height: 2000px;
-        padding: 0.5rem 1rem 1rem 1rem;
-    }
+
+    .accordion-button,
     .sub-accordion-button {
-        background-color: #2a2a2a;
-        color: #ccc;
+        background-color: #ffffff;
+        color: #111827;
         cursor: pointer;
-        padding: 0.5rem 1rem;
+        padding: 1rem 1.25rem;
         width: 100%;
         border: none;
         text-align: left;
         outline: none;
         font-size: 1rem;
         font-weight: 600;
-        border-bottom: 1px solid #555;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-left: 1rem;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.2s ease-in-out;
     }
+
+    .accordion-button {
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .accordion > div:last-of-type > .accordion-button {
+        border-bottom: none;
+    }
+
+    .accordion-button:hover,
     .sub-accordion-button:hover {
-        background-color: #3a3a3a;
+        background-color: #f9fafb;
     }
+
+    .accordion-button:focus-visible,
+    .sub-accordion-button:focus-visible {
+        box-shadow: inset 0 0 0 2px #d1d5db;
+    }
+
+    .accordion-button::after,
     .sub-accordion-button::after {
-        content: '\25bc';
-        font-size: 0.7rem;
-        transition: transform 0.3s ease;
+        content: '\002B';
+        font-size: 1.4rem;
+        font-weight: 300;
+        color: #6b7280;
+        transition: transform 0.3s ease-in-out;
     }
+
+    .accordion-button.active::after,
     .sub-accordion-button.active::after {
-        transform: rotate(180deg);
+        transform: rotate(45deg);
     }
+
+    .accordion-content,
     .sub-accordion-content {
-        background-color: #121212;
+        background-color: #f9fafb;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.4s ease;
-        padding-left: 1rem;
-        margin-left: 2rem;
-        border-left: 2px solid #444;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
     }
+
+    .accordion-content.show,
     .sub-accordion-content.show {
-        max-height: 1500px;
-        padding: 0.5rem 1rem 1rem 1rem;
+        max-height: 2000px;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
-    .subtema-text {
+
+    .sub-accordion-button {
+        padding-left: 2.5rem;
         font-size: 0.95rem;
-        color: #ddd;
-        margin-bottom: 0.7rem;
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
     }
+
+    .sub-accordion-content {
+        background-color: #f9fafb;
+        padding-left: 3.5rem;
+        border-left: none;
+    }
+
+    .subtema-text {
+        font-size: 0.9rem;
+        color: #4b5563;
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+    }
+
     @media (max-width: 768px) {
         #mainContent {
-            padding: 0.8rem;
-            max-width: 100%;
+            padding: 0.5rem;
             margin: 15px 8px;
-        }
-        .accordion {
-            max-width: 100%;
-            margin: 0 4px;
+            border-radius: 8px;
         }
         .accordion-button,
         .sub-accordion-button {
-            font-size: 0.65rem; /* más pequeño */
-            padding: 0.45rem 0.6rem;
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
         }
-        .accordion-button::after,
-        .sub-accordion-button::after {
-            font-size: 0.55rem;
+        .sub-accordion-button {
+            padding-left: 2rem;
         }
-        .nivel-3 {
-            font-size: 0.6rem;
+        .sub-accordion-content {
+            padding-left: 2.5rem;
         }
         .subtema-text {
-            font-size: 0.6rem;
-            margin-bottom: 0.5rem;
-        }
-        h1.text-center {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-        .btn.btn-success {
-            font-size: 0.8rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-        }
-        .text-muted.small {
-            font-size: 0.55rem !important;
+            font-size: 0.85rem;
         }
     }
+
     body.light-mode #mainContent {
-        background-color: #ffffff;
-        color: #000;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        background-color: #111827;
+        color: #f9fafb;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     }
+
     body.light-mode .accordion {
-        background-color: #f1f1f1;
-        color: #000;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        border-color: #374151;
     }
-    body.light-mode .accordion-button {
-        background-color: #e4e4e4;
-        color: #000;
-        border-bottom: 1px solid #ccc;
-    }
-    body.light-mode .accordion-button:hover {
-        background-color: #dcdcdc;
-    }
-    body.light-mode .accordion-content {
-        background-color: #fafafa;
-    }
+
+    body.light-mode .accordion-button,
     body.light-mode .sub-accordion-button {
-        background-color: #eaeaea;
-        color: #000;
-        border-bottom: 1px solid #ccc;
+        background-color: #1f2937;
+        color: #f3f4f6;
     }
+
+    body.light-mode .accordion-button {
+        border-bottom-color: #374151;
+    }
+
+    body.light-mode .accordion-button:hover,
     body.light-mode .sub-accordion-button:hover {
-        background-color: #dedede;
+        background-color: #374151;
     }
+
+    body.light-mode .accordion-button:focus-visible,
+    body.light-mode .sub-accordion-button:focus-visible {
+        box-shadow: inset 0 0 0 2px #4b5563;
+    }
+
+    body.light-mode .accordion-button::after,
+    body.light-mode .sub-accordion-button::after {
+        color: #9ca3af;
+    }
+
+    body.light-mode .accordion-content,
     body.light-mode .sub-accordion-content {
-        background-color: #f5f5f5;
-        border-left: 2px solid #ccc;
+        background-color: #111827;
     }
+
+    body.light-mode .sub-accordion-button {
+        background-color: #1f2937;
+        border-top: 1px solid #374151;
+        border-bottom: 1px solid #374151;
+    }
+
     body.light-mode .subtema-text {
-        color: #333;
-    }
-    .accordion-button.nivel-2,
-    .accordion-button.nivel-3 {
-        text-align: left;
-        padding-right: 1rem;
+        color: #d1d5db;
     }
     .accordion-button,
     .accordion-button:hover,
@@ -192,7 +188,21 @@
     .sub-accordion-button:active {
         background-color: #fff !important;
         color: #000 !important;
-        box-shadow: none !important; /* quita el brillo azul */
-        outline: none !important;    /* quita el borde de enfoque */
+        box-shadow: none !important; 
+        outline: none !important;    
+    }
+    body.light-mode .accordion-button,
+    body.light-mode .accordion-button:hover,
+    body.light-mode .accordion-button:focus,
+    body.light-mode .accordion-button:active {
+        background-color: #333 !important;
+        color: #eee !important;
+    }
+    body.light-mode .sub-accordion-button,
+    body.light-mode .sub-accordion-button:hover,
+    body.light-mode .sub-accordion-button:focus,
+    body.light-mode .sub-accordion-button:active {
+        background-color: #2a2a2a !important;
+        color: #ccc !important;
     }
 </style>

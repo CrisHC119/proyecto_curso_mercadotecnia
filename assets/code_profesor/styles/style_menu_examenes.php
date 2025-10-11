@@ -3,7 +3,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background-color: #f2f2f2; /* claro por defecto */
+        background-color: #f2f2f2; 
         border-radius: 0.75rem;
         color: #333;
         padding: 1.5rem;
@@ -17,7 +17,7 @@
     .card-menu i {
         font-size: 2rem;
         margin-bottom: 0.5rem;
-        color: #0d6efd; /* azul */
+        color: #0d6efd; 
     }
     .card-menu h5 {
         font-size: 1.1rem;
@@ -47,28 +47,48 @@
         font-size: 1rem;
         font-weight: 500;
     }
-    body:not(.light-mode) .card-menu {
+    .btn-outline-light {
+        border-color: #dee2e6;
+        color: #212529; 
+    }
+    .modal-content {
+        background-color: #fff;
+        color: #212529;
+    }
+    .form-control {
+        background-color: #fff;
+        color: #212529;
+        border-color: #ced4da;
+    }
+    .form-control::placeholder {
+        color: #6c757d;
+    }
+    .modal-header,
+    .modal-footer {
+        border-color: #dee2e6;
+    }
+    body.light-mode .card-menu {
         background-color: #2c2c2c;
         color: #fff;
     }
-    body:not(.light-mode) .btn-outline-light {
+    body.light-mode .btn-outline-light {
         border-color: #aaa;
         color: #eee;
     }
-    body:not(.light-mode) .modal-content {
+    body.light-mode .modal-content {
         background-color: #2b2b2b;
         color: #fff;
     }
-    body:not(.light-mode) .form-control {
+    body.light-mode .form-control {
         background-color: #3c3c3c;
         color: #fff;
         border-color: #666;
     }
-    body:not(.light-mode) .form-control::placeholder {
+    body.light-mode .form-control::placeholder {
         color: #aaa;
     }
-    body:not(.light-mode) .modal-header,
-    body:not(.light-mode) .modal-footer {
+    body.light-mode .modal-header,
+    body.light-mode .modal-footer {
         border-color: #444;
     }
     .btn-outline-primary:hover .icon-calificaciones {

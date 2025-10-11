@@ -20,4 +20,16 @@
         font-size: 0.85rem;
         white-space: nowrap;
     }
+    body.light-mode .modal-content {
+        background-color: #2c2f33;
+        color: #f8f9fa;            
+        border: 1px solid #495057;
+    }
+    body.light-mode .modal-header,
+    body.light-mode .modal-footer {
+        border-color: #495057; 
+    }
+    body.light-mode .modal-header .btn-close {
+        filter: invert(1) grayscale(100) brightness(200%);
+    }
 </style>

@@ -1,34 +1,10 @@
 <?php
-include_once __DIR__ . '/code_general/navbar.php';
-include_once __DIR__ . '/../modelo/conexion.php';
-$instituto_data = json_decode(file_get_contents(__DIR__ . '/../json/institutos.json'), true);
-$sql = "
-SELECT 
-    U.id_usuario, U.nombres, U.apellido_paterno, U.apellido_materno, U.avatar, U.id_tipo_usuario,
-    A.nocontrol AS matricula, A.semestre, A.horas_U1, A.horas_U2, A.horas_U3, A.horas_U4, A.horas_U5,
-    U.campus, 'Estudiante' AS rol
-FROM usuarios U
-INNER JOIN alumnos A ON U.id_usuario = A.id_usuario
-";
-$result = $conn->query($sql);
+    $page_3 = 'active';
+    include_once __DIR__ . '/code_general/navbar.php';
+    include_once __DIR__ . '/../modelo/login_profesor/verificar_alumnos.php';
+    include_once __DIR__ . '/styles/style_menu_alumnos.php';
+    $instituto_data = json_decode(file_get_contents(__DIR__ . '/../json/institutos.json'), true);
 ?>
-<style>
-    /* Estilos (sin cambios) */
-    :root { --bs-body-bg: #1c1c1e; --bs-body-color: #ffffff; }
-    .card { background-color: #2c2c2e; border-color: rgba(255, 255, 255, 0.15); }
-    .list-group-item { background-color: transparent; border-color: rgba(255, 255, 255, 0.15); }
-    .card-footer { background-color: transparent; }
-    .form-control, .input-group-text { background-color: #2c2c2e; border-color: rgba(255, 255, 255, 0.2); color: #fff; }
-    .form-control::placeholder { color: #8e8e93; }
-    .btn-outline-primary { --bs-btn-color: #0d6efd; --bs-btn-border-color: #0d6efd; --bs-btn-hover-bg: #0d6efd; --bs-btn-hover-border-color: #0d6efd; }
-    .btn-outline-danger { --bs-btn-color: #dc3545; --bs-btn-border-color: #dc3545; --bs-btn-hover-bg: #dc3545; --bs-btn-hover-border-color: #dc3545; }
-    .avatar-card { width: 100px; height: 100px; object-fit: cover; }
-    body.light-mode { --bs-body-bg: #f8f9fa; --bs-body-color: #212529; }
-    body.light-mode .card, body.light-mode .list-group-item { background-color: #ffffff; border-color: #dee2e6; }
-    body.light-mode .form-control, body.light-mode .input-group-text { background-color: #fff; border-color: #ced4da; color: #212529; }
-    body.light-mode .form-control::placeholder { color: #6c757d; }
-</style>
-
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-fill">
         <div class="container mt-4 mb-5">
@@ -44,12 +20,12 @@ $result = $conn->query($sql);
             <div class="row row-cols-1 row-cols-lg-2 g-4">
                 <?php while ($alumno = $result->fetch_assoc()): ?>
                     <?php
-                    $clave = $alumno['campus'];
-                    $nombre_instituto = $instituto_data[$clave] ?? $textos['no_instituto'];
-                    $totalMinutos = array_sum(array_map('intval', [$alumno['horas_U1'], $alumno['horas_U2'], $alumno['horas_U3'], $alumno['horas_U4'], $alumno['horas_U5']]));
-                    $horas = floor($totalMinutos / 60);
-                    $minutos = $totalMinutos % 60;
-                    $totalHorasTexto = sprintf('%d:%02d Horas', $horas, $minutos);
+                        $clave = $alumno['campus'];
+                        $nombre_instituto = $instituto_data[$clave] ?? $textos['no_instituto'];
+                        $totalMinutos = array_sum(array_map('intval', [$alumno['horas_U1'], $alumno['horas_U2'], $alumno['horas_U3'], $alumno['horas_U4'], $alumno['horas_U5']]));
+                        $horas = floor($totalMinutos / 60);
+                        $minutos = $totalMinutos % 60;
+                        $totalHorasTexto = sprintf('%d:%02d Horas', $horas, $minutos);
                     ?>
                     <div class="col">
                         <div class="card shadow-sm h-100 alumno-card">
@@ -80,20 +56,32 @@ $result = $conn->query($sql);
                                 </li>
                             </ul>
                             <div class="card-footer text-end border-0 pt-3">
-                                <a href="/assets/code/profesor/lost_page_profesor.php?id=<?php echo $alumno['id_usuario']; ?>" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-person-vcard"></i> <?php echo $textos['ver_detalles']; ?>
-                                </a>
-                                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarExpulsionModal" data-id="<?php echo $alumno['id_usuario']; ?>">
-                                    <i class="bi bi-person-x-fill"></i> <?php echo $textos['expulsar_alumno']; ?>
-                                </button>
-                            </div>
+                            <button type="button" class="btn btn-outline-primary btn-sm" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#detallesAlumnoModal"
+                                data-avatar="<?php echo htmlspecialchars($alumno['avatar']); ?>"
+                                data-nombre="<?php echo htmlspecialchars($alumno['nombres']); ?>"
+                                data-apaterno="<?php echo htmlspecialchars($alumno['apellido_paterno']); ?>"
+                                data-amaterno="<?php echo htmlspecialchars($alumno['apellido_materno']); ?>"
+                                data-instituto="<?php echo htmlspecialchars($nombre_instituto); ?>"
+                                data-semestre="<?php echo htmlspecialchars($alumno['semestre'] ?: 'N/A'); ?>"
+                                data-total-horas="<?php echo htmlspecialchars($totalHorasTexto); ?>"
+                                data-u1="<?php echo htmlspecialchars($alumno['calf_1'] ?? 'N/A'); ?>"
+                                data-u2="<?php echo htmlspecialchars($alumno['calf_2'] ?? 'N/A'); ?>"
+                                data-u3="<?php echo htmlspecialchars($alumno['calf_3'] ?? 'N/A'); ?>"
+                                data-u4="<?php echo htmlspecialchars($alumno['calf_4'] ?? 'N/A'); ?>"
+                                data-u5="<?php echo htmlspecialchars($alumno['calf_5'] ?? 'N/A'); ?>">
+                                <i class="bi bi-person-vcard"></i> <?php echo $textos['ver_detalles']; ?>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmarExpulsionModal" data-id="<?php echo $alumno['id_usuario']; ?>">
+                                <i class="bi bi-person-x-fill"></i> <?php echo $textos['expulsar_alumno']; ?>
+                            </button>
                         </div>
                     </div>
-                <?php endwhile; ?>
-            </div>
+                </div>
+            <?php endwhile; ?>
         </div>
-    </main>
-
+    </div>
     <div class="modal fade" id="confirmarExpulsionModal" tabindex="-1" aria-labelledby="expulsionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -125,13 +113,69 @@ $result = $conn->query($sql);
             </div>
         </div>
     </div>
+    <div class="modal fade" id="detallesAlumnoModal" tabindex="-1" aria-labelledby="detallesAlumnoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detallesAlumnoModalLabel"><i class="bi bi-person-vcard me-2"></i><?php echo $textos['detalles_estudiante']; ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center mb-4 mb-md-0">
+                            <img id="modalAvatar" src="" class="img-fluid rounded-circle" alt="Avatar del Alumno" style="width: 150px; height: 150px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-8">
+                            <h3 id="modalNombreCompleto" class="mb-1"></h3>
+                            <p class="mb-2"><strong class="me-2"><?php echo $textos['instituto']; ?>:</strong><span id="modalInstituto"></span></p>
+                            <p class="mb-2"><strong class="me-2"><?php echo $textos['semestre']; ?></strong><span id="modalSemestre"></span></p>
+                            <p class="mb-0"><strong class="me-2"><?php echo $textos['total_de_horas']; ?>:</strong><span id="modalTotalHoras" class="badge bg-primary fs-6"></span></p>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <h5 class="mb-3"><?php echo $textos['calificacion_unidad']; ?></h5>
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="fw-bold"><?php echo $textos['unidad_1']; ?></div>
+                            <div class="progress mt-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 25px;">
+                                <div id="modalProgressU1" class="progress-bar fw-bold" style="width: 0%">0</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold"><?php echo $textos['unidad_2']; ?></div>
+                            <div class="progress mt-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 25px;">
+                                <div id="modalProgressU2" class="progress-bar fw-bold" style="width: 0%">0</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold"><?php echo $textos['unidad_3']; ?></div>
+                            <div class="progress mt-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 25px;">
+                                <div id="modalProgressU3" class="progress-bar fw-bold" style="width: 0%">0</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold"><?php echo $textos['unidad_4']; ?></div>
+                            <div class="progress mt-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 25px;">
+                                <div id="modalProgressU4" class="progress-bar fw-bold" style="width: 0%">0</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="fw-bold"><?php echo $textos['unidad_5']; ?></div>
+                            <div class="progress mt-2" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 25px;">
+                                <div id="modalProgressU5" class="progress-bar fw-bold" style="width: 0%">0</div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+</div></main>
 
-    <?php include_once __DIR__ . '/../code_general/footer.php'; ?>
-    
+<?php include_once __DIR__ . '/../code_general/footer.php'; ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
-            // --- Script del buscador ---
             const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
             const buscador = document.getElementById('buscador');
             if (buscador) {
@@ -143,8 +187,6 @@ $result = $conn->query($sql);
                     });
                 });
             }
-
-            // --- Script para el Modal de Expulsión ---
             const expulsionModalEl = document.getElementById('confirmarExpulsionModal');
             if (expulsionModalEl) {
                 expulsionModalEl.addEventListener('show.bs.modal', function (event) {
@@ -156,8 +198,6 @@ $result = $conn->query($sql);
                     expulsionModalEl.querySelector('#expulsionError').textContent = '';
                 });
             }
-
-            // --- Listener para el envío del formulario de expulsión ---
             const formExpulsar = document.getElementById('formExpulsar');
             if (formExpulsar) {
                 formExpulsar.addEventListener('submit', function(event) {
@@ -173,7 +213,6 @@ $result = $conn->query($sql);
                     }
 
                     const formData = new FormData(event.target);
-                    // Usar la ruta correcta a tu modelo
                     fetch('/assets/modelo/login_profesor/expulsar_alumno.php', {
                         method: 'POST',
                         body: formData
@@ -198,6 +237,46 @@ $result = $conn->query($sql);
                 });
             }
         });
+        // Pega esto dentro de tu script, después del código del buscador
+const detallesModalEl = document.getElementById('detallesAlumnoModal');
+if (detallesModalEl) {
+    // --- Función para obtener el color de la calificación ---
+    const getGradeColorClass = (grade) => {
+        if (grade < 70) return 'bg-danger';   // Reprobado
+        if (grade < 90) return 'bg-warning';  // Regular
+        return 'bg-success';                  // Excelente
+    };
+
+    detallesModalEl.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const modal = this;
+
+        // --- Actualizar Información General (sin cambios) ---
+        const avatar = button.dataset.avatar;
+        const nombreCompleto = `${button.dataset.nombre} ${button.dataset.apaterno} ${button.dataset.amaterno}`;
+        modal.querySelector('#modalAvatar').src = `/assets/images/avatar/${avatar}`;
+        modal.querySelector('#modalNombreCompleto').textContent = nombreCompleto;
+        modal.querySelector('#modalInstituto').textContent = button.dataset.instituto;
+        modal.querySelector('#modalSemestre').textContent = button.dataset.semestre;
+        modal.querySelector('#modalTotalHoras').textContent = button.dataset.totalHoras;
+
+        // --- Actualizar Barras de Progreso de Calificaciones ---
+        for (let i = 1; i <= 5; i++) {
+            const grade = parseInt(button.dataset['u' + i]) || 0;
+            const progressBar = modal.querySelector('#modalProgressU' + i);
+            
+            // Actualizar texto y ancho de la barra
+            progressBar.textContent = grade;
+            progressBar.style.width = grade + '%';
+            progressBar.setAttribute('aria-valuenow', grade);
+
+            // Actualizar color de la barra
+            progressBar.classList.remove('bg-danger', 'bg-warning', 'bg-success');
+            progressBar.classList.add(getGradeColorClass(grade));
+        }
+    });
+}
+
     </script>
 </body>
 </html>

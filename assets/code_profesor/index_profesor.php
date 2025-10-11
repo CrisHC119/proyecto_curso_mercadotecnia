@@ -20,14 +20,6 @@
             <h4 class="mb-4"><?php echo $textos['panel_navegacion']; ?></h4>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
-                        <div class="card card-menu mensaje shadow-sm">
-                            <i class="bi bi-chat-dots-fill"></i>
-                            <h5><?php echo $textos['mensajes']; ?></h5>
-                        </div>
-                    </a>
-                </div>
-                <div class="col">
                     <a href="/assets/code_profesor/menu_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu alumnos shadow-sm">
                             <i class="bi bi-people-fill"></i>
@@ -36,7 +28,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                    <a href="/assets/code_profesor/menu_profesores.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu profesores shadow-sm">
                             <i class="bi bi-person-badge-fill"></i>
                             <h5><?php echo $textos['profesores_registrados']; ?></h5>
@@ -52,6 +44,14 @@
                     </a>
                 </div>
                 <div class="col">
+                    <a href="/assets/code_profesor/menu_ajustes.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                        <div class="card card-menu mensaje shadow-sm">
+                            <i class="bi bi-gear-fill"></i>
+                            <h5><?php echo $textos['ajustes']; ?></h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
                     <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu actividades shadow-sm">
                             <i class="bi bi-list-task"></i>
@@ -60,7 +60,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                    <a href="/assets/code_profesor/menu_calificacion_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu calificaciones shadow-sm">
                             <i class="bi bi-card-checklist"></i>
                             <h5><?php echo $textos['calificaciones']; ?></h5>

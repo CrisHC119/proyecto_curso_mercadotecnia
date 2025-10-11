@@ -19,42 +19,27 @@
         font-size: 1.2rem;
         font-weight: bold;
     }
-    body.light-mode .card-menu.alumnos {
+    .card-menu.alumnos {
         background-color: #0d6efd; 
         color: #ffffff;
     }
-    body.light-mode .card-menu.profesores {
+    .card-menu.profesores {
         background-color: #20c997; 
         color: #ffffff;
-        
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
-    body.light-mode .card-menu.mensaje {
-        background-color: #015901ff; 
+    .card-menu.mensaje {
+        background-color: #373737ff; 
         color: #ffffff;
-        
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
-    body.light-mode .card-menu.calificaciones {
+    .card-menu.calificaciones {
         background-color: #ffc107; 
         color: #ffffffff;
-        
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
-    body.light-mode .card-menu.examenes {
+    .card-menu.examenes {
         background-color: #fd7e14; 
         color: #ffffff;
     }
-    body.light-mode .card-menu.actividades {
+    .card-menu.actividades {
         background-color: #5d0075ff; 
         color: #ffffff;
                 
@@ -63,18 +48,18 @@
         cursor: not-allowed;
         transform: none; 
     }
-    body.light-mode .card-menu.logout {
+    .card-menu.logout {
         background-color: #920000ff; 
         color: #ffffff;
     }
-    body.light-mode .card-menu.registros {
+    .card-menu.registros {
         background-color: #3311bcff; 
         color: #ffffff;
     }
-    body.light-mode .card-menu i {
+    .card-menu i {
         color: #ffffff;
     }
-    body:not(.light-mode)  .card-menu.actividades, .card-menu.calificaciones, .card-menu.mensaje, .card-menu.profesores {
+    body.light-mode .card-menu.actividades {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);
@@ -84,12 +69,18 @@
         cursor: not-allowed;
         transform: none; 
     }
-    body:not(.light-mode) .card-menu i {
+    body.light-mode .card-menu i {
         color: #6f42c1;
     }
-    body:not(.light-mode) .card-menu.examenes, .card-menu.registros, .card-menu.logout, .card-menu.alumnos {
+    body.light-mode .card-menu.examenes, 
+    body.light-mode .card-menu.registros, 
+    body.light-mode .card-menu.logout, 
+    body.light-mode .card-menu.alumnos, 
+    body.light-mode .card-menu.profesores, 
+    body.light-mode .card-menu.calificaciones, 
+    body.light-mode .card-menu.mensaje {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);
-    }          
+    }
 </style>

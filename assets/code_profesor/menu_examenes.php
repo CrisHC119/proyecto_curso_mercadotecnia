@@ -1,4 +1,5 @@
 <?php
+    $page_5 = 'active';
     include_once __DIR__ . '/code_general/navbar.php';
     include_once __DIR__ . '/styles/style_menu_examenes.php';
     include_once __DIR__ . '/scripts/script_mostrar_fecha.php';
@@ -56,11 +57,11 @@
         <p>📅 <?php echo $textos['disponible']; ?> <?php echo mostrarFecha($fecha); ?></p>
         <p>🧑‍🎓 <?php echo $textos['completado_por']; ?> <strong><?php echo $realizados[$i]; ?> <?php echo $textos['de']; ?> <?php echo $totalAlumnos; ?></strong></p>
         <div class="btn-group btn-group-sm mt-3" role="group">
-            <a href="alumnos_calificacion_examenes.php?unidad=<?php echo $i; ?>" 
+            <a href="calificacion_alumnos.php?unidad=<?php echo $i; ?>" 
                 class="btn btn-outline-primary <?php echo $disabled ? 'disabled' : ''; ?>">
                 <i class="bi bi-people-fill me-1 icon-calificaciones"></i>  <?php echo $textos['ver_calificaciones']; ?> 
             </a>
-            <a href="alumnos_calificacion_examenes.php?unidad=<?php echo $i; ?>" 
+            <a href="modificar_examen.php?unidad=<?php echo $i; ?>" 
                 class="btn btn-outline-primary <?php echo $disabled ? 'disabled' : ''; ?>">
                 <i class="bi bi-book me-1 icon-calificaciones"></i> <?php echo $textos['modificar_examen']; ?> 
             </a>

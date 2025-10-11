@@ -1,5 +1,5 @@
 <?php
-    include_once __DIR__ . '/../code_profesor/code_general/navbar.php';
+    include_once __DIR__ . '/../code_alumnos/code_general/navbar.php';
     include_once __DIR__ . '/../styles/style_lost_page.php';
 ?>
 </head>

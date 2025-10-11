@@ -1,8 +1,8 @@
 <style>
   body {
     padding-top: 70px;
-    background: linear-gradient(135deg, #1a1a1d, #3c3c3c);
-    color: #f1f1f1;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #212529;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   .navbar {
@@ -72,11 +72,12 @@
   }
   #mainContent {
     flex: 1 1 400px;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     max-width: 900px;
+    color: #212529;
   }
   #temasCurso {
     flex: 1 1 400px;
@@ -113,7 +114,7 @@
     font-weight: bold;
     background-color: rgba(0, 123, 255, 0.2); 
     border-left: 4px solid #007bff;
-    color: #fff;
+    color: #000;
   }
   iframe {
     border-radius: 12px;
@@ -124,25 +125,31 @@
     max-width: 100%;
   }
   .light-mode {
-      background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
-      color: #212529 !important;
+      background: linear-gradient(135deg, #1a1a1d, #3c3c3c) !important;
+      color: #f1f1f1 !important;
   }
   .light-mode #mainContent {
-      background-color: rgba(255, 255, 255, 0.85) !important;
-      color: #212529 !important;
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      color: #f1f1f1 !important;
   }
   body.light-mode {
-    background-color: #f8f9fa;
-    color: #212529;
+    background: linear-gradient(135deg, #1a1a1d, #3c3c3c);
+    color: #f1f1f1;
   }
   .mode-toggle {
       background: none;
       border: none;
-      color: #fff;
+      color: #212529; /* Color cambiado para que sea visible en modo claro */
       font-size: 1.3rem;
   }
   .mode-toggle:hover {
-      color: #ffc107;
+      color: #007bff;
+  }
+  .light-mode .mode-toggle {
+    color: #fff; /* Color para el modo oscuro */
+  }
+  .light-mode .mode-toggle:hover {
+    color: #ffc107;
   }
   .btn-pdf {
     margin-top: 1rem;
@@ -211,10 +218,10 @@
     margin-top: -10px;
       font-size: 0.8rem !important;
     }
-    .nav-tabs .nav-link {
-      font-size: 0.8rem !important;
-      padding: 6px 10px !important;
-    }
+.nav-tabs .nav-link {
+    font-size: 0.8rem !important;
+    padding: 1px 7px !important; 
+}
     .nav-tabs .dropdown-menu {
       font-size: 0.75rem !important;
     }
@@ -234,4 +241,5 @@
       padding: 5px 10px;
     }
   }
+  
 </style>

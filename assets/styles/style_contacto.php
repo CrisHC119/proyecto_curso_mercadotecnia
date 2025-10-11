@@ -14,10 +14,10 @@
     }
     #mainContent {
         flex: 1 1 400px;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: #ffffff;
         border-radius: 16px;
         padding: 2rem;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         max-width: 1000px;
     }
     #map {
@@ -29,30 +29,34 @@
         flex: 1;
     }
     .info-card {
-        background-color: rgba(255, 255, 255, 0.07);
-        color: #ffffff;
+        background-color: #ffffff;
+        color: #212529;
         width: 100%;
         flex: 1;
-        max-width: 1400px; /* o cualquier otro valor como 1000px o 80% */
+        max-width: 1400px;
         border-radius: 12px;
         transition: background-color 0.3s, color 0.3s;
         display: flex;
-        flex-direction: column; /* para que el contenido crezca verticalmente */
+        flex-direction: column;
         height: 100%;
     }
-    body.light-mode .info-card {
-        background-color: #ffffff;
-        color: #212529;
-    }
-    .face-card {
+    body.light-mode #mainContent {
+        background-color: rgba(255, 255, 255, 0.05);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
+    body.light-mode .info-card {
         background-color: rgba(255, 255, 255, 0.07);
         color: #ffffff;
+    }
+    .face-card {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        color: #212529;
         width: 100%;
         flex: 1;
         border-radius: 12px;
         transition: background-color 0.3s, color 0.3s;
-        align-self: flex-start; /* Para alinear arriba en pantallas grandes */
+        align-self: flex-start;
         width: 100% !important;
         max-width: 100% !important;
         align-self: stretch;
@@ -60,25 +64,26 @@
     .fb-wrapper {
         width: 100%;
         display: flex;
-        justify-content: center; /* centra horizontalmente */
+        justify-content: center;
     }
     .fb-page, 
     .fb-page > span, 
     .fb-page > span > iframe[style] {
         width: 100% !important;
-        min-width: 0 !important; /* para evitar anchos mínimos forzados */
+        min-width: 0 !important;
         max-width: 100% !important;
         display: block !important;
     }
     body.light-mode .face-card {
-        background-color: #ffffff;
-        color: #212529;
+        background-color: rgba(255, 255, 255, 0.07);
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
     .contenedor-principal {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: stretch; /* <- esto es clave para igualar alturas */
+        align-items: stretch;
         gap: 2rem;
         margin-top: 2rem;
         padding: 0 50px;
@@ -97,7 +102,7 @@
     }
     @media (max-width: 768px) {
         .mapa-info {
-            flex-direction: column-reverse; /* Mapa abajo, info y face arriba */
+            flex-direction: column-reverse;
             align-items: center;
         }
         .face-card {
