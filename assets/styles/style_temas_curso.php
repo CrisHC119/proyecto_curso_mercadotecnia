@@ -205,4 +205,37 @@
         background-color: #2a2a2a !important;
         color: #ccc !important;
     }
+    /* --- Style Horas --- */
+    .badge-horas {
+        display: inline-block;
+        padding: 0.3em 0.7em;
+        font-size: 0.75em;
+        font-weight: 700;
+        text-transform: uppercase; 
+        letter-spacing: 0.5px;
+        vertical-align: middle;
+        border-radius: 50rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .badge-horas {
+        background: linear-gradient(145deg, #ffffff, #e6e6e6);
+        color: #343a40;
+        border: 1px solid #dee2e6;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    body.light-mode .badge-horas {
+        background: linear-gradient(145deg, #495057, #343a40);
+        color: #f8f9fa;
+        border: 1px solid #5a6268;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    }
+    .badge-horas:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    body.light-mode .badge-horas:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
 </style>

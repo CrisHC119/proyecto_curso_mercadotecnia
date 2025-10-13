@@ -1,19 +1,21 @@
 <?php
     ob_start();
+    $mostrarModalExito = false;
+    if (isset($_GET['registro']) && $_GET['registro'] === 'exito') {
+        $mostrarModalExito = true;
+    }
     include_once __DIR__ . '/assets/code_index/navbar.php';
     include_once __DIR__ . '/assets/code_general/verificar_session_encendido.php';
     include_once __DIR__ . '/assets/styles/style_transicion.php';
     include_once __DIR__ . '/assets/styles/style_register.php';
     include_once __DIR__ . '/assets/styles/style_botones.php';
-    // Verifica las instituciones de instituto.json (igual no funciona aparte)
     $institutos = json_decode(file_get_contents(__DIR__ . '/assets/json/institutos.json'), true);
     $clave_campus = $_SESSION['campus'] ?? 'itcv';
     $nombre_campus = $institutos[$clave_campus] ?? 'Campus no encontrado';
     if (!isset($_GET['lang'])) {
-        $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
+        $url = $_SERVER['PHP_SELF'] . '?lang=' . ($idioma ?? 'es');
         header("Location: $url");
         exit;
-        //Redirecciona a la misma página con el idioma establecido (No se pudo guardar en otro archivo jaja)
     }
 ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -41,7 +43,14 @@
                         </div>
                         <div>
                             <label for="semestre"><?php echo $textos['semestre']; ?></label>
-                            <input type="text" id="semestre" name="semestre" class="form-control" required>
+                            <select id="semestre" name="semestre" class="form-select" required>
+                                <option value="" selected disabled><?php echo $textos['semestre_curso']; ?></option>
+                                <?php
+                                    for ($i = 1; $i <= 15; $i++) {
+                                        echo "<option value=\"$i\">$i</option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <div class="form-grid mt-4">
@@ -50,11 +59,19 @@
                             <input type="text" id="campus_autocompletado" class="form-control" placeholder="Escribe tu campus..." required>
                             <input type="hidden" name="campus" id="campus_clave">
                         </div>
-                    <div>
-                        <label for="no_control"><?php echo $textos['no_control']; ?>:</label>
-                        <input type="text" id="no_control" name="nocontrol" class="form-control" required>
+                        <div>
+                            <label for="no_control"><?php echo $textos['no_control']; ?>:</label>
+                            <input 
+                                type="text" 
+                                id="no_control" 
+                                name="nocontrol" 
+                                class="form-control" 
+                                maxlength="10"
+                                pattern="[A-Za-z0-9]{1,10}"
+                                title="Máximo 10 caracteres. Solo letras y números."
+                                required>
+                        </div>
                     </div>
-                </div>
                 <div class="form-grid mt-4">
                     <div>
                         <label for="pass"><?php echo $textos['pass']; ?></label>
@@ -70,6 +87,23 @@
             <button type="button" onclick="history.back()" class="btn btn-azul"><?php echo $textos['regresar']; ?></button>
         </div>
     </div>
+    <div class="modal fade" id="modalExito" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel"><?php echo $textos['registro_exitoso']; ?></h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    <p class="mt-3 fs-5"><?php echo $textos['registro_mensaje_1']; ?></p>
+                    <p><?php echo $textos['registro_mensaje_2']; ?></p>
+                    <div class="spinner-border text-success mt-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <?php
     include_once __DIR__ . '/assets/code_general/footer.php';
@@ -77,4 +111,7 @@
 <?php
     include_once __DIR__ . '/assets/code_general/toast_message.php';
     include_once __DIR__ . '/assets/scripts/script_register.php';
+?>
+<?php
+    ob_end_flush();
 ?>

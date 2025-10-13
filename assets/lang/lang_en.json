@@ -1751,6 +1751,11 @@
   "unidad_3": "Unit 3",
   "unidad_4": "Unit 4",
   "unidad_5": "Unit 5",
+  "aviso_video": "Your browser does not support the video tag.",
+  "semestre_curso": "-- Current Semester --",
+  "registro_exitoso": "Registration Successful!",
+  "registro_mensaje_1": "Your account has been created successfully.",
+  "registro_mensaje_2": "You'll be redirected to the login page in 5 seconds...",
 
   "_comment_23": "material.php",
   "download_tema_1": "📄 Download Topic 1 Material",

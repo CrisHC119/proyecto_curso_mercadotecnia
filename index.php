@@ -1,6 +1,6 @@
 <?php
+    //index.php
     ob_start();
-    // Selecciona la pestaña que se encuentra
     $page_1 = 'active';
     $page_2 = '';
     $page_3 = '';
@@ -31,7 +31,7 @@
                     muted 
                     loop
                     preload="metadata">
-                    Tu navegador no soporta la etiqueta de video.
+                    <?php echo $textos['aviso_video']; ?>
                 </video>
             </div>
             <p class="justificado">

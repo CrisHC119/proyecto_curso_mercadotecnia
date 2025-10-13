@@ -1753,6 +1753,11 @@
   "unidad_3": "Unidad 3",
   "unidad_4": "Unidad 4",
   "unidad_5": "Unidad 5",
+  "aviso_video": "Tu navegador no soporta la etiqueta de video.",
+  "semestre_curso": "-- Semestre en Curso --",
+  "registro_exitoso": "¡Registro Exitoso!",
+  "registro_mensaje_1": "Tu cuenta ha sido creada correctamente.",
+  "registro_mensaje_2": "Serás redirigido al inicio de sesión en 5 segundos...",
 
   "_comment_23": "material.php",
   "download_tema_1": "📄 Descargar Material del Tema 1",
