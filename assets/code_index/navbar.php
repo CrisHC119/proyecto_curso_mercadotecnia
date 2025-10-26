@@ -55,15 +55,17 @@
         </nav>
     <div class="container-fluid mt-3">
         <ul class="nav nav-tabs px-3 fs-5 align-items-center">
-        <li class="nav-item">
-            <a class="nav-link <?php echo $page_1; ?>" title="<?php echo $textos['title_home']; ?>" aria-current="page" href="/index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['home']; ?></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php echo $page_2; ?>" title="<?php echo $textos['title_temas']; ?>" href="/temas_curso.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['temas']; ?></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php echo $page_3; ?>" title="<?php echo $textos['contacto']; ?>" href="/contacto.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['contacto']; ?></a>
-        </li>
+        <div class="nav-links-scrollable">
+            <li class="nav-item">
+                <a class="nav-link <?php echo $page_1; ?>" title="<?php echo $textos['title_home']; ?>" aria-current="page" href="/index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['home']; ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $page_2; ?>" title="<?php echo $textos['title_temas']; ?>" href="/temas_curso.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['temas']; ?></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo $page_3; ?>" title="<?php echo $textos['contacto']; ?>" href="/contacto.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $textos['contacto']; ?></a>
+            </li>
+        </div>
         <li class="nav-item dropdown ms-auto">
             <a class="nav-link dropdown-toggle" title="<?php echo $textos['title_idioma']; ?>" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
             <?= $idiomas[$idioma] ?? 'Idioma' ?>

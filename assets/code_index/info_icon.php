@@ -44,6 +44,6 @@
     }
     </style>
 
-    <button class="btn-info-flotante" onclick="window.location.href=\'itcv.php?lang=' . $_SESSION['lang'] . '\'">i</button>
+    <button class="btn-info-flotante" onclick="window.location.href=\'contacto.php?lang=' . $_SESSION['lang'] . '\'">i</button>
     ';
 ?>

@@ -3,15 +3,34 @@
 
     $institutos = json_decode(file_get_contents(__DIR__ . '/../../json/institutos.json'), true);
     $clave_campus = $_SESSION['campus'] ?? 'itcv';
+    if (!isset($_GET['lang'])) {
+        $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
+        header("Location: $url");
+        exit;
+    }
     $nombre_campus = $institutos[$clave_campus] ?? 'Campus no encontrado';
-
+    if (!isset($_SESSION['avatar_version'])) {
+        $_SESSION['avatar_version'] = time();
+    }
     include_once __DIR__ . '/../code_general/navbar.php';
     include_once __DIR__ . '/../styles/style_perfil.php';
+?>
+<?php
+// Muestra mensajes de éxito o error y luego los borra
+if (isset($_SESSION['success_ajustes'])) {
+    echo '<div class="alert alert-success text-center" role="alert">' . $_SESSION['success_ajustes'] . '</div>';
+    unset($_SESSION['success_ajustes']);
+}
+if (isset($_SESSION['error_ajustes'])) {
+    echo '<div class="alert alert-danger text-center" role="alert">' . $_SESSION['error_ajustes'] . '</div>';
+    unset($_SESSION['error_ajustes']);
+}
 ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <body class="bg-dark text-white">
     <div class="contenedor-central">
-        <img src="/assets/images/avatar/<?php echo htmlspecialchars($_SESSION['avatar']); ?>" alt="Avatar" class="img-circular">
+        <img src="/assets/images/avatar/<?php echo htmlspecialchars($_SESSION['avatar']); ?>?v=<?php echo $_SESSION['avatar_version']; ?>" 
+            alt="Avatar" class="img-circular">
         <button type="button" class="btn btn-avatar_perfil" data-bs-toggle="modal" data-bs-target="#modalAvatar"><?php echo $textos['cambiar_avatar']; ?></button>
         <div class="card card-perfil">
             <span class="badge-estudiante"><?php echo $textos['estudiante']; ?></span>
@@ -61,7 +80,7 @@
     </div>
     <div class="modal fade" id="modalAvatar" tabindex="-1" aria-labelledby="modalAvatarLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="/assets/code/modelo/cambiar_avatar.php" enctype="multipart/form-data">
+            <form method="POST" action="/assets/modelo/login_alumno/actualizar_avatar.php" enctype="multipart/form-data">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalAvatarLabel"><?php echo $textos['new_avatar']; ?></h5>
@@ -79,6 +98,22 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel"><?php echo $textos['registro_exitoso']; // O un texto como "¡Éxito!" ?></h5>
+                </div>
+                <div class="modal-body text-center p-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    <p class="mt-3 fs-5" id="modalExitoMensaje"></p> 
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
     </div>
 <?php

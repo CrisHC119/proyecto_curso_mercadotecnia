@@ -52,7 +52,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 2.5rem;
     margin-top: 2rem;
   }
   .contenedor-lateral {
@@ -63,7 +63,7 @@
     max-width: 530px;
   }
   .tarjeta-curso {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
@@ -132,6 +132,10 @@
       background-color: rgba(255, 255, 255, 0.05) !important;
       color: #f1f1f1 !important;
   }
+  .light-mode .tarjeta-curso {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      color: #f1f1f1 !important;
+  }
   body.light-mode {
     background: linear-gradient(135deg, #1a1a1d, #3c3c3c);
     color: #f1f1f1;
@@ -162,6 +166,9 @@
   }
   .btn-pdf:hover {
     background-color: #218838;
+  }
+  .nav-links-scrollable {
+    display: flex;
   }
   @media (max-width: 576px) {
     body {
@@ -215,13 +222,13 @@
       padding: 0 10px;
     }
     .nav-tabs {
-    margin-top: -10px;
+      margin-top: -10px;
       font-size: 0.8rem !important;
     }
-.nav-tabs .nav-link {
-    font-size: 0.8rem !important;
-    padding: 1px 7px !important; 
-}
+    .nav-tabs .nav-link {
+        font-size: 0.8rem !important;
+        padding: 1px 7px !important; 
+    }
     .nav-tabs .dropdown-menu {
       font-size: 0.75rem !important;
     }
@@ -240,6 +247,61 @@
       font-size: 0.75rem;
       padding: 5px 10px;
     }
+    .contenedor-cursos {
+        flex-direction: column;
+        display: flex;
+        padding: 0 8px;
+        gap: 1rem; /* antes: 2rem */
+        margin-top: 1rem; /* antes: 2rem o más */
+        margin-bottom: 1rem;
+    }
+    .justificado {
+        font-size: 0.75rem; /* antes: 0.8rem */
+        text-align: justify;
+        padding: 0 8px;
+    }
+    .tarjeta-curso {
+        font-size: 0.8rem; /* antes: 0.85rem */
+        margin-bottom: 0.8rem;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2em;
+    }
+    h1 {
+        font-size: 1rem; /* antes: 1.1rem */
+        text-align: center;
+    }
+    h2 {
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    .contenedor-lateral {
+        margin-top: 1rem; /* antes: 2rem o más */
+        margin-bottom: 1rem;
+        gap: 0.01rem 1.2rem; /* reducir separación entre tarjetas */
+    }
+    .btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    footer p,
+    footer small {
+        font-size: 0.75rem;
+    }
+    .nav-tabs {
+        flex-wrap: nowrap;
+    }
+    .nav-links-scrollable {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .nav-links-scrollable::-webkit-scrollbar {
+        display: none; 
+    }
   }
-  
 </style>

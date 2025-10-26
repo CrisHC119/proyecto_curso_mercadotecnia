@@ -188,4 +188,36 @@
         color: #000;
         border-color: #0d6efd;
     }
+    @media (max-width: 576px) {
+        .contenedor-central {
+            margin-top: 20px;
+            padding: 0 0.5rem;
+        }
+        .card-perfil {
+            padding: 1.3rem 1rem;
+        }
+        .img-circular {
+            width: 120px;
+            height: 120px;
+        }
+        .form-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        .card-perfil label {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .card-perfil .form-control,
+        .card-perfil .form-select {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.75rem; 
+        }
+        .btn-verde_fuerte,
+        .btn-azul {
+            font-size: 0.8rem;
+            padding: 10px 20px;
+            margin-top: 1rem;
+        }
+    }
 </style>

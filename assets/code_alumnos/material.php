@@ -22,7 +22,7 @@
         <div id="mainContent" class="mt-4">
             <h4 class="text-center mb-4"><?php echo $textos['tema_1']; ?></h4>
                 <div class="text-center">
-                <a href="/assets/pdf/Contenido_Unidades/Unidad 1.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_1 text-white d-inline-block px-4 py-2">
+                <a href="/assets/pdf/Contenido_Unidades/UNIDAD 1.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_1 text-white d-inline-block px-4 py-2">
                     <?php echo $textos['download_tema_1']; ?>
                 </a>
             </div>
@@ -30,7 +30,7 @@
         <div id="mainContent" class="mt-4">
             <h4 class="text-center mb-4"><?php echo $textos['tema_2']; ?></h4>
                 <div class="text-center">
-                <a href="/assets/pdf/Contenido_Unidades/Unidad 2.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_2 text-white d-inline-block px-4 py-2">
+                <a href="/assets/pdf/Contenido_Unidades/UNIDAD 2.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_2 text-white d-inline-block px-4 py-2">
                     <?php echo $textos['download_tema_2']; ?>
                 </a>
             </div>
@@ -39,7 +39,7 @@
             <h4 class="text-center mb-4"><?php echo $textos['tema_3']; ?></h4>
                 <div class="text-center">
                 <a href="assets/pdf/AE045 Mercadotecnia Electronica.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_3 text-white d-inline-block px-4 py-2">
-                    <?php echo $textos['download_tema_3']; ?>
+                    <?php echo $textos['download_tema_3']; ?> (Pendiente)
                 </a>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <h4 class="text-center mb-4"><?php echo $textos['tema_4']; ?></h4>
                 <div class="text-center">
                 <a href="assets/pdf/AE045 Mercadotecnia Electronica.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_4 text-white d-inline-block px-4 py-2">
-                    <?php echo $textos['download_tema_4']; ?>
+                    <?php echo $textos['download_tema_4']; ?> (Pendiente)
                 </a>
             </div>
         </div>
@@ -55,7 +55,7 @@
             <h4 class="text-center mb-4"><?php echo $textos['tema_5']; ?></h4>
                 <div class="text-center">
                 <a href="assets/pdf/AE045 Mercadotecnia Electronica.pdf" title="<?php echo $textos['title_descargar_temario']; ?>" download class="btn btn-tema_5 text-white d-inline-block px-4 py-2">
-                    <?php echo $textos['download_tema_5']; ?>
+                    <?php echo $textos['download_tema_5']; ?> (Pendiente)
                 </a>
             </div>
         </div>

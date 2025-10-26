@@ -107,28 +107,6 @@
         line-height: 1.6;
     }
 
-    @media (max-width: 768px) {
-        #mainContent {
-            padding: 0.5rem;
-            margin: 15px 8px;
-            border-radius: 8px;
-        }
-        .accordion-button,
-        .sub-accordion-button {
-            font-size: 0.9rem;
-            padding: 0.75rem 1rem;
-        }
-        .sub-accordion-button {
-            padding-left: 2rem;
-        }
-        .sub-accordion-content {
-            padding-left: 2.5rem;
-        }
-        .subtema-text {
-            font-size: 0.85rem;
-        }
-    }
-
     body.light-mode #mainContent {
         background-color: #111827;
         color: #f9fafb;
@@ -217,6 +195,7 @@
         border-radius: 50rem;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        white-space: nowrap; /* <-- AÑADE ESTA LÍNEA */
     }
     .badge-horas {
         background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -237,5 +216,35 @@
     }
     body.light-mode .badge-horas:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    @media (max-width: 768px) {
+        #mainContent {
+            padding: 0.5rem;
+            margin: 15px 8px;
+            border-radius: 8px;
+        }
+        .accordion-button,
+        .sub-accordion-button {
+            font-size: 0.65rem;
+            padding: 0.75rem 1rem;
+        }
+        .sub-accordion-button {
+            padding-left: 2rem;
+        }
+        .sub-accordion-content {
+            padding-left: 2.5rem;
+        }
+        .subtema-text {
+            font-size: 0.85rem;
+        }
+        .badge-horas {
+            font-size: 0.40rem;
+            padding: 0.25em 0.5em;
+        }
+        .btn-verde {
+            font-size: 0.6rem !important;
+            padding: 10px 20px !important;
+            margin-top: 1.5rem !important;
+        }
     }
 </style>

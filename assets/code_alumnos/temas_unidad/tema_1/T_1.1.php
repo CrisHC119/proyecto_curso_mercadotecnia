@@ -54,7 +54,7 @@
         <p class="justificado"><?php echo $textos['parrafo_0025']; ?></p>
     </div>
 <?php
-  include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+  include __DIR__ . '/../../code_general/tarjeta_curso.php';
 ?>
 </div>
 

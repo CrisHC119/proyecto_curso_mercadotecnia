@@ -51,7 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['avatar'] = !empty($row['avatar']) ? $row['avatar'] : 'avatar_default.jpg';
 
                 escribirLog("Inicio de sesión (Alumno): {$row['nombres']} {$row['apellido_paterno']} {$row['apellido_materno']} (Número de control: {$row['nocontrol']})");
-
+                $sql_insert = "INSERT INTO log_acceso_alumnos (id_usuario, fecha_entrada) VALUES (?, NOW())";
+                $stmt_log = $conn->prepare($sql_insert);
+                if ($stmt_log) {
+                    $stmt_log->bind_param("i", $_SESSION['id_usuario']); 
+                    $stmt_log->execute();
+                    
+                    $stmt_log->close();
+                }
                 echo json_encode(["success" => true, "tipo" => "alumno"]);
                 exit;
             } else {

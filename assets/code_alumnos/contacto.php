@@ -8,14 +8,6 @@
         exit;
     }
 ?>
-
-<?php
-    // Verificar inactividad
-    include_once '../modelo/login_alumno/logout_inactividad.php';
-?>
-<script src="/assets/scripts/logout_inactividad.js"></script>
-
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <body>
     <main class="flex-fill">

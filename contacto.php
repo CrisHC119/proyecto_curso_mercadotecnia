@@ -64,7 +64,7 @@
                 <p class="m-2">
                     <i class="bi bi-google me-1"></i>
                     <strong><?php echo $textos['web']; ?>:</strong>
-                    <a class="link-theme" href="https://www.facebook.com/TECNM.ITVICTORIA/?locale=es_LA" target="_blank" class="text-reset text-decoration-none">
+                    <a class="link-theme" href="https://www.itvictoria.edu.mx/" target="_blank" class="text-reset text-decoration-none">
                     <?php echo $textos['visita_web']; ?>
                     </a>
                 </p>

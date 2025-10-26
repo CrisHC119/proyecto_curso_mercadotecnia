@@ -143,4 +143,24 @@
     .btn-tema_0:hover::after {
         background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
     }
+    @media (max-width: 768px) {
+
+        .contenedor-cursos h2 {
+            font-size: 1.0rem;
+        }
+
+        .contenedor-cursos h4 {
+            font-size: 0.8rem;
+        }
+
+        .btn-tema_0,
+        .btn-tema_1,
+        .btn-tema_2,
+        .btn-tema_3,
+        .btn-tema_4,
+        .btn-tema_5 {
+            font-size: 0.5rem;
+            padding: 12px 24px;
+        }
+    }
 </style>

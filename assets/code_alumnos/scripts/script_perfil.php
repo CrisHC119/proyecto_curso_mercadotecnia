@@ -104,3 +104,35 @@
         document.querySelector('input[name="nuevo_avatar"]').value = '';
     }
 </script>
+
+<?php
+// ===== TRIGGER PARA EL MODAL DE ÉXITO =====
+
+// Comprueba si existe la variable de sesión que creamos
+if (isset($_SESSION['show_success_modal'])) {
+    
+    // Guarda el mensaje en una variable y la sanitiza para JS
+    $success_message = json_encode($_SESSION['show_success_modal']);
+    
+    // Borra la variable de sesión para que el modal no aparezca de nuevo si recargas
+    unset($_SESSION['show_success_modal']);
+    
+    // Imprime el script que activa el modal
+    echo "
+    <script>
+        // Espera a que la página cargue completamente
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Crea una instancia del modal de Bootstrap
+            var modalExito = new bootstrap.Modal(document.getElementById('modalExito'));
+            
+            // Pone el mensaje de éxito (que pasamos desde PHP) dentro del modal
+            document.getElementById('modalExitoMensaje').innerText = $success_message;
+            
+            // Muestra el modal
+            modalExito.show();
+        });
+    </script>
+    ";
+}
+?>

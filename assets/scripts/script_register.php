@@ -28,7 +28,6 @@
             }
         });
 
-        // SE HA ELIMINADO EL BLOQUE .on("change", ...) QUE CAUSABA EL CONFLICTO
 
         const claveActual = $("#campus_clave").val();
         if (claveActual && institutos[claveActual]) {

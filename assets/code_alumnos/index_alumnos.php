@@ -10,13 +10,6 @@
         exit;
     }
 ?>
-
-<?php
-    // Verificar inactividad
-    include_once '../modelo/login_alumno/logout_inactividad.php';
-?>
-<script src="/assets/scripts/logout_inactividad.js"></script>
-
 <div class="contenedor-cursos">
     <div id="mainContent">
         <h1 class="text-center mb-4 titulo"><?php echo $textos['titulo']; ?></h1>
@@ -46,8 +39,8 @@
             <?php echo $textos['parrafo_0005']; ?>
         </p>
         <div class="text-center mt-4">
-            <a href="../../../pdf/AE045 Mercadotecnia Electronica.pdf" download class="btn btn-verde btn-downtema d-inline-block px-4 py-2 mt-3">
-            <?php echo $textos['descargar_pdf_temas']; ?>
+            <a href="/assets/pdf/AE045 Mercadotecnia Electronica.pdf" download class="btn btn-verde btn-downtema d-inline-block px-4 py-2 mt-3">
+                <?php echo $textos['descargar_pdf_temas']; ?>
             </a>
         </div>
         <div class="text-center mt-4">
@@ -56,7 +49,7 @@
             </a>
         </div>
     </div>
-    <div class="contenedor-lateral">
+    <div class="contenedor-lateral d-none d-md-flex">
         <div class="tarjeta-curso">
             <h2 class="text-center"><?php echo $textos['pendiente']; ?></h2>
             <div class="border-top border-primary my-3" style="height: 3px; width: 80%; margin: 0 auto;"></div>

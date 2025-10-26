@@ -1,7 +1,3 @@
-        <?php
-            include_once __DIR__ . '/../styles/style_redes_footer.php';
-        ?>
-
         <footer class="bg-dark text-white pt-4 pb-3 mt-5">
             <div class="container text-center">
                 <p class="mb-2 fw-bold fs-5">TecNM Ciudad Victoria</p>
@@ -14,5 +10,8 @@
                 <small>&copy; 2025 TecNM Ciudad Victoria. <?php echo $textos['copyright']; ?>.</small>
             </div>
         </footer>
+        <?php
+            include_once __DIR__ . '/../styles/style_redes_footer.php';
+        ?>
     </body>
 </html>

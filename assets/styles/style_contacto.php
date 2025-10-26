@@ -101,14 +101,33 @@
         max-width: 600px;
     }
     @media (max-width: 768px) {
-        .mapa-info {
-            flex-direction: column-reverse;
+        .contenedor-principal {
+            flex-direction: column;
             align-items: center;
+            padding: 0 1rem;
+            gap: 1.5rem;
+        }
+        #mainContent {
+            padding: 1rem;
+            width: 100%;
+        }
+        .info-card {
+            padding: 1rem;
+            width: 100%;
+        }
+        .info-card p {
+            font-size: 0.7rem;
+            margin-bottom: 0.90rem !important;
         }
         .face-card {
-            max-width: 90%;
-            margin: 0 auto;
-            align-self: center;
+            max-width: 100%;
+            margin: 0;
+            align-self: stretch;
+        }
+        .mapa-info {
+            flex-direction: column-reverse; 
+            align-items: center;
+            width: 100%;
         }
         .fb-wrapper {
             width: 100%;
@@ -123,9 +142,12 @@
             min-width: 0 !important;
             display: block !important;
         }
-        .contenedor-principal {
-            flex-direction: column;
-            align-items: center;
+        #mainContent .titulo {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem !important;
+        }
+        .info-card h4 {
+            font-size: 0.9rem;
         }
     }
 </style>

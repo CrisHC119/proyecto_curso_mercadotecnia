@@ -11,7 +11,6 @@
     include_once __DIR__ . '/assets/code_index/info_icon.php';
     include_once __DIR__ . '/assets/styles/style_video.php'; 
     include_once __DIR__ . '/assets/styles/style_transicion.php'; 
-    include_once __DIR__ . '/assets/styles/styles_responsivo_NL/style_responsivo_index.php';
     if (!isset($_GET['lang'])) {
         $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
         header("Location: $url");

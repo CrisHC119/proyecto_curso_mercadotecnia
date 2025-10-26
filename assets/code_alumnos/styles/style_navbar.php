@@ -227,13 +227,21 @@
         text-decoration: none;
         outline: none;
     }
-    @media (max-width: 768px) {
-        #temasCurso {
-            display: none;
-        }
-        .contenedor-lateral {
-            display: none;
-        }
+    #modalInactividad .modal-content {
+        background-color: #2d3748;
+        color: #f5f5f5;
+        border: 1px solid #4a5568;
+    }
+
+    #modalInactividad .modal-header {
+        border-bottom: 1px solid #4a5568;
+        color: #ffffff; 
+    }
+
+    #modalInactividad .modal-footer {
+        border-top: 1px solid #4a5568;
+    }
+    #modalInactividad .modal-body {
     }
     @media (max-width: 576px) {
         body {
@@ -299,6 +307,172 @@
         .avatar{
             width: 40px;
             height: 40px;
+        }
+        #mainContent .titulo {
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem !important; 
+        }
+        .justificado {
+            font-size: 0.9rem;
+        }
+        .tarjeta-curso {
+            padding: 1rem 1.2rem;
+        }
+        .tarjeta-curso h2 {
+            font-size: 1.1rem;
+        }
+        .tema-lista-custom .titulo-tema {
+            font-size: 0.70rem;
+            padding: 8px 12px;
+        }
+        .tema-lista-custom .list-group-item {
+            font-size: 0.70rem;
+            padding-left: 1rem;
+        }
+        .tema-lista-custom .list-group-item.ps-5 {
+            padding-left: 2.2rem !important;
+            font-size: 0.60rem;
+        }
+        .btn-downtema,
+        .btn-tema {
+            font-size: 0.9rem;
+            padding: 12px 24px;
+        }
+        .navbar .dropdown img {
+            width: 40px !important;
+            height: 40px !important;
+        }
+        #mobile-hub-container .accordion-button {
+            font-size: 0.8rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        #mobile-hub-container #headingAvatar .accordion-button img {
+            width: 30px !important;
+            height: 30px !important;
+        }
+        #mobile-hub-container .accordion-body .tema-lista-custom .titulo-tema {
+            font-size: 0.65rem !important;
+            padding: 6px 10px;
+        }
+        #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item {
+            font-size: 0.65rem !important; 
+            padding-left: 0.8rem !important;
+        }
+        #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item.ps-5 {
+            padding-left: 1.8rem !important;
+            font-size: 0.6rem !important;
+        }
+        #mobile-hub-container {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-top: 0.5rem !important;
+        }
+        .nav-tabs {
+            flex-wrap: nowrap;
+        }
+
+        .nav-links-scrollable {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0; 
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .nav-links-scrollable::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .nav-links-scrollable {
+        display: flex;
+    }
+    .accordion-button img {
+        border: 2px solid #FFF;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .accordion-body .list-group-item {
+        background-color: transparent;
+        border: none;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+    }
+    .accordion-body .list-group-item:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+    body.light-mode .accordion-item {
+        border-color: rgba(255,255,255,0.15);
+    }
+    body.light-mode .accordion-button {
+        background-color: #212529;
+        color: #f1f1f1;
+    }
+    body.light-mode .accordion-button:not(.collapsed) {
+        background-color: #343a40;
+    }
+    body.light-mode .accordion-button::after {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+    body.light-mode .accordion-body {
+        background-color: #1a1a1d;
+    }
+    body.light-mode .accordion-body .list-group-item {
+        color: #f1f1f1;
+    }
+    body.light-mode .accordion-body .list-group-item:hover {
+        background-color: rgba(255,255,255,0.1);
+    }
+    body.light-mode .accordion-body .list-group-item.text-danger {
+        color: #ff5c5c !important;
+    }
+    body.light-mode #mobile-hub-container .accordion-body .tarjeta-curso h2 {
+        color: #f1f1f1 !important;
+    }
+
+    body.light-mode #mobile-hub-container .accordion-body .tema-lista-custom .titulo-tema {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        color: #79a6fc !important;
+        border: none !important;
+    }
+
+    body.light-mode #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        color: #e0e0e0 !important;
+        border: none !important;
+    }
+
+    body.light-mode #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item.ps-5 {
+        color: #b0b0b0 !important;
+    }
+
+    body.light-mode #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item:hover,
+    body.light-mode #mobile-hub-container .accordion-body .tema-lista-custom .list-group-item:focus {
+        background-color: #0d6efd !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        outline: none !important;
+    }
+    .navbar .dropdown a#avatarDropdown {
+        position: relative; 
+        display: inline-block; 
+    }
+    .notification-dot {
+        position: absolute; 
+        width: 0.99rem;     
+        height: 0.99rem;
+        padding: 0 !important; 
+        border-radius: 50%; 
+        top: -2px;
+        right: 5px;
+        z-index: 10; 
+    }
+    @media (max-width: 576px) {
+        .notification-dot {
+            width: 0.99rem; 
+            height: 0.99rem;
+            top: -2px;
+            right: 5px;
         }
     }
 </style>
