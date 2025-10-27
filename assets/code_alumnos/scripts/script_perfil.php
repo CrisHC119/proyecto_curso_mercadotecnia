@@ -104,35 +104,58 @@
         document.querySelector('input[name="nuevo_avatar"]').value = '';
     }
 </script>
-
 <?php
-// ===== TRIGGER PARA EL MODAL DE ÉXITO =====
-
-// Comprueba si existe la variable de sesión que creamos
-if (isset($_SESSION['show_success_modal'])) {
-    
-    // Guarda el mensaje en una variable y la sanitiza para JS
-    $success_message = json_encode($_SESSION['show_success_modal']);
-    
-    // Borra la variable de sesión para que el modal no aparezca de nuevo si recargas
-    unset($_SESSION['show_success_modal']);
-    
-    // Imprime el script que activa el modal
-    echo "
-    <script>
-        // Espera a que la página cargue completamente
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // Crea una instancia del modal de Bootstrap
-            var modalExito = new bootstrap.Modal(document.getElementById('modalExito'));
-            
-            // Pone el mensaje de éxito (que pasamos desde PHP) dentro del modal
-            document.getElementById('modalExitoMensaje').innerText = $success_message;
-            
-            // Muestra el modal
-            modalExito.show();
-        });
-    </script>
-    ";
-}
+    if (isset($_SESSION['show_success_modal'])) {
+        
+        $success_message = json_encode($_SESSION['show_success_modal']);
+        
+        unset($_SESSION['show_success_modal']);
+        
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                var modalExito = new bootstrap.Modal(document.getElementById('modalExito'));
+                
+                document.getElementById('modalExitoMensaje').innerText = $success_message;
+                
+                modalExito.show();
+            });
+        </script>
+        ";
+    }
+?>
+<?php
+    if (isset($_SESSION['show_logout_modal'])) {
+        
+        $logout_message = json_encode($_SESSION['show_logout_modal']);
+        
+        unset($_SESSION['show_logout_modal']);
+        
+        echo "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                var modalLogout = new bootstrap.Modal(document.getElementById('modalLogout'));
+                
+                document.getElementById('modalLogoutMensaje').innerText = $logout_message;
+                
+                modalLogout.show();
+                
+                var countdownElement = document.getElementById('countdown');
+                var seconds = 10;
+                
+                var countdownInterval = setInterval(function() {
+                    seconds--;
+                    countdownElement.innerText = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        window.location.href = window.location.origin + '/assets/modelo/logout.php';
+                    }
+                }, 1000); // 1000 ms = 1 segundo
+            });
+        </script>
+        ";
+    }
 ?>

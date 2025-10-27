@@ -1,7 +1,7 @@
 <?php
     ob_start();
     include_once __DIR__ . '/../../code_general/verificar_session_apagado.php';
-    include_once __DIR__ . '/verificar_idioma.php';
+    include __DIR__ . '/verificar_idioma.php';
     include_once __DIR__ . '/../../modelo/conexion.php';
     include_once __DIR__ . '/../../code_general/horas_establecidas.php';
     include_once __DIR__ . '/../../code_general/bootstrap_5.php';

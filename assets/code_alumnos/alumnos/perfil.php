@@ -116,6 +116,24 @@ if (isset($_SESSION['error_ajustes'])) {
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalLogout" tabindex="-1" aria-labelledby="modalLogoutLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">                 
+                <div class="modal-header">                     
+                    <h5 class="modal-title" id="modalLogoutLabel"><?php echo $textos['aviso']; ?></h5> 
+                </div>
+                <div class="modal-body text-center p-4">
+                    <i class="bi bi-shield-lock-fill text-success" style="font-size: 4rem;"></i>
+                    <p class="mt-3 fs-5" id="modalLogoutMensaje"></p>
+                    <p class="mt-2">                         
+                        <?php echo $textos['seras_redirigido_logout']; ?>
+                        <strong id="countdown" class="fs-5">10</strong>
+                        <?php echo $textos['segundos']; ?>
+                    </p>                 
+                </div>                             
+            </div>         
+        </div>     
+    </div>
 <?php
     include_once __DIR__ . '/../../code_general/footer.php';
     include_once __DIR__ . '/../scripts/script_perfil.php';

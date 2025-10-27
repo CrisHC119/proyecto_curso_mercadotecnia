@@ -8,6 +8,7 @@
     }
     $anterior = '../../index_alumnos.php'; 
     $siguiente = 'T_1.2.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 
 <div class="contenedor-cursos">

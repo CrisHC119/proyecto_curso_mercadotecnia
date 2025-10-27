@@ -42,11 +42,6 @@
     .card-menu.actividades {
         background-color: #5d0075ff; 
         color: #ffffff;
-                
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
     }
     .card-menu.logout {
         background-color: #920000ff; 
@@ -59,16 +54,6 @@
     .card-menu i {
         color: #ffffff;
     }
-    body.light-mode .card-menu.actividades {
-        background-color: #2c2c2e;
-        color: #ffffff;
-        border: 1px solid rgba(255,255,255,0.1);
-                
-        opacity: 0.5;
-        pointer-events: none;
-        cursor: not-allowed;
-        transform: none; 
-    }
     body.light-mode .card-menu i {
         color: #6f42c1;
     }
@@ -78,7 +63,8 @@
     body.light-mode .card-menu.alumnos, 
     body.light-mode .card-menu.profesores, 
     body.light-mode .card-menu.calificaciones, 
-    body.light-mode .card-menu.mensaje {
+    body.light-mode .card-menu.mensaje,
+    body.light-mode .card-menu.actividades {
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);

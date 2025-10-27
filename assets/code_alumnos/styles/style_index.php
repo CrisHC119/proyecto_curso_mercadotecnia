@@ -79,4 +79,21 @@
     .btn-tema:hover::after {
         background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
     }
+    @media (max-width: 767px) {
+        #mainContent h2 {
+            font-size: 1.1rem;
+        }
+        #mainContent h1 {
+            font-size: 1.1rem;
+        }
+        #mainContent h3 {
+            font-size: 1.1rem;
+        }
+        #mainContent h4 {
+            font-size: 1.1rem;
+        }
+        .justificado {
+            font-size: 0.6rem;
+        }
+    }
 </style>

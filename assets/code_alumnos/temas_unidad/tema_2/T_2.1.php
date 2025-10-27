@@ -6,8 +6,8 @@
         header("Location: $url");
         exit;
     }
-    $anterior = 'T_1.Glosario.php'; 
     $siguiente = 'T_2.2.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 
 <div class="contenedor-cursos">
@@ -93,7 +93,7 @@
         <p class="justificado"><?php echo $textos['parrafo_0214']; ?></p>
     </div>
 <?php
-  include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+  include __DIR__ . '/../../code_general/tarjeta_curso.php';
 ?>
 </div>
 

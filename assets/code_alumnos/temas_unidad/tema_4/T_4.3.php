@@ -6,8 +6,9 @@
         header("Location: $url");
         exit;
     }
-    $anterior = 'T_1.2.4.php'; 
-    $siguiente = 'T_3.1.php'; 
+    $anterior = 'T_4.2.4.php'; 
+    $siguiente = 'T_4.4.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 <div class="contenedor-cursos">
     <div id="mainContent">
@@ -45,7 +46,7 @@
         </ul>
     </div>
     <?php
-        include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+        include __DIR__ . '/../../code_general/tarjeta_curso.php';
     ?>
 </div>
 <?php

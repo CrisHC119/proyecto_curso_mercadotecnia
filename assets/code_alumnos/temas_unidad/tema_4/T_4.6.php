@@ -6,8 +6,9 @@
         header("Location: $url");
         exit;
     }
-    $anterior = 'T_1.6.php'; 
-    $siguiente = 'T_1.G.php'; 
+    $anterior = 'T_4.5.2.php'; 
+    $siguiente = 'T_4.Glosario.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 <div class="contenedor-cursos">
     <div id="mainContent">
@@ -26,12 +27,7 @@
                     </a>
                 </p>
                 <p class="justificado"><?php echo $textos['parrafo_0631']; ?><br>
-                    <a href="<?php echo $textos['parrafo_0631_hyp']; ?>" target="_blank" style="color: #007bff; text-decoration: underline;">
-                        <?php echo $textos['parrafo_0631_hyp']; ?>
-                    </a>
-                    <a href="<?php echo $textos['parrafo_0631_hyp2']; ?>" target="_blank" style="color: #007bff; text-decoration: underline;">
-                        <?php echo $textos['parrafo_0631_hyp2']; ?>
-                    </a>
+
                 </p>
                 <p class="justificado"><?php echo $textos['parrafo_0632']; ?><br>
                     <a href="<?php echo $textos['parrafo_0632_hyp']; ?>" target="_blank" style="color: #007bff; text-decoration: underline;">
@@ -81,7 +77,7 @@
         </div>
     </div>
     <?php
-        include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+        include __DIR__ . '/../../code_general/tarjeta_curso.php';
     ?>
 </div>
 <?php

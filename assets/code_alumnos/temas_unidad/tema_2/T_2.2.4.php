@@ -7,7 +7,8 @@
         exit;
     }
     $anterior = 'T_2.2.3.php'; 
-    $siguiente = 'T_3.1.php'; 
+    $siguiente = 'T_2.3.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 
 <div class="contenedor-cursos">
@@ -424,7 +425,7 @@
         </div>
     </div>
 <?php
-  include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+  include __DIR__ . '/../../code_general/tarjeta_curso.php';
 ?>
 </div>
 

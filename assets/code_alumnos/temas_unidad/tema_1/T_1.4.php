@@ -8,6 +8,7 @@
     }
     $anterior = 'T_1.3.php'; 
     $siguiente = 'T_1.5.php'; 
+    include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 <div class="contenedor-cursos">
     <div id="mainContent">
@@ -145,7 +146,7 @@
         </div>
     </div>
     <?php
-        include_once __DIR__ . '/../../code_general/tarjeta_curso.php';
+        include __DIR__ . '/../../code_general/tarjeta_curso.php';
     ?>
 </div>
 <?php

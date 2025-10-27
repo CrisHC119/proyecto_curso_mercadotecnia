@@ -52,7 +52,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="/assets/code_404/lost_page_profesor.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
+                    <a href="/assets/code_profesor/menu_actividades.php?lang=<?php echo $_SESSION['idioma'];?>" class="text-decoration-none">
                         <div class="card card-menu actividades shadow-sm">
                             <i class="bi bi-list-task"></i>
                             <h5><?php echo $textos['actividades']; ?></h5>
