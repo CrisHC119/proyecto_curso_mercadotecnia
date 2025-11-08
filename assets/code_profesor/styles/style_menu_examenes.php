@@ -94,13 +94,54 @@
     .btn-outline-primary:hover .icon-calificaciones {
         color: #fff; 
     }
-    @media (max-width: 768px) {
-        .card-menu {
-            padding: 1rem;
+    @media (max-width: 576px) {
+        h1.h2 {
+            font-size: 0.95rem;
+            text-align: center; 
+            margin-bottom: 1rem;
         }
-            .btn-group-sm .btn {
+        .card-menu {
+            padding: 0.8rem; 
+        }
+        .card-menu h5 {
+            font-size: 0.9rem; 
+        }
+        .card-menu p {
+            font-size: 0.70rem;
+            margin-bottom: 0.4rem; 
+        }
+        .card-menu .btn-group {
+            flex-direction: column; 
+            width: 100%;
+            gap: 0.5rem;
+        }
+        .card-menu .btn-group .btn {
+            width: 100%;
+            border-radius: var(--bs-border-radius-sm) !important; 
+            font-size: 0.8rem; 
+            padding: 0.3rem 0.5rem;
+        }
+        .container .text-center .btn-secondary {
+            width: 100%;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.5rem;
+        }
+        .card-menu > .d-flex i {
+            font-size: 0.9rem;
+            margin-bottom: 0; 
+        }
+        .modal-title {
+            font-size: 0.8rem;
+        }
+        #modalFecha .modal-body .form-label {
             font-size: 0.75rem;
-            margin-right: 0.25rem;
+        }
+        #modalFecha .modal-body .form-control,
+        #modalFecha .modal-body .btn-outline-secondary {
+            font-size: 0.75rem;
+        }
+        #modalFecha .modal-footer .btn-danger {
+            font-size: 0.8rem;
         }
     }
 </style>

@@ -37,7 +37,7 @@
                         <h3 class="card-title mb-2 text-center"><?php echo $textos['login']; ?></h3>
                         <p class="text-muted mensaje_1 mb-4 text-center"><?php echo $textos['login_frase']; ?></p>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nocontrol" name="nocontrol" placeholder="Número de Control" maxlength="8" required>
+                            <input type="text" class="form-control" id="nocontrol" name="nocontrol" placeholder="Número de Control" maxlength="15" required>
                             <label for="nocontrol"><?php echo $textos['no_control']; ?></label>
                         </div>
                         <div class="form-floating mb-3 position-relative">
@@ -66,7 +66,7 @@
                             <h3 class="card-title mb-2 text-center"><?php echo $textos['login_profesor']; ?></h3>
                             <p class="text-muted mensaje_1 mb-4 text-center"><?php echo $textos['login_frase_profesor']; ?></p>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="matriculaProfesor" name="matricula" placeholder="Matrícula" maxlength="10" required>
+                                <input type="text" class="form-control" id="matriculaProfesor" name="matricula" placeholder="Matrícula" maxlength="40" required>
                                 <label for="nocontrolProfesor"><?php echo $textos['login_matricula']; ?></label>
                             </div>
                             <div class="form-floating mb-3 position-relative">

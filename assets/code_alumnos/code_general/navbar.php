@@ -20,7 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body class="d-flex flex-column min-vh-100">
-        <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
+        <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/assets/code_alumnos/index_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>">
                 <i class="bi bi-mortarboard-fill me-2"></i>ITCV - <?php echo $textos['titulo']; ?>  
@@ -121,10 +121,6 @@
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <li class="nav-item ms-2">
-                    <button id="toggleMode" class="btn btn-outline-secondary" title="Cambiar modo">
-                        <i id="modeIcon" class="bi bi-moon"></i>
-                    </button>
                 </li>
             </ul>
         </div>

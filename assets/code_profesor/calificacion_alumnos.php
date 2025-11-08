@@ -7,8 +7,9 @@
     
     $campoCalf = "calf_" . $unidad;
     $campoExamen = "examen_U" . $unidad;
-
-    // Lógica para repetir examen
+    $campoInicioExamen = "inicio_examen_U" . $unidad;
+    
+    // --- Lógica de Repetir Examen ---
     if (isset($_GET['repetir_id'])) {
         $repetir_id = intval($_GET['repetir_id']);
         $nombreAlumno = '';
@@ -23,7 +24,7 @@
         $stmtNom->close();
 
         // Se reinicia el examen y la calificación a NULL
-        $stmt = $conn->prepare("UPDATE alumnos_calificacion SET $campoExamen = 0, $campoCalf = NULL WHERE id_usuario = ?");
+        $stmt = $conn->prepare("UPDATE alumnos_calificacion SET $campoExamen = 0, $campoCalf = NULL, $campoInicioExamen = NULL WHERE id_usuario = ?");
         $stmt->bind_param("i", $repetir_id);
         $stmt->execute();
         $stmt->close();
@@ -32,9 +33,14 @@
         exit;
     }
 
+    // --- Incluir Navbar (Esto abre <html>, <head> y <body>) ---
     include_once __DIR__ . '/code_general/navbar.php';
 
-    // Consulta principal de alumnos
+    // --- Incluir Estilos de esta página ---
+    // (Lo movimos aquí, fuera del <head> duplicado)
+    include_once __DIR__ . '/styles/style_calificacion_alumnos.php';
+
+    // --- Consulta principal de alumnos ---
     $sql = "SELECT 
                 A.id_usuario, A.nocontrol, U.nombres, U.apellido_paterno, U.apellido_materno, U.avatar,
                 AC.$campoCalf AS calificacion, AC.$campoExamen AS examen_realizado
@@ -47,27 +53,21 @@
     
     $alumnoToast = isset($_GET['alumno']) ? htmlspecialchars(urldecode($_GET['alumno'])) : '';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calificaciones - Unidad <?= $unidad ?></title>
-    <?php
-        include_once __DIR__ . '/styles/style_calificacion_alumnos.php';
-    ?>
-</head>
-<body class="d-flex flex-column min-vh-100">
 
 <main class="flex-fill">
     <div class="container py-4">
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-none d-md-flex justify-content-between align-items-center mb-4">
             <h1 class="h2 mb-0">📘 Calificaciones - Unidad <?= $unidad ?></h1>
             <a href="menu_examenes.php" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i> Regresar al Menú
             </a>
         </div>
+
+        <div class="d-md-none d-flex justify-content-between align-items-center mb-4">
+             <h1 class="h2 mb-0">📘 Unidad <?= $unidad ?></h1>
+        </div>
+
         
         <div class="card shadow-sm rounded-4">
             <div class="card-body">
@@ -130,6 +130,11 @@
                 </div>
             </div>
         </div>
+
+        <a href="menu_examenes.php" class="btn btn-outline-secondary d-md-none mt-4 w-100 py-2">
+            <i class="bi bi-arrow-left"></i> Regresar al Menú
+        </a>
+
     </div>
 </main>
 
@@ -146,6 +151,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // Lógica del Toast
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('mensaje') === 'ok') {
         const alumno = decodeURIComponent(urlParams.get('alumno') || '');
@@ -157,6 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.show();
     }
 
+    // Lógica del Buscador
     const buscador = document.getElementById('buscador');
     buscador.addEventListener('input', function() {
         const filtro = this.value.toLowerCase();
@@ -167,5 +174,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-</body>
-</html>

@@ -20,8 +20,8 @@
             <h1 class="text-center mb-4 titulo"><?php echo $textos['tecnm']; ?></h1>
             <?php
                 $direccion = "Blvd. Emilio Portes Gil 1301, Sin Nombre de Col 7, 87010 Ciudad. Victoria, Tamps.";
-                $lat = 23.7535780056823;
-                $lng = -99.16672100652961;
+                $lat = 23.754878004640684; 
+                $lng = -99.16686640441525;
             ?>
             <div class="mapa-info">
                 <div id="map"></div>

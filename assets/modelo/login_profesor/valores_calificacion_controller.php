@@ -1,106 +1,109 @@
 <?php
-session_start();
-include_once __DIR__ . '/../conexion.php'; // Ajusta la ruta si es necesario
+    session_start();
+    include_once __DIR__ . '/../conexion.php'; 
 
-// 1. Validaciones iniciales
-// Solo permitir si hay sesión, es POST y se reciben los 'valores'
-if (!isset($_SESSION['id_usuario']) || $_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST['valores'])) {
-    header("Location: ../../code_profesor/menu_ajustes.php");
-    exit;
-}
-
-$valores_post = $_POST['valores'];
-
-// 2. Iniciar transacción
-// Esto asegura que si falla una unidad, no se guarde ninguna
-$conn->begin_transaction();
-
-try {
-    // 3. Preparar la consulta UNA SOLA VEZ
-    // Usamos UPDATE porque los registros (1-5) ya existen en la tabla.
-    $stmt = $conn->prepare("UPDATE alumnos_valores_calificar SET examen_valor = ?, actividad_valor = ? WHERE id_unidad = ?");
-
-    if (!$stmt) {
-        throw new Exception("Error al preparar la consulta: " . $conn->error);
+    if (!isset($_SESSION['id_usuario']) || $_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST['valores'])) {
+        header("Location: ../../code_profesor/menu_ajustes.php");
+        exit;
     }
 
-    // 4. Iterar y validar CADA unidad (1 a 5)
-    for ($i = 1; $i <= 5; $i++) {
-        
-        // Asegurarse de que los datos de esta unidad fueron enviados
-        if (!isset($valores_post[$i]) || !isset($valores_post[$i]['examen']) || !isset($valores_post[$i]['actividad'])) {
-            throw new Exception("Datos incompletos para la unidad $i.");
+    $valores_post = $_POST['valores'];
+
+    $conn->begin_transaction();
+
+    try {
+        $stmt = $conn->prepare(
+            "UPDATE alumnos_valores_calificar 
+            SET examen_valor = ?, actividad_valor = ?, asistencia_valor = ?, proyecto_final_valor = ? 
+            WHERE id_unidad = ?"
+        );
+
+        if (!$stmt) {
+            throw new Exception("Error al preparar la consulta: " . $conn->error);
         }
 
-        $examen_str = $valores_post[$i]['examen'];
-        $actividad_str = $valores_post[$i]['actividad'];
+        for ($i = 1; $i <= 5; $i++) {
+            
+            if (
+                !isset($valores_post[$i]) || 
+                !isset($valores_post[$i]['examen']) || 
+                !isset($valores_post[$i]['actividad']) ||
+                !isset($valores_post[$i]['asistencia']) ||
+                !isset($valores_post[$i]['proyecto_final']) 
+            ) {
+                throw new Exception("Datos incompletos para la unidad $i.");
+            }
 
-        $examen_db = null;
-        $actividad_db = null;
-        $unidad_id = $i;
+            $examen_str = $valores_post[$i]['examen'];
+            $actividad_str = $valores_post[$i]['actividad'];
+            $asistencia_str = $valores_post[$i]['asistencia']; 
+            $proyecto_final_str = $valores_post[$i]['proyecto_final'];
 
-        // 5. Validación del lado del servidor (¡Muy importante!)
-        
-        // Caso 1: Ambos vacíos (Válido, se guardará como NULL)
-        if ($examen_str === '' && $actividad_str === '') {
             $examen_db = null;
             $actividad_db = null;
-        } 
-        // Caso 2: Ambos llenos (Validar suma)
-        else if ($examen_str !== '' && $actividad_str !== '') {
+            $asistencia_db = null; 
+            $proyecto_final_db = null;
+            $unidad_id = $i;
+
+            if ($examen_str === '' && $actividad_str === '' && $asistencia_str === '' && $proyecto_final_str === '') {
+                $examen_db = null;
+                $actividad_db = null;
+                $asistencia_db = null;
+                $proyecto_final_db = null;
+            } 
+            else if ($examen_str !== '' && $actividad_str !== '' && $asistencia_str !== '' && $proyecto_final_str !== '') {
+                
+                if (!is_numeric($examen_str) || !is_numeric($actividad_str) || !is_numeric($asistencia_str) || !is_numeric($proyecto_final_str)) {
+                    throw new Exception("Error en Unidad $i: Los valores deben ser numéricos.");
+                }
+
+                $examen_val = intval($examen_str);
+                $actividad_val = intval($actividad_str);
+                $asistencia_val = intval($asistencia_str); 
+                $proyecto_final_val = intval($proyecto_final_str);
+
+                if (
+                    $examen_val < 0 || $examen_val > 100 || 
+                    $actividad_val < 0 || $actividad_val > 100 ||
+                    $asistencia_val < 0 || $asistencia_val > 100 || 
+                    $proyecto_final_val < 0 || $proyecto_final_val > 100 
+                ) {
+                    throw new Exception("Error en Unidad $i: Los valores deben estar entre 0 y 100.");
+                }
+
+                $suma_total = $examen_val + $actividad_val + $asistencia_val + $proyecto_final_val; 
+                if ($suma_total !== 100) {
+                    throw new Exception("Error en Unidad $i: La suma debe ser 100. Suma actual: " . $suma_total);
+                }
+
+                $examen_db = $examen_val;
+                $actividad_db = $actividad_val;
+                $asistencia_db = $asistencia_val; 
+                $proyecto_final_db = $proyecto_final_val; 
+            } 
+            else {
+                throw new Exception("Error en Unidad $i: Debe completar los CUATRO valores o dejar los CUATRO vacíos.");
+            }
+
+            $stmt->bind_param("iiiii", $examen_db, $actividad_db, $asistencia_db, $proyecto_final_db, $unidad_id);
             
-            // Validar que sean numéricos
-            if (!is_numeric($examen_str) || !is_numeric($actividad_str)) {
-                throw new Exception("Error en Unidad $i: Los valores deben ser numéricos.");
+            if (!$stmt->execute()) {
+                throw new Exception("Error al actualizar la unidad $i: " . $stmt->error);
             }
-
-            $examen_val = intval($examen_str);
-            $actividad_val = intval($actividad_str);
-
-            // Validar rango (0-100)
-            if ($examen_val < 0 || $examen_val > 100 || $actividad_val < 0 || $actividad_val > 100) {
-                 throw new Exception("Error en Unidad $i: Los valores deben estar entre 0 y 100.");
-            }
-
-            // Validar suma
-            if ($examen_val + $actividad_val !== 100) {
-                throw new Exception("Error en Unidad $i: La suma debe ser 100. Suma actual: " . ($examen_val + $actividad_val));
-            }
-
-            // Si todo es válido, asignar los valores enteros
-            $examen_db = $examen_val;
-            $actividad_db = $actividad_val;
-        } 
-        // Caso 3: Uno vacío y el otro no (Inválido)
-        else {
-            // Esto no debería pasar si el JS funciona, pero es la seguridad del servidor
-            throw new Exception("Error en Unidad $i: Debe completar ambos valores o dejar ambos vacíos.");
         }
 
-        // 6. Bindeo y ejecución por cada unidad
-        // "iii" = integer, integer, integer. PHP/MySQL maneja bien NULL para tipos integer.
-        $stmt->bind_param("iii", $examen_db, $actividad_db, $unidad_id);
-        
-        if (!$stmt->execute()) {
-            throw new Exception("Error al actualizar la unidad $i: " . $stmt->error);
-        }
+        $conn->commit();
+        $_SESSION['success_ajustes'] = "Valores de calificación actualizados correctamente.";
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        $_SESSION['error_ajustes'] = $e->getMessage();
     }
 
-    // 7. Si todo el bucle fue bien, aplicar cambios
-    $conn->commit();
-    $_SESSION['success_ajustes'] = "Valores de calificación actualizados correctamente.";
-
-} catch (Exception $e) {
-    // 8. Si algo falló, revertir todos los cambios
-    $conn->rollback();
-    $_SESSION['error_ajustes'] = $e->getMessage();
-}
-
-// 9. Cerrar y redirigir
-if (isset($stmt)) {
-    $stmt->close();
-}
-$conn->close();
-header("Location: ../../code_profesor/menu_ajustes.php");
-exit;
+    if (isset($stmt)) {
+        $stmt->close();
+    }
+    $conn->close();
+    header("Location: ../../code_profesor/menu_ajustes.php");
+    exit;
 ?>

@@ -31,15 +31,15 @@
                     <div class="form-grid">
                         <div>
                             <label for="nombre"><?php echo $textos['nombre']; ?></label>
-                            <input type="text" id="nombre" name="nombres" class="form-control" required>
+                            <input type="text" id="nombre" name="nombres" class="form-control" maxlength="20" required>
                         </div>
                         <div>
                             <label for="apellido_p"><?php echo $textos['a_paterno']; ?></label>
-                            <input type="text" id="apellido_p" name="apellido_paterno" class="form-control" required>
+                            <input type="text" id="apellido_p" name="apellido_paterno" class="form-control" maxlength="20" required>
                         </div>
                         <div>
                             <label for="apellido_m"><?php echo $textos['a_materno']; ?></label>
-                            <input type="text" id="apellido_m" name="apellido_materno" class="form-control">
+                            <input type="text" id="apellido_m" name="apellido_materno" class="form-control" maxlength="20" required>
                         </div>
                         <div>
                             <label for="semestre"><?php echo $textos['semestre']; ?></label>
@@ -66,20 +66,20 @@
                                 id="no_control" 
                                 name="nocontrol" 
                                 class="form-control" 
-                                maxlength="10"
+                                maxlength="15"
                                 pattern="[A-Za-z0-9]{1,10}"
-                                title="Máximo 10 caracteres. Solo letras y números."
+                                title="Máximo 15 caracteres. Solo letras y números."
                                 required>
                         </div>
                     </div>
                 <div class="form-grid mt-4">
                     <div>
                         <label for="pass"><?php echo $textos['pass']; ?></label>
-                        <input type="password" name="pass" class="form-control" required>
+                        <input type="password" name="pass" class="form-control" maxlength="20" required>
                     </div>
                 <div>
                     <label for="pass"><?php echo $textos['pass_confirm']; ?></label>
-                    <input type="password" id="pass_confirm" name="pass_confirm" class="form-control" required>
+                    <input type="password" id="pass_confirm" name="pass_confirm" class="form-control" maxlength="20" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-verde_fuerte"><?php echo $textos['registrar_datos']; ?></button>

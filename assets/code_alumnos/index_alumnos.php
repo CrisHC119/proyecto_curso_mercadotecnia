@@ -39,11 +39,6 @@
             <?php echo $textos['parrafo_0005']; ?>
         </p>
         <div class="text-center mt-4">
-            <a href="/assets/pdf/AE045 Mercadotecnia Electronica.pdf" download class="btn btn-verde btn-downtema d-inline-block px-4 py-2 mt-3">
-                <?php echo $textos['descargar_pdf_temas']; ?>
-            </a>
-        </div>
-        <div class="text-center mt-4">
             <a href="temas_unidad/tema_1/T_1.1.php" class="btn btn-tema text-white">
                 <i class="bi bi-play-circle-fill"></i><?php echo $textos['inicio_curso']; ?>
             </a>

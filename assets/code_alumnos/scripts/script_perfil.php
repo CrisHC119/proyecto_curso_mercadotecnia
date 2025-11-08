@@ -81,6 +81,19 @@
     }
 
     function confirmarContraseña() {
+        const oldpass = document.getElementById('oldpass').value.trim();
+        const newpass = document.getElementById('pass').value.trim();
+
+        if (!oldpass || !newpass) {
+            alert("<?php echo $textos['pass_ambos_requeridos']; ?>"); 
+            return false; 
+        }
+
+        if (oldpass === newpass) {
+            alert("<?php echo $textos['pass_no_igual_actual']; ?>");
+            return false;
+        }
+
         return confirm("<?php echo $textos['confirmacion_contrasena_actualizado']; ?>");
     }
     function mostrarVistaPrevia(input) {

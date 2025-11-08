@@ -48,10 +48,8 @@
         this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
     });
 
-    document.querySelectorAll('#nocontrol, #nocontrolProfesor').forEach(input => {
-        input.addEventListener('input', function () {
-            this.value = this.value.replace(/\D/g, '');
-        });
+    document.getElementById('nocontrol').addEventListener('input', function () {
+    this.value = this.value.replace(/[^a-zA-Z0-9]/g, ''); 
     });
 
     document.getElementById('loginBtn').addEventListener('click', function () {

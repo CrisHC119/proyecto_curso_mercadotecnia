@@ -12,7 +12,7 @@
     width: 600px !important;
   }
   .navbar-custom {
-    background: linear-gradient(90deg, rgb(9, 31, 62), rgb(17, 66, 138));
+    background: #003772ff;
   }
   .navbar-brand {
     font-weight: bold;
@@ -143,7 +143,7 @@
   .mode-toggle {
       background: none;
       border: none;
-      color: #212529; /* Color cambiado para que sea visible en modo claro */
+      color: #004a99; /* Color cambiado para que sea visible en modo claro */
       font-size: 1.3rem;
   }
   .mode-toggle:hover {
@@ -251,24 +251,24 @@
         flex-direction: column;
         display: flex;
         padding: 0 8px;
-        gap: 1rem; /* antes: 2rem */
-        margin-top: 1rem; /* antes: 2rem o más */
+        gap: 1rem;
+        margin-top: 1rem;
         margin-bottom: 1rem;
     }
     .justificado {
-        font-size: 0.75rem; /* antes: 0.8rem */
+        font-size: 0.75rem;
         text-align: justify;
         padding: 0 8px;
     }
     .tarjeta-curso {
-        font-size: 0.8rem; /* antes: 0.85rem */
+        font-size: 0.8rem;
         margin-bottom: 0.8rem;
         width: 100%;
         box-sizing: border-box;
         padding: 2em;
     }
     h1 {
-        font-size: 1rem; /* antes: 1.1rem */
+        font-size: 1rem;
         text-align: center;
     }
     h2 {
@@ -276,9 +276,9 @@
         font-size: 1.1rem;
     }
     .contenedor-lateral {
-        margin-top: 1rem; /* antes: 2rem o más */
+        margin-top: 1rem;
         margin-bottom: 1rem;
-        gap: 0.01rem 1.2rem; /* reducir separación entre tarjetas */
+        gap: 0.01rem 1.2rem;
     }
     .btn {
         font-size: 0.8rem;

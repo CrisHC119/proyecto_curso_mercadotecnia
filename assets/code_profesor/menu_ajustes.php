@@ -21,7 +21,7 @@
     }
     $stmt->close();
     $valores_unidades = [];
-    $stmt_valores = $conn->prepare("SELECT id_unidad, examen_valor, actividad_valor FROM alumnos_valores_calificar WHERE id_unidad BETWEEN 1 AND 5 ORDER BY id_unidad");
+    $stmt_valores = $conn->prepare("SELECT id_unidad, examen_valor, actividad_valor, asistencia_valor, proyecto_final_valor FROM alumnos_valores_calificar WHERE id_unidad BETWEEN 1 AND 5 ORDER BY id_unidad");
     if ($stmt_valores) {
         $stmt_valores->execute();
         $resultado_valores = $stmt_valores->get_result();
@@ -329,28 +329,51 @@ $alumnos = [];
                                     <?php
                                         $examen_val = $valores_unidades[$i]['examen_valor'] ?? null;
                                         $actividad_val = $valores_unidades[$i]['actividad_valor'] ?? null;
+                                        $asistencia_val = $valores_unidades[$i]['asistencia_valor'] ?? null; 
+                                        $proyecto_val = $valores_unidades[$i]['proyecto_final_valor'] ?? null; 
+
                                         $examen_display = $examen_val !== null ? htmlspecialchars($examen_val) : '';
                                         $actividad_display = $actividad_val !== null ? htmlspecialchars($actividad_val) : '';
+                                        $asistencia_display = $asistencia_val !== null ? htmlspecialchars($asistencia_val) : '';
+                                        $proyecto_display = $proyecto_val !== null ? htmlspecialchars($proyecto_val) : ''; 
                                     ?>
                                     <h6 class="mt-4">Unidad <?php echo $i; ?></h6>
-                                    <div class="row">
-                                        <div class="col-md-5">
+                                    
+                                    <div class="row g-2"> <div class="col-sm-6 col-md">
                                             <div class="form-floating">
-                                                <input type="number" class="form-control mb-4" id="examen_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][examen]" placeholder="Valor Examen (%)" value="<?php echo $examen_display; ?>" min="0" max="100">
+                                                <input type="number" class="form-control" id="examen_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][examen]" placeholder="Valor Examen (%)" value="<?php echo $examen_display; ?>" min="0" max="100">
                                                 <label for="examen_unidad_<?php echo $i; ?>">Valor Examen (%)</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-5">
+                                        
+                                        <div class="col-sm-6 col-md">
                                             <div class="form-floating">
-                                                <input type="number" class="form-control mb-4" id="actividad_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][actividad]" placeholder="Valor Actividades (%)" value="<?php echo $actividad_display; ?>" min="0" max="100">
+                                                <input type="number" class="form-control" id="actividad_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][actividad]" placeholder="Valor Actividades (%)" value="<?php echo $actividad_display; ?>" min="0" max="100">
                                                 <label for="actividad_unidad_<?php echo $i; ?>">Valor Actividades (%)</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 d-flex align-items-center justify-content-start">
-                                            <h5 class="mb-3"><span class="badge bg-secondary" id="suma_unidad_<?php echo $i; ?>">Suma: 0%</span></h5>
+
+                                        <div class="col-sm-6 col-md">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" id="asistencia_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][asistencia]" placeholder="Asistencia (%)" value="<?php echo $asistencia_display; ?>" min="0" max="100">
+                                                <label for="asistencia_unidad_<?php echo $i; ?>">Asistencia (%)</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                <?php endfor; ?>
+
+                                        <div class="col-sm-6 col-md">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control" id="proyecto_final_unidad_<?php echo $i; ?>" name="valores[<?php echo $i; ?>][proyecto_final]" placeholder="Proyecto (%)" value="<?php echo $proyecto_display; ?>" min="0" max="100">
+                                                <label for="proyecto_final_unidad_<?php echo $i; ?>">Proyecto (%)</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-12 col-md d-flex align-items-center justify-content-sm-center justify-content-md-center">
+                                            <h5 class="my-2 my-md-0">
+                                                <span class="badge bg-secondary" id="suma_unidad_<?php echo $i; ?>">Suma: 0%</span>
+                                            </h5>
+                                        </div>
+
+                                    </div> <?php endfor; ?>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary mt-4" id="btnGuardarValores">
                                         <i class="bi bi-save-fill"></i> Guardar Valores de Calificación
@@ -501,19 +524,33 @@ $alumnos = [];
         label: institutos[clave],
         value: clave
     }));
+
     function sinTildes(texto) {
         if (typeof texto !== 'string') return '';
         return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
+
     $(function () {
         const $botonGuardar = $('#btnGuardarCambiosProfesor');
         const modalAjustes = new bootstrap.Modal(document.getElementById('confirmAjustesModal'));
+        
         const valoresIniciales = {
             nombre: "<?php echo htmlspecialchars($profesor_data['nombres']); ?>",
             apaterno: "<?php echo htmlspecialchars($profesor_data['apellido_paterno']); ?>",
             amaterno: "<?php echo htmlspecialchars($profesor_data['apellido_materno']); ?>",
             campus: "<?php echo htmlspecialchars($profesor_data['campus']); ?>"
         };
+
+        const valoresCalificacionIniciales = {};
+        for (let i = 1; i <= 5; i++) {
+            valoresCalificacionIniciales[i] = {
+                examen: $('#examen_unidad_' + i).val(),
+                actividad: $('#actividad_unidad_' + i).val(),
+                asistencia: $('#asistencia_unidad_' + i).val(),
+                proyecto: $('#proyecto_final_unidad_' + i).val()
+            };
+        }
+
         function verificarCambios() {
             const nombreActual = $('#nombreProfesor').val();
             const apaternoActual = $('#apaternoProfesor').val();
@@ -529,7 +566,9 @@ $alumnos = [];
             const contrasenaCambiada = nuevaPassActual !== '' || confirmarPassActual !== '';
             $botonGuardar.prop('disabled', !(datosPersonalesCambiados || contrasenaCambiada));
         }
+
         $('#nombreProfesor, #apaternoProfesor, #amaternoProfesor, #nuevaContrasena, #confirmarContrasena').on('input', verificarCambios);
+
         $("#campus_autocompletado_profesor").autocomplete({
             source: function (request, response) {
                 const termino = sinTildes(request.term);
@@ -544,10 +583,12 @@ $alumnos = [];
                 return false;
             },
         });
+
         const claveActual = $("#campusProfesor").val();
         if (claveActual && institutos[claveActual]) {
             $("#campus_autocompletado_profesor").val(institutos[claveActual]);
         }
+
         $("#campus_autocompletado_profesor").on('input', function() {
             const textoVisible = $(this).val().trim();
             const match = etiquetas.find(item => sinTildes(item.label) === sinTildes(textoVisible));
@@ -558,65 +599,81 @@ $alumnos = [];
             }
             verificarCambios();
         });
+
         $botonGuardar.on('click', function() {
             const nombre = $('#nombreProfesor').val().trim();
             const apaterno = $('#apaternoProfesor').val().trim();
             const amaterno = $('#amaternoProfesor').val().trim();
             const nombreCampus = $("#campus_autocompletado_profesor").val().trim();
             const claveCampus = $("#campusProfesor").val().trim();
+            
             if (nombre === '' || apaterno === '' || amaterno === '') {
-                 alert("Por favor, completa todos los campos de nombre y apellidos.");
-                 if (nombre === '') $('#nombreProfesor').focus();
-                 else if (apaterno === '') $('#apaternoProfesor').focus();
-                 else $('#amaternoProfesor').focus();
-                 return;
+                alert("Por favor, completa todos los campos de nombre y apellidos.");
+                if (nombre === '') $('#nombreProfesor').focus();
+                else if (apaterno === '') $('#apaternoProfesor').focus();
+                else $('#amaternoProfesor').focus();
+                return;
             }
             if (nombreCampus === "") {
-                 alert("Por favor, ingresa el nombre de tu campus.");
-                 $("#campus_autocompletado_profesor").focus();
-                 return;
+                alert("Por favor, ingresa el nombre de tu campus.");
+                $("#campus_autocompletado_profesor").focus();
+                return;
             }
             if (claveCampus === "") {
-                 alert("El campus '" + nombreCampus + "' no es válido. Por favor, selecciónelo de la lista desplegable.");
-                 $("#campus_autocompletado_profesor").focus();
-                 return;
+                alert("El campus '" + nombreCampus + "' no es válido. Por favor, selecciónelo de la lista desplegable.");
+                $("#campus_autocompletado_profesor").focus();
+                return;
             }
             modalAjustes.show();
         });
         
-        // --- Lógica para el modal de Avatar ---
         const modalAvatarEl = document.getElementById('modalAvatarProfesor');
         const inputAvatarFile = document.getElementById('inputAvatarFile');
-        // ... (resto de tu código de avatar sin cambios) ...
+        
         function resetAvatarModal() {
-            // ... (tu código) ...
         }
+
         modalAvatarEl.addEventListener('show.bs.modal', resetAvatarModal);
+        
         inputAvatarFile.addEventListener('change', function() {
-            // ... (tu código de validación de avatar) ...
         });
 
-        // --- Lógica para el formulario de Valores de Calificación ---
         function actualizarSumaUnidad(unidadId) {
             const $examenInput = $('#examen_unidad_' + unidadId);
             const $actividadInput = $('#actividad_unidad_' + unidadId);
+            const $asistenciaInput = $('#asistencia_unidad_' + unidadId);
+            const $proyectoInput = $('#proyecto_final_unidad_' + unidadId);
             const $sumaBadge = $('#suma_unidad_' + unidadId);
+
             const examenValStr = $examenInput.val();
             const actividadValStr = $actividadInput.val();
-            if (examenValStr === '' && actividadValStr === '') {
-                 $sumaBadge.text('Suma: N/A');
-                 $sumaBadge.removeClass('bg-success bg-danger').addClass('bg-secondary');
-                 return;
+            const asistenciaValStr = $asistenciaInput.val();
+            const proyectoValStr = $proyectoInput.val();
+
+            const allEmpty = examenValStr === '' && actividadValStr === '' && asistenciaValStr === '' && proyectoValStr === '';
+            const someEmpty = examenValStr === '' || actividadValStr === '' || asistenciaValStr === '' || proyectoValStr === '';
+
+            if (allEmpty) {
+                $sumaBadge.text('Suma: 0%');
+                $sumaBadge.removeClass('bg-success bg-danger').addClass('bg-secondary');
+                return;
             }
-            if (examenValStr === '' || actividadValStr === '') {
-                 $sumaBadge.text('Suma: N/A');
-                 $sumaBadge.removeClass('bg-success bg-secondary').addClass('bg-danger');
-                 return;
+
+            if (someEmpty) {
+                $sumaBadge.text('Suma: N/A');
+                $sumaBadge.removeClass('bg-success bg-secondary').addClass('bg-danger');
+                return;
             }
+
             const examenVal = parseInt(examenValStr) || 0;
             const actividadVal = parseInt(actividadValStr) || 0;
-            const suma = examenVal + actividadVal;
+            const asistenciaVal = parseInt(asistenciaValStr) || 0;
+            const proyectoVal = parseInt(proyectoValStr) || 0;
+
+            const suma = examenVal + actividadVal + asistenciaVal + proyectoVal;
+
             $sumaBadge.text('Suma: ' + suma + '%');
+
             if (suma === 100) {
                 $sumaBadge.removeClass('bg-secondary bg-danger').addClass('bg-success');
             } else {
@@ -624,78 +681,93 @@ $alumnos = [];
             }
         }
 
-        /**
-         * --- NUEVA FUNCIÓN ---
-         * Valida todos los campos de calificación y habilita/deshabilita el botón de guardar.
-         */
         function validarTodosLosValores() {
             const $botonValores = $('#btnGuardarValores');
-            let todoValido = true; // Asumimos que todo está bien al inicio
-
+            let todoValido = true;
+            let hayCambios = false;
+            
             for (let i = 1; i <= 5; i++) {
                 const examenVal = $('#examen_unidad_' + i).val();
                 const actividadVal = $('#actividad_unidad_' + i).val();
+                const asistenciaVal = $('#asistencia_unidad_' + i).val();
+                const proyectoVal = $('#proyecto_final_unidad_' + i).val();
 
-                // Caso 1: Ambos vacíos (Válido)
-                if (examenVal === '' && actividadVal === '') {
-                    continue; // Pasa a la siguiente unidad
+                if (
+                    examenVal !== valoresCalificacionIniciales[i].examen ||
+                    actividadVal !== valoresCalificacionIniciales[i].actividad ||
+                    asistenciaVal !== valoresCalificacionIniciales[i].asistencia ||
+                    proyectoVal !== valoresCalificacionIniciales[i].proyecto
+                ) {
+                    hayCambios = true;
                 }
 
-                // Caso 2: Uno vacío, otro no (Inválido)
-                if ((examenVal === '' && actividadVal !== '') || (examenVal !== '' && actividadVal === '')) {
+                const allEmpty = (examenVal === '' && actividadVal === '' && asistenciaVal === '' && proyectoVal === '');
+                const someEmpty = (examenVal === '' || actividadVal === '' || asistenciaVal === '' || proyectoVal === '');
+
+                if (allEmpty) {
+                    continue; 
+                }
+
+                if (someEmpty) { 
                     todoValido = false;
-                    break; // Encontramos un error, no es necesario seguir
+                    break; 
                 }
+
+                const suma = (parseInt(examenVal) || 0) + 
+                             (parseInt(actividadVal) || 0) + 
+                             (parseInt(asistenciaVal) || 0) +
+                             (parseInt(proyectoVal) || 0);
                 
-                // Caso 3: Ambos llenos (Validar suma)
-                // Usamos || 0 por si el usuario borra y deja un campo no numérico (aunque el input type=number ayuda)
-                const suma = (parseInt(examenVal) || 0) + (parseInt(actividadVal) || 0);
                 if (suma !== 100) {
                     todoValido = false;
-                    break; // Encontramos un error, no es necesario seguir
+                    break; 
                 }
             }
             
-            // Habilita el botón si 'todoValido' es true, lo deshabilita si es false
-            $botonValores.prop('disabled', !todoValido);
+            $botonValores.prop('disabled', !(todoValido && hayCambios));
         }
 
-        // --- MODIFICADO ---
-        // Bucle para inicializar y asignar listeners
         for (let i = 1; i <= 5; i++) {
-            actualizarSumaUnidad(i); // Actualiza el badge al cargar
+            actualizarSumaUnidad(i);
             
-            // Asigna el listener de 'input'
-            $('#examen_unidad_' + i + ', #actividad_unidad_' + i).on('input', function() {
-                actualizarSumaUnidad(i);   // Actualiza el badge
-                validarTodosLosValores();  // Valida y actualiza el botón
+            $('#examen_unidad_' + i + ', #actividad_unidad_' + i + ', #asistencia_unidad_' + i + ', #proyecto_final_unidad_' + i).on('input', function() { 
+                actualizarSumaUnidad(i);
+                validarTodosLosValores();
             });
         }
         
-        // --- AÑADIDO ---
-        // Ejecuta la validación una vez al cargar la página
-        // para establecer el estado inicial correcto del botón
         validarTodosLosValores();
 
-        // Validación de submit (como doble chequeo, aunque el botón debería estar deshabilitado)
         $('#valoresForm').on('submit', function(e) {
             let allValid = true;
             let firstErrorUnit = -1;
             for (let i = 1; i <= 5; i++) {
                 const $examenInput = $('#examen_unidad_' + i);
                 const $actividadInput = $('#actividad_unidad_' + i);
+                const $asistenciaInput = $('#asistencia_unidad_' + i);
+                const $proyectoInput = $('#proyecto_final_unidad_' + i);
+
                 const examenVal = $examenInput.val();
                 const actividadVal = $actividadInput.val();
-                if (examenVal === '' && actividadVal === '') {
+                const asistenciaVal = $asistenciaInput.val();
+                const proyectoVal = $proyectoInput.val();
+
+                if (examenVal === '' && actividadVal === '' && asistenciaVal === '' && proyectoVal === '') {
                     continue;
                 }
-                if ((examenVal === '' && actividadVal !== '') || (examenVal !== '' && actividadVal === '')) {
+
+                if (examenVal === '' || actividadVal === '' || asistenciaVal === '' || proyectoVal === '') {
                     allValid = false;
                     firstErrorUnit = i;
-                    alert('Error en Unidad ' + i + ': Debe completar AMBOS valores (Examen y Actividades) o dejar AMBOS vacíos.');
+                    alert('Error en Unidad ' + i + ': Debe completar TODOS los valores (Examen, Actividades, Asistencia y Proyecto) o dejar TODOS vacíos.');
                     break;
                 }
-                const suma = parseInt(examenVal) + parseInt(actividadVal);
+
+                const suma = (parseInt(examenVal) || 0) + 
+                             (parseInt(actividadVal) || 0) + 
+                             (parseInt(asistenciaVal) || 0) +
+                             (parseInt(proyectoVal) || 0);
+                
                 if (suma !== 100) {
                     allValid = false;
                     firstErrorUnit = i;
@@ -706,32 +778,36 @@ $alumnos = [];
             if (!allValid) {
                 e.preventDefault();
                 if (firstErrorUnit !== -1) {
-                    $('#examen_unidad_' + firstErrorUnit).focus();
+                    if ($('#examen_unidad_' + firstErrorUnit).val() === '') {
+                        $('#examen_unidad_' + firstErrorUnit).focus();
+                    } else if ($('#actividad_unidad_' + firstErrorUnit).val() === '') {
+                        $('#actividad_unidad_' + firstErrorUnit).focus();
+                    } else if ($('#asistencia_unidad_' + firstErrorUnit).val() === '') {
+                        $('#asistencia_unidad_' + firstErrorUnit).focus();
+                    } else {
+                        $('#proyecto_final_unidad_' + firstErrorUnit).focus();
+                   }
                 }
             }
         });
-document.getElementById("btnDescargarAlumnosPDF").addEventListener("click", function () {
-    try {
-        const doc = new jsPDF();
 
-        doc.text("Lista de Alumnos", 14, 20);
-
-        doc.autoTable({
-            html: '#tabla-lista-alumnos',
-            startY: 30,
-            styles: { fontSize: 10, cellPadding: 2 },
-            headStyles: { fillColor: [52, 58, 64] }
+        document.getElementById("btnDescargarAlumnosPDF").addEventListener("click", function () {
+            try {
+                const doc = new jsPDF();
+                doc.text("Lista de Alumnos", 14, 20);
+                doc.autoTable({
+                    html: '#tabla-lista-alumnos',
+                    startY: 30,
+                    styles: { fontSize: 10, cellPadding: 2 },
+                    headStyles: { fillColor: [52, 58, 64] }
+                });
+                doc.save("lista_alumnos.pdf");
+            } catch (error) {
+                console.error("Error al generar el PDF:", error);
+                alert("Hubo un error al generar el PDF. Ver consola para más detalles.");
+            }
         });
 
-        doc.save("lista_alumnos.pdf");
-    } catch (error) {
-        console.error("Error al generar el PDF:", error);
-        alert("Hubo un error al generar el PDF. Ver consola para más detalles.");
-    }
-});
-
-
-        // --- FIN NUEVO ---
     });
 </script>
 

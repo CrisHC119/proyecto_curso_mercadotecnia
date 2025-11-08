@@ -8,10 +8,6 @@
         exit;
     }
 ?>
-<?php
-    // Verificar inactividad
-    //include_once '../modelo/login_profesor/logout_inactividad.php';
-?>
 <!--<script src="/assets/scripts/logout_inactividad_profesor.js"></script>-->
 
 <body>

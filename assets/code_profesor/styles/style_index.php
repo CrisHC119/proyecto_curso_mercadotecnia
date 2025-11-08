@@ -24,11 +24,11 @@
         color: #ffffff;
     }
     .card-menu.profesores {
-        background-color: #20c997; 
+        background-color: #198754; 
         color: #ffffff;
     }
     .card-menu.mensaje {
-        background-color: #373737ff; 
+        background-color: #6c757d; 
         color: #ffffff;
     }
     .card-menu.calificaciones {
@@ -40,7 +40,7 @@
         color: #ffffff;
     }
     .card-menu.actividades {
-        background-color: #5d0075ff; 
+        background-color: #0dcaf0; 
         color: #ffffff;
     }
     .card-menu.logout {
@@ -48,7 +48,7 @@
         color: #ffffff;
     }
     .card-menu.registros {
-        background-color: #3311bcff; 
+        background-color: #6f42c1; 
         color: #ffffff;
     }
     .card-menu i {
@@ -68,5 +68,18 @@
         background-color: #2c2c2e;
         color: #ffffff;
         border: 1px solid rgba(255,255,255,0.1);
+    }
+    @media (max-width: 576px) {
+        .card-menu {
+            padding: 1rem 0.5rem;
+            border-radius: 0.75rem;
+        }
+        .card-menu i {
+            font-size: 2rem;      
+            margin-bottom: 0.5rem;
+        }
+        .card-menu h5 {
+            font-size: 0.8rem;
+        }
     }
 </style>

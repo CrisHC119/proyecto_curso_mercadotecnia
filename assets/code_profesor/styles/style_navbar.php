@@ -12,7 +12,7 @@
         width: 600px !important;
     }
     .navbar-custom {
-        background: linear-gradient(90deg, rgb(9, 31, 62), rgb(17, 66, 138));
+        background: #003772ff;
     }
     .navbar-brand {
         font-weight: bold;
@@ -303,10 +303,36 @@
             width: 40px;
             height: 40px;
         }
+        .nav-tabs {
+            flex-wrap: nowrap;
+        }
+        .nav-links-scrollable {
+            display: flex;
+            overflow-x: auto;     
+            white-space: nowrap;  
+            flex: 1;              
+            min-width: 0;         
+            -ms-overflow-style: none; 
+            scrollbar-width: none;     
+        }
+        .nav-links-scrollable::-webkit-scrollbar {
+            display: none;  
+        }
+        .navbar .dropdown img {
+            width: 40px; 
+            height: 40px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+        }
     }
     body.light-mode .nav-tabs .nav-link.active {
         background-color: #dee2e6;  
         color: #212529;
         border-color: #495057 #495057 #dee2e6; 
+    }
+    .nav-links-scrollable {
+        display: flex;
     }
 </style>

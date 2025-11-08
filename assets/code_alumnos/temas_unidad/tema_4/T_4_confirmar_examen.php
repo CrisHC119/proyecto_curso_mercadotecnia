@@ -14,16 +14,16 @@
         exit;
     }
 
-    $id_unidad_actual = 2;
+    $id_unidad_actual = 4;
     $accesoPermitido = false;
     $mensajeError = '';
     $iconoError = 'bi-x-circle-fill';
 
-    $stmt_realizado = $conn->prepare("SELECT examen_U2 FROM alumnos_calificacion WHERE id_usuario = ?");
+    $stmt_realizado = $conn->prepare("SELECT examen_U4 FROM alumnos_calificacion WHERE id_usuario = ?");
     $stmt_realizado->bind_param("i", $id_usuario);
     $stmt_realizado->execute();
     $resultado_realizado = $stmt_realizado->get_result();
-    $examenRealizado = ($resultado_realizado->fetch_assoc()['examen_U2'] ?? 0) == 1;
+    $examenRealizado = ($resultado_realizado->fetch_assoc()['examen_U4'] ?? 0) == 1;
     $stmt_realizado->close();
 
     if ($examenRealizado) {
@@ -62,7 +62,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Confirmación de Examen - Unidad 2</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <title>Confirmación de Examen - Unidad 4</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
         <style>
             body { background: linear-gradient(to right, #f8f9fa, #e9ecef); }
@@ -78,14 +78,14 @@
                             <?php if ($accesoPermitido): ?>
                                 <i class="bi bi-clock-history fs-1 text-primary mb-3"></i>
                                 <h2 class="card-title mb-3">Confirmar Examen</h2>
-                                <p class="text-muted">Estás a punto de iniciar el examen de la <strong>Unidad 2</strong>.</p> <div class="alert alert-info mt-4">
+                                <p class="text-muted">Estás a punto de iniciar el examen de la <strong>Unidad 4</strong>.</p> <div class="alert alert-info mt-4">
                                     <h5 class="alert-heading">Reglas del Examen</h5>
                                     <ul class="list-unstyled mb-0 text-start">
                                         <li><i class="bi bi-alarm me-2"></i><strong>Tiempo Límite:</strong> 10 minutos.</li>
                                         <li><i class="bi bi-exclamation-triangle me-2"></i><strong>Importante:</strong> El cronómetro no se detiene una vez iniciado.</li>
                                     </ul>
                                 </div>
-                                <form action="T_2_Examen.php" method="post" class="mt-4"> <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                                <form action="T_4_Examen.php" method="post" class="mt-4"> <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                                         <button type="submit" class="btn btn-success btn-lg">
                                             <i class="bi bi-play-circle me-2"></i>Comenzar Examen
                                         </button>

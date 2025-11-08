@@ -1,42 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    const modalEl = document.getElementById('avisoModal');
-    const modalTitle = document.getElementById('avisoModalLabel');
-    const modalBody = document.getElementById('avisoModalBody');
-    const avisoModal = new bootstrap.Modal(modalEl);
-
-    const linksExamen = document.querySelectorAll('.link-examen');
-
-    linksExamen.forEach(link => {
-        link.addEventListener('click', function(event) {
+    const modalNoDisponible = document.getElementById('modalExamenNoDisponible');
+    if (modalNoDisponible) {
+        const spanFechaInicio = document.getElementById('fecha-disponible-span');
+        
+        modalNoDisponible.addEventListener('show.bs.modal', function(event) {
+            const link = event.relatedTarget;
             
-            event.preventDefault(); 
+            const fechaInicio = link.getAttribute('data-fecha-inicio');
             
-            const fechaStr = link.getAttribute('data-fecha');
-            const urlDestino = link.getAttribute('data-url');
-            const ahora = new Date();
-            
-            if (!fechaStr) {
-                modalTitle.textContent = 'Examen No Disponible';
-                modalBody.textContent = 'Este examen aún no tiene una fecha asignada. Por favor, contacta a tu profesor.';
-                avisoModal.show();
-                return;
-            }
-
-            const fechaExamen = new Date(fechaStr);
-
-            if (isNaN(fechaExamen.getTime()) || fechaExamen < ahora) {
-                const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-                const fechaFormateada = fechaExamen.toLocaleDateString('es-MX', opciones);
-
-                modalTitle.textContent = 'Acceso Denegado';
-                modalBody.textContent = `La fecha límite para este examen ya pasó (${fechaFormateada}). No puedes acceder.`;
-                avisoModal.show();
-                return;
-            }
-            
-            // ✅ Si todas las validaciones pasan, navegamos manualmente con JavaScript
-            window.location.href = urlDestino;
+            spanFechaInicio.textContent = fechaInicio;
         });
-    });
+    }
+
+    const modalVencido = document.getElementById('modalExamenVencido');
+    if (modalVencido) {
+        const spanFechaFin = document.getElementById('fecha-limite-span');
+        
+        modalVencido.addEventListener('show.bs.modal', function(event) {
+            const link = event.relatedTarget;
+            
+            const fechaFin = link.getAttribute('data-fecha-fin');
+            
+            spanFechaFin.textContent = fechaFin;
+        });
+    }
 });

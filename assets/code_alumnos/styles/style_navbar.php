@@ -12,7 +12,7 @@
         width: 600px !important;
     }
     .navbar-custom {
-        background: linear-gradient(90deg, rgb(9, 31, 62), rgb(17, 66, 138));
+        background: #003772ff;
     }
     .navbar-brand {
         font-weight: bold;

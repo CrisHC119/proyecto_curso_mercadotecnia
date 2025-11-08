@@ -39,6 +39,7 @@
         height: 100px; 
         object-fit: cover; 
     }
+
     body.light-mode { 
         --bs-body-bg: #1c1c1e; 
         --bs-body-color: #ffffff; 
@@ -63,6 +64,20 @@
     body.light-mode .card-body .text-body-secondary {
         color: rgba(255, 255, 255, 0.75) !important;
     }
+    body.light-mode .modal-content {
+        background-color: #2c2c2e;
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+    }
+    body.light-mode .modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+    }
+    body.light-mode .modal-footer {
+        border-top-color: rgba(255, 255, 255, 0.15);
+    }
+    body.light-mode .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
     @media (max-width: 576px) {
         h1.h2 {
             font-size: 1.1rem;
@@ -75,58 +90,56 @@
             width: 80px; 
             height: 80px;
         }
-        .alumno-card .card-title {
+        .usuario-card .card-title {
             font-size: 1.0rem;
         }
-        .alumno-card .list-group-item {
+        .usuario-card .list-group-item {
             font-size: 0.7rem;
             padding-top: 0.4rem;
             padding-bottom: 0.6rem;
         }
-        .alumno-card .card-footer {
+        .usuario-card .card-footer {
             text-align: center !important; 
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
-        .alumno-card .card-footer .btn {
+        .usuario-card .card-footer .btn {
             width: 100%;
         }
-        #detallesAlumnoModal .modal-body {
-            padding: 1rem;
-        }
-        #detallesAlumnoModal .row.align-items-center {
+        .usuario-card .col-sm-8 {
             text-align: center;
         }
-        #modalAvatar {
+
+        #detallesPersonalModal .modal-body {
+            padding: 1rem;
+        }
+        #detallesPersonalModal .row.align-items-center {
+            text-align: center;
+        }
+        #modalAvatarPersonal {
             width: 100px !important; 
             height: 100px !important;
         }
-        #modalNombreCompleto {
+        #modalNombreCompletoPersonal {
             font-size: 1.2rem; 
         }
         .modal-body p {
             font-size: 0.8rem;
         }
-        .modal-body h5 { 
-            font-size: 1.0rem;
-            text-align: center;
-        }
-        #detallesAlumnoModal .modal-body .row.text-center .col {
-            flex-basis: 100%;
-            margin-bottom: 1rem;
-        }
-        #detallesAlumnoModal .modal-body .row.text-center .col:last-child {
-            margin-bottom: 0;
-        }
-        .progress {
-            height: 20px !important; 
-        }
-        .progress-bar {
-            font-size: 0.85rem;
-        }
-        .alumno-card .col-sm-8 {
-            text-align: center;
-        }
+    }
+    body.light-mode .modal-content .form-label {
+        color: #f8f9fa;
+    }
+    body.light-mode .modal-content .text-muted {
+        color: rgba(255, 255, 255, 0.55);
+    }
+    body.light-mode .modal-content {
+        background-color: #2c2c2e;
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+    }
+    body.light-mode .modal-content .text-muted {
+        color: rgba(255, 255, 255, 0.7) !important;
     }
 </style>

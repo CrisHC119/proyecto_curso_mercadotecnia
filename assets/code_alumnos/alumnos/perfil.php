@@ -16,7 +16,6 @@
     include_once __DIR__ . '/../styles/style_perfil.php';
 ?>
 <?php
-// Muestra mensajes de éxito o error y luego los borra
 if (isset($_SESSION['success_ajustes'])) {
     echo '<div class="alert alert-success text-center" role="alert">' . $_SESSION['success_ajustes'] . '</div>';
     unset($_SESSION['success_ajustes']);
@@ -39,15 +38,15 @@ if (isset($_SESSION['error_ajustes'])) {
                 <div class="form-grid">
                     <div>
                         <label for="nombre"><?php echo $textos['nombre']; ?></label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo htmlspecialchars($_SESSION['nombre']); ?>" required>
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo htmlspecialchars($_SESSION['nombre']); ?>" maxlength="20" required>
                     </div>
                     <div>
                         <label for="apellido_p"><?php echo $textos['a_paterno']; ?></label>
-                        <input type="text" id="apellido_p" name="apellido_p" class="form-control" value="<?php echo htmlspecialchars($_SESSION['apellido_p']); ?>" required>
+                        <input type="text" id="apellido_p" name="apellido_p" class="form-control" value="<?php echo htmlspecialchars($_SESSION['apellido_p']); ?>" maxlength="20" required>
                     </div>
                     <div>
                         <label for="apellido_m"><?php echo $textos['a_materno']; ?></label>
-                        <input type="text" id="apellido_m" name="apellido_m" class="form-control" value="<?php echo htmlspecialchars($_SESSION['apellido_m']); ?>">
+                        <input type="text" id="apellido_m" name="apellido_m" class="form-control" value="<?php echo htmlspecialchars($_SESSION['apellido_m']); ?>" maxlength="20" required>
                     </div>
                 </div>
                 <div class="form-grid mt-4">
@@ -64,11 +63,11 @@ if (isset($_SESSION['error_ajustes'])) {
                 <div class="form-grid mt-4">
                     <div>
                         <label for="oldpass"><?php echo $textos['pass_actual']; ?></label>
-                        <input type="password" id="oldpass" name="oldpass" class="form-control">
+                        <input type="password" id="oldpass" name="oldpass" class="form-control" maxlength="20">
                     </div>
                     <div>
                         <label for="pass"><?php echo $textos['pass_new']; ?></label>
-                        <input type="password" id="pass" name="pass" class="form-control">
+                        <input type="password" id="pass" name="pass" class="form-control" maxlength="20">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-actualizar"><?php echo $textos['act_pass']; ?></button>
@@ -104,7 +103,7 @@ if (isset($_SESSION['error_ajustes'])) {
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalExitoLabel"><?php echo $textos['registro_exitoso']; // O un texto como "¡Éxito!" ?></h5>
+                    <h5 class="modal-title" id="modalExitoLabel"><?php echo $textos['registro_exitoso']; ?></h5>
                 </div>
                 <div class="modal-body text-center p-4">
                     <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>

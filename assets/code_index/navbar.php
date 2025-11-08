@@ -17,7 +17,7 @@
         ?>
     </head>
     <body class="d-flex flex-column min-vh-100">
-        <nav class="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
+        <nav class="navbar navbar-dark navbar-expand-md fixed-top navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" title="<?php echo $textos['title_home']; ?>" href="/index.php?lang=<?php echo $_SESSION['lang']; ?>">
                     <i class="bi bi-mortarboard-fill me-2"></i>ITCV - <?php echo $textos['titulo']; ?>  
@@ -74,11 +74,6 @@
             <li><a class="dropdown-item <?= $idioma == 'es' ? 'active' : '' ?>" href="?lang=es">Español</a></li>
             <li><a class="dropdown-item <?= $idioma == 'en' ? 'active' : '' ?>" href="?lang=en">English</a></li>
             </ul>
-        </li>
-        <li class="nav-item ms-2">
-            <button id="toggleMode" class="btn btn-outline-secondary" title="<?php echo $textos['title_night_mode']; ?>">
-            <i id="modeIcon" class="bi bi-moon"></i>
-            </button>
         </li>
         </ul>
     </div>
