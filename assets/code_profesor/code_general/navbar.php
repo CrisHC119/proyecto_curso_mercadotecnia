@@ -2,7 +2,6 @@
     ob_start();
     include_once __DIR__ . '/../../code_general/verificar_session_apagado.php';
     include_once __DIR__ . '/../../code_general/bootstrap_5.php';
-    include_once __DIR__ . '/../../styles/style_transicion.php';
     include_once __DIR__ . '/../styles/style_navbar.php';
     include_once __DIR__ . '/verificar_idioma.php';
 ?>
@@ -52,6 +51,7 @@
                             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="avatarDropdown" style="min-width: 200px;">
                                 <li><a class="dropdown-item" href="/assets/code_profesor/menu_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['alumnos']; ?></a></li>
                                 <li><a class="dropdown-item" href="/assets/code_profesor/menu_profesores.php?lang=<?php echo $idioma; ?>"><?php echo $textos['profesor']; ?></a></li>
+                                <li><a class="dropdown-item" href="/assets/code_profesor/menu_material.php?lang=<?php echo $idioma; ?>"><?php echo $textos['material']; ?></a></li>
                                 <li><a class="dropdown-item" href="/assets/code_profesor/menu_examenes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['examen']; ?></a></li>
                                 <li><a class="dropdown-item" href="/assets/code_profesor/menu_calificacion_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['calificacion']; ?></a></li>
                                 <li><a class="dropdown-item" href="/assets/code_profesor/menu_ajustes.php?lang=<?php echo $idioma; ?>"><?php echo $textos['ajustes']; ?></a></li>
@@ -71,6 +71,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $page_2; ?>" href="/assets/code_profesor/menu_calificacion_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['calificacion']; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $page_7; ?>" href="/assets/code_profesor/menu_material.php?lang=<?php echo $idioma; ?>"><?php echo $textos['material']; ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $page_3; ?>" href="/assets/code_profesor/menu_alumnos.php?lang=<?php echo $idioma; ?>"><?php echo $textos['alumnos']; ?></a>
