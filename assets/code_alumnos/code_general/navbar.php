@@ -8,7 +8,11 @@
     include_once __DIR__ . '/../styles/style_navbar.php';
 //  include_once __DIR__ . '/../code/contador.php';
     include_once __DIR__ . '/verificar_notificacion.php';
+    include_once __DIR__ . '/../../modelo/timer_sesion.php';
 ?>
+<script>
+    window.INACTIVITY_TIMEOUT = <?php echo $INACTIVITY_TIMEOUT_MS; ?>;
+</script>
 <script src="/assets/scripts/logout_inactividad.js"></script>
 <!DOCTYPE html>
 <html lang="es">
@@ -149,7 +153,7 @@
                     <div id="collapseThemes" class="accordion-collapse collapse" aria-labelledby="headingThemes" data-bs-parent="#mobile-hub-accordion">
                         <div class="accordion-body">
                             <?php
-                                include __DIR__ . '/tarjeta_curso.php';
+                                include __DIR__ . '/tarjeta_curso_movil.php';
                             ?>
                         </div>
                     </div>

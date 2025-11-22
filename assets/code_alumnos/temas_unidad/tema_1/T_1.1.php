@@ -6,7 +6,7 @@
         header("Location: $url");
         exit;
     }
-    $anterior = '../../index_alumnos.php'; 
+    $anterior = 'T_1_introduccion.php'; 
     $siguiente = 'T_1.2.php'; 
     include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>

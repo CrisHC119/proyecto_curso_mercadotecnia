@@ -1,67 +1,111 @@
 <?php
-// archivo: /assets/modelo/profesor/guardar_examen.php
-
 session_start();
 require_once '../conexion.php';
 
-// 1. Seguridad: Verificar que el usuario sea profesor y que el método sea POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Acceso denegado.");
-}
-if (!isset($_SESSION['id_usuario']) || ($_SESSION['id_tipo_usuario'] != 1 && $_SESSION['id_tipo_usuario'] != 2)) {
-    die("No tienes permiso para realizar esta acción.");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Acceso denegado.");
+
+// Verificación básica de sesión de profesor
+if (!isset($_SESSION['id_usuario'])) {
+    die("Error de sesión.");
 }
 
-// 2. Obtener los datos del formulario
-$id_examen = $_POST['id_examen'];
-$preguntas = $_POST['pregunta'];
-$respuestas = $_POST['respuesta'];
-$correctos = $_POST['correcto'];
-
-// 3. Iniciar una transacción para asegurar la integridad de los datos
+$id_examen = intval($_POST['id_examen']);
 $conn->begin_transaction();
 
 try {
-    // 4. Actualizar el texto de cada pregunta
-    $stmtPregunta = $conn->prepare("UPDATE examen_pregunta SET pregunta = ? WHERE id_pregunta = ?");
-    foreach ($preguntas as $id_pregunta => $texto_pregunta) {
-        $stmtPregunta->bind_param("si", $texto_pregunta, $id_pregunta);
-        $stmtPregunta->execute();
-    }
-    $stmtPregunta->close();
+    // --------------------------------------------
+    // 0. ELIMINAR PREGUNTAS MARCADAS
+    // --------------------------------------------
+    if (isset($_POST['preguntas_eliminar']) && is_array($_POST['preguntas_eliminar'])) {
+        foreach ($_POST['preguntas_eliminar'] as $idEliminar) {
+            $idEliminar = intval($idEliminar);
+            
+            // 1. Primero borramos las respuestas asociadas (Integridad referencial manual)
+            $stmtDelResp = $conn->prepare("DELETE FROM examen_respuesta WHERE id_pregunta = ?");
+            $stmtDelResp->bind_param("i", $idEliminar);
+            $stmtDelResp->execute();
+            $stmtDelResp->close();
 
-    // 5. Actualizar el texto de cada respuesta
-    $stmtRespuesta = $conn->prepare("UPDATE examen_respuesta SET respuesta = ? WHERE id_respuesta = ?");
-    foreach ($respuestas as $id_respuesta => $texto_respuesta) {
-        $stmtRespuesta->bind_param("si", $texto_respuesta, $id_respuesta);
-        $stmtRespuesta->execute();
+            // 2. Luego borramos la pregunta
+            $stmtDelPreg = $conn->prepare("DELETE FROM examen_pregunta WHERE id_pregunta = ?");
+            $stmtDelPreg->bind_param("i", $idEliminar);
+            $stmtDelPreg->execute();
+            $stmtDelPreg->close();
+        }
     }
-    $stmtRespuesta->close();
 
-    // 6. Actualizar cuál es la respuesta correcta para cada pregunta
-    $stmtCorrectoReset = $conn->prepare("UPDATE examen_respuesta SET correcto = 0 WHERE id_pregunta = ?");
-    $stmtCorrectoSet = $conn->prepare("UPDATE examen_respuesta SET correcto = 1 WHERE id_respuesta = ?");
-    foreach ($correctos as $id_pregunta => $id_respuesta_correcta) {
-        // Primero, ponemos todas las respuestas de esta pregunta como incorrectas
-        $stmtCorrectoReset->bind_param("i", $id_pregunta);
-        $stmtCorrectoReset->execute();
-        // Luego, marcamos solo la seleccionada como correcta
-        $stmtCorrectoSet->bind_param("i", $id_respuesta_correcta);
-        $stmtCorrectoSet->execute();
+    // --------------------------------------------
+    // 1. ACTUALIZAR PREGUNTAS EXISTENTES
+    // --------------------------------------------
+    if (isset($_POST['pregunta_existente'])) {
+        foreach ($_POST['pregunta_existente'] as $idPregunta => $datos) {
+            // Verificar si esta pregunta no fue marcada para eliminar antes de procesarla
+            if (isset($_POST['preguntas_eliminar']) && in_array($idPregunta, $_POST['preguntas_eliminar'])) {
+                continue; 
+            }
+
+            $textoPregunta = $datos['texto'];
+            $esVF = isset($datos['tipo']) ? 1 : 0;
+            $indiceCorrecto = intval($datos['correcto']);
+
+            $stmtUpdPreg = $conn->prepare("UPDATE examen_pregunta SET pregunta = ?, pre_falso = ? WHERE id_pregunta = ?");
+            $stmtUpdPreg->bind_param("sii", $textoPregunta, $esVF, $idPregunta);
+            $stmtUpdPreg->execute();
+            $stmtUpdPreg->close();
+
+            if (isset($datos['respuestas'])) {
+                foreach ($datos['respuestas'] as $index => $respData) {
+                    if ($esVF && $index > 1) continue; 
+
+                    $idRespuesta = intval($respData['id']);
+                    $textoRespuesta = $respData['texto'];
+                    $esCorrecta = ($index === $indiceCorrecto) ? 1 : 0;
+
+                    $stmtUpdResp = $conn->prepare("UPDATE examen_respuesta SET respuesta = ?, correcto = ? WHERE id_respuesta = ?");
+                    $stmtUpdResp->bind_param("sii", $textoRespuesta, $esCorrecta, $idRespuesta);
+                    $stmtUpdResp->execute();
+                    $stmtUpdResp->close();
+                }
+            }
+        }
     }
-    $stmtCorrectoReset->close();
-    $stmtCorrectoSet->close();
 
-    // 7. Si todo salió bien, confirmamos los cambios
+    // --------------------------------------------
+    // 2. INSERTAR PREGUNTAS NUEVAS
+    // --------------------------------------------
+    if (isset($_POST['pregunta_nueva'])) {
+        $stmtInsPreg = $conn->prepare("INSERT INTO examen_pregunta (id_examen, pregunta, pre_falso) VALUES (?, ?, ?)");
+        $stmtInsResp = $conn->prepare("INSERT INTO examen_respuesta (id_pregunta, respuesta, correcto) VALUES (?, ?, ?)");
+
+        foreach ($_POST['pregunta_nueva'] as $datos) {
+            $textoPregunta = $datos['texto'];
+            $esVF = isset($datos['tipo']) ? 1 : 0;
+            $indiceCorrecto = intval($datos['correcto']);
+
+            $stmtInsPreg->bind_param("isi", $id_examen, $textoPregunta, $esVF);
+            $stmtInsPreg->execute();
+            $nuevoIdPregunta = $conn->insert_id;
+
+            if (isset($datos['respuestas'])) {
+                foreach ($datos['respuestas'] as $index => $textoRespuesta) {
+                    if ($esVF && $index > 1) continue;
+                    
+                    $esCorrecta = ($index === $indiceCorrecto) ? 1 : 0;
+                    $stmtInsResp->bind_param("isi", $nuevoIdPregunta, $textoRespuesta, $esCorrecta);
+                    $stmtInsResp->execute();
+                }
+            }
+        }
+        $stmtInsPreg->close();
+        $stmtInsResp->close();
+    }
+
     $conn->commit();
-
-    // 8. Redirigir de vuelta con un mensaje de éxito
     header("Location: ../../code_profesor/modificar_examen.php?unidad=$id_examen&success=1");
     exit();
 
 } catch (Exception $e) {
-    // 9. Si algo falló, revertimos todos los cambios
     $conn->rollback();
-    die("Error al actualizar el examen. No se guardaron los cambios. Error: " . $e->getMessage());
+    die("Error crítico al guardar: " . $e->getMessage());
 }
 ?>

@@ -10,6 +10,9 @@
         exit;
     }
 ?>
+<script>
+    unidadActual = 0; 
+</script>
 <div class="contenedor-cursos">
     <div id="mainContent">
         <h1 class="text-center mb-4 titulo"><?php echo $textos['titulo']; ?></h1>
@@ -48,9 +51,26 @@
         <div class="tarjeta-curso">
             <h2 class="text-center"><?php echo $textos['pendiente']; ?></h2>
             <div class="border-top border-primary my-3" style="height: 3px; width: 80%; margin: 0 auto;"></div>
-            <p>
-                <?php echo $textos['objetivo_3'];?><br>
-            </p>
+            <?php if (!empty($notificaciones_pendientes)): ?>
+                <ul class="list-group list-group-flush">
+                    <?php foreach ($notificaciones_pendientes as $pendiente): ?>
+                        <li class="list-group-item d-flex align-items-center p-2">
+                            <?php if ($pendiente['tipo'] == 'actividad'): ?>
+                                <i class="bi bi-pencil-fill text-warning me-2 fs-5"></i> 
+                            <?php else: ?>
+                                <i class="bi bi-file-earmark-text-fill text-info me-2 fs-5"></i> 
+                            <?php endif; ?>
+                            <a href="<?php echo htmlspecialchars($pendiente['enlace']); ?>" class="text-decoration-none text-dark small flex-grow-1">
+                                <?php echo htmlspecialchars($pendiente['mensaje']); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p class="text-center text-muted small mt-3">
+                    <?php echo $textos['no_noti']; ?>
+                </p>
+            <?php endif; ?>
         </div>
         <div class="tarjeta-curso">
             <h2 class="text-center"><?php echo $textos['objetivos']; ?></h2>

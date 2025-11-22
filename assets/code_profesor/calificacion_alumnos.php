@@ -151,7 +151,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Lógica del Toast
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('mensaje') === 'ok') {
         const alumno = decodeURIComponent(urlParams.get('alumno') || '');

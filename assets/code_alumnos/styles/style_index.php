@@ -39,6 +39,23 @@
     .btn-downtema:hover::after {
         background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
     }
+    .pdf-viewer-wrapper {
+        position: relative;
+        width: 100%;
+        height: 75vh;
+        min-height: 500px;
+        border: 1px solid #dee2e6;
+        border-top: none;
+    }
+    .pdf-viewer-wrapper iframe.visor-pdf {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    .tab-pane .ratio {
+        border: 1px solid #dee2e6;
+        border-top: none;
+    }
     .btn-tema {
         background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
         border: none;

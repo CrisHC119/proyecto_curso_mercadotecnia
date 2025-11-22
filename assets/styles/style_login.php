@@ -75,10 +75,12 @@
     }
     #switchFormBtn {
         position: fixed;
-        top: 20px;
-        right: 20px;
+        top: 30px;
+        right:50px;
         z-index: 100;
         transition: background-color 0.3s, color 0.3s;
+        padding: 15px 30px;
+        font-size: 1.7rem;
     }
     #loadingOverlay {
         position: fixed;
@@ -161,6 +163,8 @@
             padding: 0.2rem 0.4rem;
             top: 10px;
             right: 10px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
         }
         #liveToast {
             max-width: 240px;

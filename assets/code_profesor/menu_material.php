@@ -31,7 +31,7 @@
             <h4 class="text-center mb-4"><?php echo $textos['tema_3']; ?></h4>
                 <div class="text-center">
                 <a href="scripts/script_acceso_archivos.php?file=tema3" title="<?php echo $textos['title_descargar_temario']; ?>" class="btn btn-tema_3 text-white d-inline-block px-4 py-2">
-                    <?php echo $textos['download_tema_3']; ?> (Pendiente)
+                    <?php echo $textos['download_tema_3']; ?>
                 </a>
             </div>
         </div>

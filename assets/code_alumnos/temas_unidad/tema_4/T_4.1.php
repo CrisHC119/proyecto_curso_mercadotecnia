@@ -6,6 +6,7 @@
         header("Location: $url");
         exit;
     }
+    $anterior = 'T_4_introduccion.php'; 
     $siguiente = 'T_4.2.php'; 
     include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>

@@ -47,7 +47,28 @@ $alumnos = [];
         }
         $stmt_alumnos->close();
     }
-    // --- FIN NUEVO ---
+    $timer_data = [
+        'timer_profesor_min' => 20, // Valor por defecto: 20 minutos
+        'timer_alumno_min' => 20   // Valor por defecto: 20 minutos
+    ];
+
+    // Intentamos insertar la fila ID=1 si no existe, con valores por defecto (20 min)
+    // 20 minutos * 60 seg/min * 1000 ms/seg = 1,200,000 ms
+    $conn->query("INSERT INTO timer_login (id, timer_profesor, timer_alumno) VALUES (1, 1200000, 1200000) ON DUPLICATE KEY UPDATE id=id");
+
+    $stmt_timer = $conn->prepare("SELECT timer_profesor, timer_alumno FROM timer_login WHERE id = 1");
+    if ($stmt_timer) {
+        $stmt_timer->execute();
+        $resultado_timer = $stmt_timer->get_result();
+        if ($resultado_timer->num_rows > 0) {
+            $fila_timer = $resultado_timer->fetch_assoc();
+            // Convertimos de milisegundos a minutos para mostrar en el input
+            // 1 minuto = 60,000 milisegundos
+            $timer_data['timer_profesor_min'] = $fila_timer['timer_profesor'] / 60000;
+            $timer_data['timer_alumno_min'] = $fila_timer['timer_alumno'] / 60000;
+        }
+        $stmt_timer->close();
+    }
 
     if ($profesor_data === null) {
         session_destroy();
@@ -314,7 +335,8 @@ $alumnos = [];
                         </div>
                     </div>
                 </div>
-            </div> <div class="row">
+            </div> 
+            <div class="row">
                 <div class="col-lg-12 mb-4">
                     <div class="card shadow-sm h-100">
                         <div class="card-header">
@@ -380,6 +402,48 @@ $alumnos = [];
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-clock-fill"></i> Configurar Tiempo de Inactividad</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column p-4">
+                            <p class="text-center">Configura el tiempo (en minutos) tras el cual se cerrará la sesión por inactividad.</p>
+                            <form action="../modelo/login_profesor/timer_controller.php" method="POST" id="timerForm" class="flex-fill d-flex flex-column justify-content-center">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="timer_alumno" name="timer_alumno" placeholder="Tiempo inactividad Alumnos (Minutos):" value="<?php echo htmlspecialchars($timer_data['timer_alumno_min']); ?>" min="1" max="120" required>
+                                    <label for="timer_alumno">Tiempo inactividad Alumnos (Minutos):</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="timer_profesor" name="timer_profesor" placeholder="Tiempo inactividad Profesor (Minutos):" value="<?php echo htmlspecialchars($timer_data['timer_profesor_min']); ?>" min="1" max="120" required>
+                                    <label for="timer_profesor">Tiempo inactividad Profesor (Minutos):</label>
+                                </div>
+                                <div class="text-center mt-auto">
+                                    <button type="submit" class="btn btn-primary" id="btnGuardarTimer" disabled>
+                                        <i class="bi bi-save-fill"></i> Guardar Cambios
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-gear"></i> Otra Configuración</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center p-4">
+                            <p class="text-center">Aquí puedes agregar otra sección de ajustes en el futuro.</p>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-secondary" disabled>
+                                    <i class="bi bi-save-fill"></i> Proximamente...
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -516,300 +580,6 @@ $alumnos = [];
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-
-
-<script>
-    const institutos = <?php echo json_encode($institutos); ?>;
-    const etiquetas = Object.keys(institutos).map(clave => ({
-        label: institutos[clave],
-        value: clave
-    }));
-
-    function sinTildes(texto) {
-        if (typeof texto !== 'string') return '';
-        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    }
-
-    $(function () {
-        const $botonGuardar = $('#btnGuardarCambiosProfesor');
-        const modalAjustes = new bootstrap.Modal(document.getElementById('confirmAjustesModal'));
-        
-        const valoresIniciales = {
-            nombre: "<?php echo htmlspecialchars($profesor_data['nombres']); ?>",
-            apaterno: "<?php echo htmlspecialchars($profesor_data['apellido_paterno']); ?>",
-            amaterno: "<?php echo htmlspecialchars($profesor_data['apellido_materno']); ?>",
-            campus: "<?php echo htmlspecialchars($profesor_data['campus']); ?>"
-        };
-
-        const valoresCalificacionIniciales = {};
-        for (let i = 1; i <= 5; i++) {
-            valoresCalificacionIniciales[i] = {
-                examen: $('#examen_unidad_' + i).val(),
-                actividad: $('#actividad_unidad_' + i).val(),
-                asistencia: $('#asistencia_unidad_' + i).val(),
-                proyecto: $('#proyecto_final_unidad_' + i).val()
-            };
-        }
-
-        function verificarCambios() {
-            const nombreActual = $('#nombreProfesor').val();
-            const apaternoActual = $('#apaternoProfesor').val();
-            const amaternoActual = $('#amaternoProfesor').val();
-            const campusActual = $('#campusProfesor').val();
-            const nuevaPassActual = $('#nuevaContrasena').val();
-            const confirmarPassActual = $('#confirmarContrasena').val();
-            const datosPersonalesCambiados = 
-                nombreActual !== valoresIniciales.nombre ||
-                apaternoActual !== valoresIniciales.apaterno ||
-                amaternoActual !== valoresIniciales.amaterno ||
-                campusActual !== valoresIniciales.campus;
-            const contrasenaCambiada = nuevaPassActual !== '' || confirmarPassActual !== '';
-            $botonGuardar.prop('disabled', !(datosPersonalesCambiados || contrasenaCambiada));
-        }
-
-        $('#nombreProfesor, #apaternoProfesor, #amaternoProfesor, #nuevaContrasena, #confirmarContrasena').on('input', verificarCambios);
-
-        $("#campus_autocompletado_profesor").autocomplete({
-            source: function (request, response) {
-                const termino = sinTildes(request.term);
-                const resultados = etiquetas.filter(item => sinTildes(item.label).includes(termino));
-                response(resultados);
-            },
-            minLength: 1,
-            select: function (event, ui) {
-                $("#campus_autocompletado_profesor").val(ui.item.label); 
-                $("#campusProfesor").val(ui.item.value);
-                verificarCambios();
-                return false;
-            },
-        });
-
-        const claveActual = $("#campusProfesor").val();
-        if (claveActual && institutos[claveActual]) {
-            $("#campus_autocompletado_profesor").val(institutos[claveActual]);
-        }
-
-        $("#campus_autocompletado_profesor").on('input', function() {
-            const textoVisible = $(this).val().trim();
-            const match = etiquetas.find(item => sinTildes(item.label) === sinTildes(textoVisible));
-            if (match) {
-                $("#campusProfesor").val(match.value);
-            } else {
-                $("#campusProfesor").val("");
-            }
-            verificarCambios();
-        });
-
-        $botonGuardar.on('click', function() {
-            const nombre = $('#nombreProfesor').val().trim();
-            const apaterno = $('#apaternoProfesor').val().trim();
-            const amaterno = $('#amaternoProfesor').val().trim();
-            const nombreCampus = $("#campus_autocompletado_profesor").val().trim();
-            const claveCampus = $("#campusProfesor").val().trim();
-            
-            if (nombre === '' || apaterno === '' || amaterno === '') {
-                alert("Por favor, completa todos los campos de nombre y apellidos.");
-                if (nombre === '') $('#nombreProfesor').focus();
-                else if (apaterno === '') $('#apaternoProfesor').focus();
-                else $('#amaternoProfesor').focus();
-                return;
-            }
-            if (nombreCampus === "") {
-                alert("Por favor, ingresa el nombre de tu campus.");
-                $("#campus_autocompletado_profesor").focus();
-                return;
-            }
-            if (claveCampus === "") {
-                alert("El campus '" + nombreCampus + "' no es válido. Por favor, selecciónelo de la lista desplegable.");
-                $("#campus_autocompletado_profesor").focus();
-                return;
-            }
-            modalAjustes.show();
-        });
-        
-        const modalAvatarEl = document.getElementById('modalAvatarProfesor');
-        const inputAvatarFile = document.getElementById('inputAvatarFile');
-        
-        function resetAvatarModal() {
-        }
-
-        modalAvatarEl.addEventListener('show.bs.modal', resetAvatarModal);
-        
-        inputAvatarFile.addEventListener('change', function() {
-        });
-
-        function actualizarSumaUnidad(unidadId) {
-            const $examenInput = $('#examen_unidad_' + unidadId);
-            const $actividadInput = $('#actividad_unidad_' + unidadId);
-            const $asistenciaInput = $('#asistencia_unidad_' + unidadId);
-            const $proyectoInput = $('#proyecto_final_unidad_' + unidadId);
-            const $sumaBadge = $('#suma_unidad_' + unidadId);
-
-            const examenValStr = $examenInput.val();
-            const actividadValStr = $actividadInput.val();
-            const asistenciaValStr = $asistenciaInput.val();
-            const proyectoValStr = $proyectoInput.val();
-
-            const allEmpty = examenValStr === '' && actividadValStr === '' && asistenciaValStr === '' && proyectoValStr === '';
-            const someEmpty = examenValStr === '' || actividadValStr === '' || asistenciaValStr === '' || proyectoValStr === '';
-
-            if (allEmpty) {
-                $sumaBadge.text('Suma: 0%');
-                $sumaBadge.removeClass('bg-success bg-danger').addClass('bg-secondary');
-                return;
-            }
-
-            if (someEmpty) {
-                $sumaBadge.text('Suma: N/A');
-                $sumaBadge.removeClass('bg-success bg-secondary').addClass('bg-danger');
-                return;
-            }
-
-            const examenVal = parseInt(examenValStr) || 0;
-            const actividadVal = parseInt(actividadValStr) || 0;
-            const asistenciaVal = parseInt(asistenciaValStr) || 0;
-            const proyectoVal = parseInt(proyectoValStr) || 0;
-
-            const suma = examenVal + actividadVal + asistenciaVal + proyectoVal;
-
-            $sumaBadge.text('Suma: ' + suma + '%');
-
-            if (suma === 100) {
-                $sumaBadge.removeClass('bg-secondary bg-danger').addClass('bg-success');
-            } else {
-                $sumaBadge.removeClass('bg-secondary bg-success').addClass('bg-danger');
-            }
-        }
-
-        function validarTodosLosValores() {
-            const $botonValores = $('#btnGuardarValores');
-            let todoValido = true;
-            let hayCambios = false;
-            
-            for (let i = 1; i <= 5; i++) {
-                const examenVal = $('#examen_unidad_' + i).val();
-                const actividadVal = $('#actividad_unidad_' + i).val();
-                const asistenciaVal = $('#asistencia_unidad_' + i).val();
-                const proyectoVal = $('#proyecto_final_unidad_' + i).val();
-
-                if (
-                    examenVal !== valoresCalificacionIniciales[i].examen ||
-                    actividadVal !== valoresCalificacionIniciales[i].actividad ||
-                    asistenciaVal !== valoresCalificacionIniciales[i].asistencia ||
-                    proyectoVal !== valoresCalificacionIniciales[i].proyecto
-                ) {
-                    hayCambios = true;
-                }
-
-                const allEmpty = (examenVal === '' && actividadVal === '' && asistenciaVal === '' && proyectoVal === '');
-                const someEmpty = (examenVal === '' || actividadVal === '' || asistenciaVal === '' || proyectoVal === '');
-
-                if (allEmpty) {
-                    continue; 
-                }
-
-                if (someEmpty) { 
-                    todoValido = false;
-                    break; 
-                }
-
-                const suma = (parseInt(examenVal) || 0) + 
-                             (parseInt(actividadVal) || 0) + 
-                             (parseInt(asistenciaVal) || 0) +
-                             (parseInt(proyectoVal) || 0);
-                
-                if (suma !== 100) {
-                    todoValido = false;
-                    break; 
-                }
-            }
-            
-            $botonValores.prop('disabled', !(todoValido && hayCambios));
-        }
-
-        for (let i = 1; i <= 5; i++) {
-            actualizarSumaUnidad(i);
-            
-            $('#examen_unidad_' + i + ', #actividad_unidad_' + i + ', #asistencia_unidad_' + i + ', #proyecto_final_unidad_' + i).on('input', function() { 
-                actualizarSumaUnidad(i);
-                validarTodosLosValores();
-            });
-        }
-        
-        validarTodosLosValores();
-
-        $('#valoresForm').on('submit', function(e) {
-            let allValid = true;
-            let firstErrorUnit = -1;
-            for (let i = 1; i <= 5; i++) {
-                const $examenInput = $('#examen_unidad_' + i);
-                const $actividadInput = $('#actividad_unidad_' + i);
-                const $asistenciaInput = $('#asistencia_unidad_' + i);
-                const $proyectoInput = $('#proyecto_final_unidad_' + i);
-
-                const examenVal = $examenInput.val();
-                const actividadVal = $actividadInput.val();
-                const asistenciaVal = $asistenciaInput.val();
-                const proyectoVal = $proyectoInput.val();
-
-                if (examenVal === '' && actividadVal === '' && asistenciaVal === '' && proyectoVal === '') {
-                    continue;
-                }
-
-                if (examenVal === '' || actividadVal === '' || asistenciaVal === '' || proyectoVal === '') {
-                    allValid = false;
-                    firstErrorUnit = i;
-                    alert('Error en Unidad ' + i + ': Debe completar TODOS los valores (Examen, Actividades, Asistencia y Proyecto) o dejar TODOS vacíos.');
-                    break;
-                }
-
-                const suma = (parseInt(examenVal) || 0) + 
-                             (parseInt(actividadVal) || 0) + 
-                             (parseInt(asistenciaVal) || 0) +
-                             (parseInt(proyectoVal) || 0);
-                
-                if (suma !== 100) {
-                    allValid = false;
-                    firstErrorUnit = i;
-                    alert('Error en Unidad ' + i + ': La suma de los valores debe ser 100. Actualmente suma ' + suma + '%.');
-                    break;
-                }
-            }
-            if (!allValid) {
-                e.preventDefault();
-                if (firstErrorUnit !== -1) {
-                    if ($('#examen_unidad_' + firstErrorUnit).val() === '') {
-                        $('#examen_unidad_' + firstErrorUnit).focus();
-                    } else if ($('#actividad_unidad_' + firstErrorUnit).val() === '') {
-                        $('#actividad_unidad_' + firstErrorUnit).focus();
-                    } else if ($('#asistencia_unidad_' + firstErrorUnit).val() === '') {
-                        $('#asistencia_unidad_' + firstErrorUnit).focus();
-                    } else {
-                        $('#proyecto_final_unidad_' + firstErrorUnit).focus();
-                   }
-                }
-            }
-        });
-
-        document.getElementById("btnDescargarAlumnosPDF").addEventListener("click", function () {
-            try {
-                const doc = new jsPDF();
-                doc.text("Lista de Alumnos", 14, 20);
-                doc.autoTable({
-                    html: '#tabla-lista-alumnos',
-                    startY: 30,
-                    styles: { fontSize: 10, cellPadding: 2 },
-                    headStyles: { fillColor: [52, 58, 64] }
-                });
-                doc.save("lista_alumnos.pdf");
-            } catch (error) {
-                console.error("Error al generar el PDF:", error);
-                alert("Hubo un error al generar el PDF. Ver consola para más detalles.");
-            }
-        });
-
-    });
-</script>
-
-</body>
-</html>
+<?php
+    include_once __DIR__ . '/scripts/script_menu_ajustes_1.php';
+?>

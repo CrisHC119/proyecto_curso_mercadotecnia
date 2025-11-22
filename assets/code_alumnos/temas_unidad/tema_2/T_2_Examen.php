@@ -1,188 +1,309 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-session_start();
-require_once '../../../modelo/conexion.php';
+    session_start();
+    require_once '../../../modelo/conexion.php'; 
 
-$id_usuario = $_SESSION['id_usuario'] ?? null;
-if (!$id_usuario) die("Usuario no identificado.");
+    $id_usuario = $_SESSION['id_usuario'] ?? null;
+    if (!$id_usuario) {
+        die("Acceso denegado: Usuario no identificado.");
+    }
+    
+    // --- CONFIGURACIÓN UNIDAD 2 ---
+    $id_examen = 2;
+    $id_unidad_actual = 2;
+    
+    $puntos_totales = null;
+    $examen_enviado = $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST);
+    $zonaHorariaLocal = new DateTimeZone('America/Mexico_City');
+    
+    // --- 1. DATOS DEL ALUMNO ---
+    $sqlTipo = $conn->prepare("SELECT tipo_examen_U2, calf_2, examen_U2, inicio_examen_U2 FROM alumnos_calificacion WHERE id_usuario = ?");
+    $sqlTipo->bind_param("i", $id_usuario);
+    $sqlTipo->execute();
+    $resTipo = $sqlTipo->get_result();
+    $row = $resTipo->fetch_assoc();
+    
+    $examenYaRealizado = ($row && $row['examen_U2'] == 1);
+    $inicio_examen_db = $row ? $row['inicio_examen_U2'] : null;
 
-// ✅ 1. VARIABLES DE UNIDAD
-$id_unidad = 2;
-$id_examen = 2; // Asumiendo que el id_examen corresponde al id_unidad
-$puntos_totales = null;
+    // --- 2. TEXTOS ---
+    define('ROOT_PATH', dirname(__DIR__, 4));
+    $idioma = $_SESSION['idioma'] ?? 'es';
+    $rutaArchivo = ROOT_PATH . "/assets/lang/lang_{$idioma}.json"; 
+    if (!file_exists($rutaArchivo)) { 
+        $rutaArchivo = ROOT_PATH . "/assets/lang/lang_es.json"; 
+    }
+    $textos = json_decode(file_get_contents($rutaArchivo), true);
 
-// ✅ 2. CONTROL DE TIEMPO (usando sesión para Unidad 2)
-if (!isset($_SESSION['inicio_examen_U2'])) {
-    $_SESSION['inicio_examen_U2'] = time();
-}
-$limite = 10 * 60; // 10 minutos
-$tiempo_restante = $limite - (time() - $_SESSION['inicio_examen_U2']);
-if ($tiempo_restante <= 0 && $_SERVER['REQUEST_METHOD'] !== 'POST') {
-    unset($_SESSION['inicio_examen_U2']); // Limpiar timer
-    echo "<script>alert('Tiempo agotado.'); window.location.href='../index_alumnos.php';</script>";
-    exit;
-}
+    // --- 3. VERIFICACIONES ---
+    if (!$examen_enviado) {
+        if ($examenYaRealizado) {
+            echo "<script>alert('Ya has realizado este examen.'); window.location.href='../../index_alumnos.php';</script>";
+            exit;
+        }
 
-// ✅ 3. IDIOMA (con ruta corregida y robusta)
-define('ROOT_PATH', dirname(__DIR__, 4));
-$idiomas = ['es' => 'Español', 'en' => 'English'];
-$idioma = $_SESSION['idioma'] ?? 'es';
-$rutaArchivo = ROOT_PATH . "/assets/lang/lang_{$idioma}.json";
-if (!file_exists($rutaArchivo)) {
-    $rutaArchivo = ROOT_PATH . "/assets/lang/lang_es.json";
-}
-$textos = json_decode(file_get_contents($rutaArchivo), true);
+        $stmt_fechas = $conn->prepare("SELECT fecha_disponible, fecha_limite FROM examen_unidad WHERE id_unidad = ?");
+        $stmt_fechas->bind_param("i", $id_unidad_actual); 
+        $stmt_fechas->execute(); 
+        $examen_info = $stmt_fechas->get_result()->fetch_assoc();
+        $stmt_fechas->close();
 
-// ✅ 4. VERIFICAR GRUPO DE EXAMEN (usando columnas para Unidad 2)
-$sqlTipo = $conn->prepare("SELECT tipo_examen_U2, calf_2, examen_U2 FROM alumnos_calificacion WHERE id_usuario = ?");
-$sqlTipo->bind_param("i", $id_usuario);
-$sqlTipo->execute();
-$resTipo = $sqlTipo->get_result();
-$row = $resTipo->fetch_assoc();
+        $mensajeError = '';
 
-$examen_enviado = $_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0;
+        if (!$examen_info || is_null($examen_info['fecha_disponible']) || is_null($examen_info['fecha_limite'])) {
+            $mensajeError = 'Las fechas para este examen no han sido configuradas...';
+        } else {
+            $ahora = new DateTime("now", $zonaHorariaLocal);
+            $inicio = new DateTime($examen_info['fecha_disponible'], $zonaHorariaLocal);
+            $fin = new DateTime($examen_info['fecha_limite'], $zonaHorariaLocal);
 
-if ($row) {
-    // Si el examen ya fue enviado previamente
-    if (!$examen_enviado && $row['examen_U2'] == 1) {
-        echo "<!DOCTYPE html><html lang='{$idioma}'><head><meta charset='UTF-8'><title>Examen Completado</title><link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'></head><body class='bg-light'><div class='container py-5'><div class='alert alert-info text-center'><h4 class='mb-3'>✅ Examen ya realizado</h4><p>Este examen ya fue enviado y no se puede volver a presentar.</p><a href='../index_alumnos.php' class='btn btn-primary mt-3'>Regresar</a></div></div></body></html>";
+            if ($ahora < $inicio) {
+                $mensajeError = 'El examen aún no está disponible...';
+            } elseif ($ahora > $fin) {
+                if (is_null($inicio_examen_db)) { 
+                    $mensajeError = 'El periodo para presentar este examen ha finalizado...';
+                }
+            }
+        }
+
+        if (!empty($mensajeError)) {
+            echo "<div class='container py-5'><div class='alert alert-danger'>$mensajeError</div><a href='../../index_alumnos.php' class='btn btn-primary'>Volver</a></div>";
+            exit;
+        }
+    }
+
+    // --- 4. ASEGURAR FILA ---
+    if (!$row) {
+        $in = $conn->prepare("INSERT INTO alumnos_calificacion (id_usuario, tipo_examen_U2) VALUES (?, 1)");
+        $in->bind_param("ii", $id_usuario);
+        $in->execute();
+        $inicio_examen_db = null; 
+    } else {
+        if ($examenYaRealizado) { 
+            $puntos_totales = $row['calf_2'];
+        }
+    }
+
+    // --- 5. TEMPORIZADOR (60 MIN) ---
+    $limite = 60 * 60; 
+    $tiempo_restante = $limite; 
+    $tiempo_inicio_ts = null;
+
+    if ($inicio_examen_db) {
+        $inicio = new DateTime($inicio_examen_db, $zonaHorariaLocal);
+        $tiempo_inicio_ts = $inicio->getTimestamp();
+        $tiempo_restante = $limite - (time() - $tiempo_inicio_ts);
+        
+    } elseif (!$examen_enviado) {
+        $ahora_sql = (new DateTime("now", $zonaHorariaLocal))->format('Y-m-d H:i:s');
+        $stmt_set_start = $conn->prepare("UPDATE alumnos_calificacion SET inicio_examen_U2 = ? WHERE id_usuario = ? AND inicio_examen_U2 IS NULL");
+        $stmt_set_start->bind_param("si", $ahora_sql, $id_usuario);
+        $stmt_set_start->execute();
+        $stmt_set_start->close();
+        $tiempo_restante = $limite;
+    }
+
+    // --- 6. TIMEOUT ---
+    if ($tiempo_restante <= 0 && !$examen_enviado) {
+        $guardar = $conn->prepare("UPDATE alumnos_calificacion SET calf_2 = 0, examen_U2 = 1 WHERE id_usuario = ? AND examen_U2 = 0");
+        $guardar->bind_param("i", $id_usuario);
+        $guardar->execute();
+        
+        echo "<script>alert('Tu tiempo ha terminado. El examen se cerró automáticamente.'); window.location.href='../../index_alumnos.php';</script>";
         exit;
     }
 
-    $grupo = $row['tipo_examen_U2'];
-    if (is_null($grupo)) {
-        $grupo = rand(1, 3);
-        $up = $conn->prepare("UPDATE alumnos_calificacion SET tipo_examen_U2 = ? WHERE id_usuario = ?");
-        $up->bind_param("ii", $grupo, $id_usuario);
-        $up->execute();
-    }
-    if ($row['examen_U2'] == 1) {
-        $puntos_totales = $row['calf_2'];
-    }
-} else {
-    // Si no hay registro para el alumno, se crea uno nuevo
-    $grupo = rand(1, 3);
-    $in = $conn->prepare("INSERT INTO alumnos_calificacion (id_usuario, tipo_examen_U2) VALUES (?, ?)");
-    $in->bind_param("ii", $id_usuario, $grupo);
-    $in->execute();
-}
+    // --- 7. CARGAR PREGUNTAS ---
+    $stmt = $conn->prepare("SELECT * FROM examen_pregunta WHERE id_examen = ?");
+    $stmt->bind_param("i", $id_examen);
+    $stmt->execute();
+    $todasLasPreguntas = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $totalPreguntas = count($todasLasPreguntas);
 
-$offset = ($grupo - 1) * 5;
+    // Mezclar preguntas
+    shuffle($todasLasPreguntas); 
 
-// ✅ 5. GUARDAR RESPUESTAS (usando columnas para Unidad 2)
-if ($examen_enviado && $puntos_totales === null) {
-    $puntos_totales = 0;
-    foreach ($_POST as $key => $id_respuesta) {
-        if (strpos($key, 'pregunta_') === 0) {
-            $ver = $conn->prepare("SELECT correcto FROM examen_respuesta WHERE id_respuesta = ?");
-            $ver->bind_param("i", $id_respuesta);
-            $ver->execute();
-            $rs = $ver->get_result();
-            if ($rs->fetch_assoc()['correcto']) {
-                $puntos_totales += 20;
+    // --- 8. PROCESAR ENVÍO ---
+    if ($examen_enviado && $puntos_totales === null) {
+        $aciertos = 0;
+
+        foreach ($_POST as $key => $id_respuesta) {
+            if (strpos($key, 'pregunta_') === 0 && is_numeric($id_respuesta)) {
+                $ver = $conn->prepare("SELECT correcto FROM examen_respuesta WHERE id_respuesta = ?");
+                $ver->bind_param("i", $id_respuesta);
+                $ver->execute();
+                $rs = $ver->get_result();
+                $resp_data = $rs->fetch_assoc();
+                
+                if ($resp_data && $resp_data['correcto']) {
+                    $aciertos++;
+                }
             }
         }
+
+        $puntos_totales = ($totalPreguntas > 0) ? round(($aciertos / $totalPreguntas) * 100) : 0;
+
+        $guardar = $conn->prepare("UPDATE alumnos_calificacion SET calf_2 = ?, examen_U2 = 1 WHERE id_usuario = ?");
+        $guardar->bind_param("ii", $puntos_totales, $id_usuario);
+        $guardar->execute();
     }
-
-    $guardar = $conn->prepare("UPDATE alumnos_calificacion SET calf_2 = ?, examen_U2 = 1 WHERE id_usuario = ?");
-    $guardar->bind_param("ii", $puntos_totales, $id_usuario);
-    $guardar->execute();
-    unset($_SESSION['inicio_examen_U2']); // Limpiar el timer al enviar
-}
-
-// 6. CARGAR PREGUNTAS (usa la variable $id_examen que ahora es 2)
-$stmt = $conn->prepare("SELECT * FROM examen_pregunta WHERE id_examen = ? LIMIT 5 OFFSET ?");
-$stmt->bind_param("ii", $id_examen, $offset);
-$stmt->execute();
-$pregs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
-<html lang="<?= $idioma ?>">
+<html lang="<?= htmlspecialchars($idioma) ?>">
 <head>
-  <meta charset="UTF-8">
-  <title>Examen Unidad 2</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Examen Unidad 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .card { border: none; border-radius: 1rem; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); }
+        .card-header { background-color: #0d6efd; color: white; border-top-left-radius: 1rem; border-top-right-radius: 1rem; padding: 1.5rem; }
+        #temporizador { font-size: 1.25rem; font-weight: 500; }
+        .pregunta-bloque { border: 1px solid #e9ecef; border-radius: 0.75rem; padding: 1.5rem; background-color: #fff; }
+        .form-check-label { cursor: pointer; padding: 0.5rem 0.75rem; border-radius: 0.5rem; transition: background-color 0.2s; width: 100%; }
+        .form-check-input { margin-top: 0.7em; }
+        .form-check-input:checked + .form-check-label { background-color: #e9f2ff; font-weight: 500; color: #0d6efd; }
+        .resultado-final { background: linear-gradient(135deg, #28a745, #218838); }
+        .form-check-label.correcta { border: 1px solid #198754; background-color: #e9fdef; color: #146c43; font-weight: bold; }
+        .form-check-label.incorrecta { border: 1px solid #dc3545; background-color: #fdefee; color: #b02a37; }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 h4"><i class="bi bi-file-earmark-text-fill"></i> Examen Unidad 2</h4>
+                <small class="text-white-50">Total de preguntas: <?= $totalPreguntas ?></small>
+            </div>
+            <?php if ($puntos_totales === null) : ?>
+                <span id="temporizador" class="badge bg-light text-primary d-flex align-items-center gap-2">
+                    <i class="bi bi-clock-fill"></i>
+                    <span>--:--</span>
+                </span>
+            <?php endif; ?>
+        </div>
+        <div class="card-body p-4 p-md-5">
+            <form method="POST" id="form-examen">
+                <?php
+                foreach ($todasLasPreguntas as $i => $pregunta) {
+                    $id_pregunta = $pregunta['id_pregunta'];
+                    
+                    // Verificamos si es pregunta de Verdadero/Falso (bit)
+                    $esVF = isset($pregunta['pre_falso']) && $pregunta['pre_falso'] == 1;
+
+                    $texto_pregunta = $textos[$pregunta['pregunta']] ?? $pregunta['pregunta'];
+
+                    echo "<div class='pregunta-bloque mb-4'><p class='fw-bold fs-5'>" . ($i + 1) . ". " . htmlspecialchars($texto_pregunta) . "</p>";
+
+                    $stmtResp = $conn->prepare("SELECT * FROM examen_respuesta WHERE id_pregunta = ?");
+                    $stmtResp->bind_param("i", $id_pregunta);
+                    $stmtResp->execute();
+                    $resps = $stmtResp->get_result()->fetch_all(MYSQLI_ASSOC);
+
+                    // --- FILTRO CRÍTICO: Si es V/F, solo tomamos las primeras 2 respuestas ---
+                    if ($esVF && count($resps) > 2) {
+                        $resps = array_slice($resps, 0, 2);
+                    }
+
+                    // Mezclar respuestas (aleatorio también para V/F según lo solicitado)
+                    shuffle($resps);
+
+                    $seleccionada = $_POST['pregunta_' . $id_pregunta] ?? null;
+
+                    foreach ($resps as $resp) {
+                        $id_respuesta = $resp['id_respuesta'];
+                        $checked = ($id_respuesta == $seleccionada) ? 'checked' : '';
+                        $disabled = ($puntos_totales !== null) ? 'disabled' : '';
+                        $clase_label = '';
+
+                        if ($puntos_totales !== null) { 
+                            if ($resp['correcto']) {
+                                $clase_label = 'correcta';
+                            } elseif ($id_respuesta == $seleccionada && !$resp['correcto']) {
+                                $clase_label = 'incorrecta';
+                            }
+                        }
+
+                        $texto_resp = $textos[$resp['respuesta']] ?? $resp['respuesta'];
+                        echo "<div class='form-check mb-2'>";
+                        echo "<input class='form-check-input' type='radio' name='pregunta_{$id_pregunta}' id='r{$id_respuesta}' value='{$id_respuesta}' {$checked} {$disabled} required>";
+                        echo "<label class='form-check-label {$clase_label}' for='r{$id_respuesta}'>" . htmlspecialchars($texto_resp) . "</label>";
+                        echo "</div>";
+                    }
+                    echo "</div>";
+                }
+                ?>
+
+                <?php if ($puntos_totales === null) : ?>
+                    <div class="text-end mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">Enviar Examen</button>
+                    </div>
+                <?php else : ?>
+                    <div class="alert resultado-final text-white text-center mt-4">
+                        <h3 class="mb-0">Resultado Final: <?= htmlspecialchars($puntos_totales) ?> / 100</h3>
+                        <p class="mb-0">Has acertado <?= $aciertos ?> de <?= $totalPreguntas ?> preguntas.</p>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="../../index_alumnos.php" class="btn btn-secondary">Volver al Inicio</a>
+                    </div>
+                <?php endif; ?>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-  let tiempo = <?= $tiempo_restante ?>;
-  <?php if ($puntos_totales === null): ?>
-  function actualizarTemporizador() {
-    const min = Math.floor(tiempo / 60);
-    const seg = tiempo % 60;
-    const temporizadorEl = document.getElementById('temporizador');
-    if (temporizadorEl) {
-        temporizadorEl.textContent = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+    let tiempoRestante = <?= $tiempo_restante > 0 ? $tiempo_restante : 0 ?>;
+    
+    <?php if ($puntos_totales === null) : ?>
+    const temporizadorEl = document.querySelector('#temporizador span');
+    const formExamen = document.getElementById('form-examen');
+    let intervaloTimer;
+    let submitted = false; 
+
+    function actualizarTemporizador() {
+        if (tiempoRestante <= 0) {
+            temporizadorEl.textContent = '00:00';
+            clearInterval(intervaloTimer); 
+            
+            if (formExamen && !submitted) {
+                submitted = true; 
+                alert("El tiempo ha terminado. El examen se enviará automáticamente.");
+                formExamen.submit();
+            }
+            return;
+        }
+
+        const horas = Math.floor(tiempoRestante / 3600);
+        const minutos = Math.floor((tiempoRestante % 3600) / 60);
+        const segundos = tiempoRestante % 60;
+
+        const hStr = horas > 0 ? horas.toString().padStart(2, '0') + ':' : '';
+        const mStr = minutos.toString().padStart(2, '0');
+        const sStr = segundos.toString().padStart(2, '0');
+
+        temporizadorEl.textContent = `${hStr}${mStr}:${sStr}`;
+        tiempoRestante--;
+    }
+
+    if (formExamen) {
+        formExamen.addEventListener('submit', function() {
+            submitted = true;
+            clearInterval(intervaloTimer); 
+        });
     }
     
-    if (tiempo <= 0) {
-      alert("Tiempo agotado. El examen se enviará automáticamente.");
-      document.getElementById('form-examen').submit();
-    } else {
-      tiempo--;
-      setTimeout(actualizarTemporizador, 1000);
+    if (temporizadorEl) {
+        actualizarTemporizador(); 
+        intervaloTimer = setInterval(actualizarTemporizador, 1000); 
     }
-  }
-  window.onload = actualizarTemporizador;
-  <?php endif; ?>
-</script>
-</head>
-<body class="bg-light">
-<div class="container py-4">
-  <div class="card p-4 shadow">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>Examen Unidad 2 - Grupo <?= $grupo ?></h4>
-      <?php if ($puntos_totales === null): ?>
-        <span id="temporizador" class="badge bg-danger fs-5"></span>
-      <?php endif; ?>
-    </div>
-
-    <form method="POST" id="form-examen">
-    <?php
-    foreach ($pregs as $i => $pregunta) {
-        $id_pregunta = $pregunta['id_pregunta'];
-        $texto = $textos[$pregunta['pregunta']] ?? $pregunta['pregunta'];
-        echo "<div class='mb-4'><p class='fw-bold'>" . ($i+1) . ". $texto</p>";
-        $stmtResp = $conn->prepare("SELECT * FROM examen_respuesta WHERE id_pregunta = ?");
-        $stmtResp->bind_param("i", $id_pregunta);
-        $stmtResp->execute();
-        $resps = $stmtResp->get_result()->fetch_all(MYSQLI_ASSOC);
-
-        // ✅ 8. CORRECCIÓN DE LÓGICA (para mostrar respuestas del usuario)
-        $seleccionada = $_POST['pregunta_'.$id_pregunta] ?? null;
-
-        foreach ($resps as $resp) {
-            $checked = ($resp['id_respuesta'] == $seleccionada) ? 'checked' : '';
-            $disabled = ($puntos_totales !== null) ? 'disabled' : '';
-            $clase = '';
-            if ($puntos_totales !== null) {
-                if ($resp['correcto']) $clase = 'text-success fw-bold';
-                elseif ($resp['id_respuesta'] == $seleccionada) $clase = 'text-danger';
-                else $clase = 'text-muted';
-            }
-            $texto_resp = $textos[$resp['respuesta']] ?? $resp['respuesta'];
-            echo "<div class='form-check'>";
-            echo "<input class='form-check-input' type='radio' name='pregunta_$id_pregunta' id='r{$resp['id_respuesta']}' value='{$resp['id_respuesta']}' $checked $disabled>";
-            echo "<label class='form-check-label $clase' for='r{$resp['id_respuesta']}'>{$texto_resp}</label>";
-            echo "</div>";
-        }
-        echo "</div>";
-    }
-    ?>
-    <?php if ($puntos_totales === null): ?>
-      <div class="text-end">
-        <button class="btn btn-primary">Enviar Examen</button>
-      </div>
-    <?php else: ?>
-      <div class="alert alert-success text-center"><h3>Resultado: <?= $puntos_totales ?> / 100</h3></div>
-      <div class="text-center mt-3">
-        <a href="../index_alumnos.php" class="btn btn-secondary">Regresar</a>
-      </div>
     <?php endif; ?>
-    </form>
-  </div>
-</div>
+</script>
 </body>
 </html>

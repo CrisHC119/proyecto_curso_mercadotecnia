@@ -2,30 +2,43 @@
     session_start();
     ob_start();
     $mensajeResultado = '';
-    $anterior = 'T_1.Glosario.php';
+    // Para la unidad 1, no hay "anterior" lógico o sería el inicio
+    $anterior = '#'; 
     include_once __DIR__ . '/../../../modelo/conexion.php'; 
     include __DIR__ . '/../../code_general/icon_navegacion.php';
+    
     if (isset($_SESSION['mensajeResultado'])) {
         $mensajeResultado = $_SESSION['mensajeResultado'];
         unset($_SESSION['mensajeResultado']);
     }
+    
     $estadoEntrega = 0;
     $calificacion = null;
     $archivosSubidos = [];
 
     $idUnidad = 1; 
-    $numActividad = 1;
+    $numActividad = 1; // Ojo: En tu código original tenías numActividad = 1 para la unidad 1
 
     $identificadorActividad = 'U' . $idUnidad . 'A' . $numActividad;
-    $columnaCalificacion = 'calf_A_' . $numActividad;
+
+    // --- DEFINICIÓN DE COLUMNAS (CORREGIDO) ---
+    // La calificación se toma por UNIDAD
+    $columnaCalificacion = 'calf_A_' . $idUnidad; 
+    
     $columnaFechaInicial = 'act_' . $numActividad . '_fecha_inicial';
     $columnaFechaFinal = 'act_' . $numActividad . '_fecha_final';
+    $columnaActividadEntregado = 'act_unidad_' . $idUnidad;
 
     $actividadAbierta = false; 
     $mensajeEstadoActividad = '';
+    
+    $actividadEntregadaBit = 0;
 
-    $numeroControl = $_SESSION['nocontrol'];
-    $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . "/assets/code_alumnos/actividades/unidad_" . $idUnidad . "/";
+    // --- DATOS DE SESIÓN ---
+    $numeroControl = $_SESSION['nocontrol']; // Para carpetas
+    $idUsuario = $_SESSION['id_usuario'];    // Para Base de Datos
+    
+    $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . "/assets/code_alumnos/actividades/unidad_" . $idUnidad . "/" . $numeroControl . "/";
 
     if (!file_exists($directorioDestino)) {
         mkdir($directorioDestino, 0777, true);
@@ -34,6 +47,7 @@
         $fechaInicialDB = null;
         $fechaFinalDB = null;
 
+        // En Unidad 1, la maestra suele ser la misma (1)
         $stmtFechas = $conn->prepare("SELECT $columnaFechaInicial, $columnaFechaFinal FROM alumnos_actividad_fecha WHERE id_unidad = ?");
         $stmtFechas->bind_param("i", $idUnidad);
         $stmtFechas->execute();
@@ -46,8 +60,9 @@
             $fechaFinalDB = $fechasData[$columnaFechaFinal];
         }
 
+        // 2. Calificación (Usando id_usuario)
         $stmtCalificacion = $conn->prepare("SELECT $columnaCalificacion FROM alumnos_actividad WHERE id_usuario = ?");
-        $stmtCalificacion->bind_param("s", $numeroControl);
+        $stmtCalificacion->bind_param("i", $idUsuario); // Entero
         $stmtCalificacion->execute();
         $resultadoCalificacion = $stmtCalificacion->get_result();
         $calificacionData = $resultadoCalificacion->fetch_assoc();
@@ -57,10 +72,24 @@
         }
         $stmtCalificacion->close();
 
+        // 3. Estado de Entrega (Usando id_usuario)
+        $stmtBit = $conn->prepare("SELECT $columnaActividadEntregado FROM actividad_entregado WHERE id_usuario = ?");
+        $stmtBit->bind_param("i", $idUsuario); // Entero
+        $stmtBit->execute();
+        $resultadoBit = $stmtBit->get_result();
+        $bitData = $resultadoBit->fetch_assoc();
+        
+        if ($bitData) {
+            $actividadEntregadaBit = $bitData[$columnaActividadEntregado];
+        }
+        $stmtBit->close();
+
+        // 4. Archivos físicos
         $patronBusqueda = $directorioDestino . $numeroControl . "_" . $identificadorActividad . "_*.*";
         $archivosSubidos = glob($patronBusqueda);
         $estadoEntrega = (count($archivosSubidos) > 0);
 
+        // Lógica de fechas
         if ($fechaInicialDB === null || $fechaFinalDB === null) {
             $actividadAbierta = false;
             $mensajeEstadoActividad = '<div class="alert alert-warning">Esta actividad aún no ha sido configurada por el profesor. No hay fechas de entrega establecidas.</div>';
@@ -86,18 +115,56 @@
         $mensajeResultado = '<div class="alert alert-danger">Error al consultar los datos de la actividad. ' . $e->getMessage() . '</div>';
     }
 
+    // --- CANCELAR ENTREGA ---
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["cancelarEntrega"])) {
+        if (!$actividadAbierta) {
+             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se puede cancelar la entrega porque la actividad está cerrada por fecha.</div>';
+        } elseif ($calificacion > 0) {
+             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se puede cancelar la entrega porque la actividad ya ha sido calificada.</div>';
+        } elseif ($actividadEntregadaBit == 1) {
+            try {
+                // Update usando id_usuario
+                $stmtCancelBit = $conn->prepare("UPDATE actividad_entregado SET $columnaActividadEntregado = 0 WHERE id_usuario = ?");
+                $stmtCancelBit->bind_param("i", $idUsuario);
+                $stmtCancelBit->execute();
+                $stmtCancelBit->close();
+                $actividadEntregadaBit = 0;
+                $_SESSION['mensajeResultado'] = '<div class="alert alert-success">¡Entrega cancelada! Ahora puedes modificar o eliminar tus archivos.</div>';
+            } catch (mysqli_sql_exception $e) {
+                $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">Error al cancelar la entrega: ' . $e->getMessage() . '</div>';
+            }
+        } else {
+            $_SESSION['mensajeResultado'] = '<div class="alert alert-warning">La actividad no estaba marcada como entregada.</div>';
+        }
+    }
+
+    // --- ELIMINAR ARCHIVO ---
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["eliminarArchivo"])) {
         if (!$actividadAbierta) {
             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se pueden eliminar archivos porque la actividad está cerrada.</div>';
+        } elseif ($actividadEntregadaBit == 1 && ($calificacion == null || $calificacion == 0)) { 
+             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se pueden eliminar archivos porque la entrega final ya fue marcada. Primero debe cancelarla.</div>';
+        } elseif ($calificacion > 0) {
+             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se pueden eliminar archivos porque la actividad ya fue calificada.</div>';
         } elseif (isset($numeroControl)) {
             $archivoAEliminar = basename($_POST['nombreArchivo']);
             $rutaCompletaArchivo = $directorioDestino . $archivoAEliminar;
 
-            if (strpos($archivoAEliminar, $numeroControl . '_') === 0 && file_exists($rutaCompletaArchivo)) {
+            if (strpos($archivoAEliminar, $numeroControl . '_' . $identificadorActividad . '_') === 0 && file_exists($rutaCompletaArchivo)) {
                 if (unlink($rutaCompletaArchivo)) {
                     $_SESSION['mensajeResultado'] = '<div class="alert alert-success">Archivo "' . htmlspecialchars($archivoAEliminar) . '" eliminado correctamente.</div>';
                     $archivosSubidos = glob($patronBusqueda);
                     $estadoEntrega = (count($archivosSubidos) > 0);
+                    
+                    // Si se queda vacío, actualizamos el bit a 0
+                    if (count($archivosSubidos) === 0 && $actividadEntregadaBit == 1) {
+                        $stmtUpdateBit = $conn->prepare("UPDATE actividad_entregado SET $columnaActividadEntregado = 0 WHERE id_usuario = ?");
+                        $stmtUpdateBit->bind_param("i", $idUsuario); // Usando id_usuario
+                        $stmtUpdateBit->execute();
+                        $stmtUpdateBit->close();
+                        $actividadEntregadaBit = 0;
+                    }
+
                 } else {
                     $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se pudo eliminar el archivo.</div>';
                 }
@@ -107,8 +174,11 @@
         }
     }
 
+    // --- SUBIR ARCHIVO ---
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["subirArchivo"])) {
-        if (!$actividadAbierta) {
+        if ($actividadEntregadaBit == 1) { 
+            $_SESSION['mensajeResultado'] = '<div class="alert alert-warning">La actividad ya ha sido marcada como entregada. Primero debe cancelar la entrega para subir más archivos.</div>';
+        } elseif (!$actividadAbierta) {
             $_SESSION['mensajeResultado'] = '<div class="alert alert-danger">No se pueden subir archivos porque la actividad está cerrada.</div>';
         } elseif (isset($numeroControl)) {
             $conteoExistentes = count($archivosSubidos);
@@ -139,7 +209,6 @@
                         if ($_FILES["archivoActividad"]["error"][$i] == 0) {
                             
                             $nombreOriginal = basename($_FILES["archivoActividad"]["name"][$i]);
-
                             $tipoArchivoOriginal = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
 
                             $nombreChequeo = $numeroControl . "_" . $identificadorActividad . "_" . $nombreOriginal;
@@ -156,7 +225,6 @@
                                     "php", "phtml", "php3", "php4", "php5", "php7", "phps", "phar", 
                                     "asp", "aspx", "cer", "jsp", "cgi", "pl", "py", "sh", 
                                     "htaccess", "htpasswd", "config", "ini",
-                                    
                                     "exe", "bat", "com", "cmd", "vbs", "js", "jar", "scr", "msi"
                                 ];
 
@@ -181,6 +249,13 @@
                     if ($subidasExitosas > 0) {
                         $archivosSubidos = glob($patronBusqueda);
                         $estadoEntrega = (count($archivosSubidos) > 0);
+
+                        // Insert/Update usando id_usuario
+                        $stmtUpdateBit = $conn->prepare("INSERT INTO actividad_entregado (id_usuario, $columnaActividadEntregado) VALUES (?, 1) ON DUPLICATE KEY UPDATE $columnaActividadEntregado = 1");
+                        $stmtUpdateBit->bind_param("i", $idUsuario);
+                        $stmtUpdateBit->execute();
+                        $stmtUpdateBit->close();
+                        $actividadEntregadaBit = 1; 
                     }
                     $_SESSION['mensajeResultado'] = implode('', $resultadosHTML);
                 }
@@ -197,6 +272,7 @@
         header("Location: " . $urlRedirect);
         exit;
     }
+    
     include_once __DIR__ . '/../../code_general/navbar.php';
     include_once __DIR__ . '/../../styles/style_index.php';
     if (!isset($_GET['lang'])) {
@@ -204,7 +280,6 @@
         header("Location: $url");
         exit;
     }
-    $anterior = 'T_1.Glosario.php'; 
     include __DIR__ . '/../../code_general/icon_navegacion.php';
 ?>
 <div class="contenedor-cursos">
@@ -277,17 +352,17 @@
                     <div class="stat-item">
                         <span class="stat-label"><?php echo $textos['calificacion']; ?></span>
                         <?php if ($calificacion !== null && $calificacion > 0): ?>
-                            <span class="stat-value text-primary">                             
+                            <span class="stat-value text-primary">                            
                                 <i class="fas fa-award me-2"></i><?php echo htmlspecialchars($calificacion); ?> / 100
-                            </span>                     
-                        <?php else: ?>                         
-                            <span class="stat-value text-muted">                             
+                            </span>                        
+                        <?php else: ?>                        
+                            <span class="stat-value text-muted">                            
                                 <i class="fas fa-hourglass-half me-2"></i><?php echo $textos['sin_calificar']; ?>                        
-                            </span>                     
-                        <?php endif; ?>                 
-                    </div>             
-                </div>                         
-                <hr><h6 class="mb-2"><strong><?php echo $textos['archivos_subidos']; ?>   </strong></h6>
+                            </span>                        
+                        <?php endif; ?>                        
+                    </div>                    
+                </div>                    
+                <hr><h6 class="mb-2"><strong><?php echo $textos['archivos_subidos']; ?>    </strong></h6>
                 <?php if (!empty($archivosSubidos)): ?>
                     <ul class="list-group list-group-flush" id="listaArchivosCargadosPreviamente">
                         <?php
@@ -305,7 +380,7 @@
                                 <i class="fas fa-file-alt text-secondary me-2"></i>
                                 <?php echo htmlspecialchars($nombreArchivoBase); ?>
                             </a>
-                            <?php if (($calificacion == null || $calificacion == 0) && $actividadAbierta): ?>
+                            <?php if (($calificacion == null || $calificacion == 0) && $actividadAbierta && $actividadEntregadaBit == 0): ?>
                                 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?lang=' . $idioma; ?>" style="margin: 0;">
                                     <input type="hidden" name="nombreArchivo" value="<?php echo htmlspecialchars($nombreArchivoBase); ?>">
                                     <button type="submit" name="eliminarArchivo" class="btn btn-danger btn-sm" onclick="return confirm('<?php echo $textos['eliminar_archivo_aviso']; ?>');">
@@ -318,7 +393,7 @@
                     </ul>
                 <?php else: ?>
                     <p class="text-muted"><?php echo $textos['sin_archivos']; ?></p>
-                <?php endif; ?>   
+                <?php endif; ?>  
             </div>
             <?php if (!isset($numeroControl)): ?>
                 <div class="alert alert-warning">Debes <a href="/login.php">iniciar sesión</a> para entregar la actividad.</div>
@@ -326,26 +401,41 @@
                 <div class="alert alert-info"><?php echo $textos['aviso_entrega']; ?></div>
             <?php elseif (!$actividadAbierta && isset($numeroControl)): ?>
                 <?php echo $mensajeEstadoActividad; ?>
+            <?php elseif ($actividadEntregadaBit == 1): ?>
+                <div class="card p-3 mb-4 shadow-sm text-center">
+                    <div class="alert alert-success d-flex align-items-center justify-content-center mb-3" role="alert">
+                        <i class="fas fa-check-double fa-2x me-3"></i>
+                        <div>
+                            <strong>¡Actividad Entregada!</strong> La actividad fue marcada como entregada.
+                        </div>
+                    </div>
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?lang=' . $idioma; ?>" style="margin: 0;">
+                        <input type="hidden" name="cancelarEntrega" value="1">
+                        <button type="submit" class="btn btn-warning w-100" onclick="return confirm('¿Estás seguro de que deseas CANCELAR la entrega? Esto te permitirá editar o borrar archivos.');">
+                            <i class="fas fa-undo me-2"></i>Cancelar Entrega
+                        </button>
+                    </form>
+                </div>
             <?php else:  ?>
             <div class="card p-3 mb-4 shadow-sm">
                 <h5 class="card-title"><?php echo $textos['entregar_actividad']; ?></h5>
                 <p class="card-text text-muted"><?php echo $textos['aviso_tamaño_archivo']; ?></p>
                 <form id="uploadForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?lang=' . $idioma; ?>" method="post" enctype="multipart/form-data" novalidate>
                     <input class="form-control" type="file" name="archivoActividad[]" id="archivoActividad" multiple style="display: none;">
-                    <div id="dropZone" class="drop-zone">   
+                    <div id="dropZone" class="drop-zone">  
                         <span class="drop-zone__prompt">  
                             <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i><br>
                             <?php echo $textos['arrastra_archivo_1']; ?><strong><?php echo $textos['arrastra_archivo_2']; ?></strong>
-                        </span>             
-                    </div>                         
-                    <div id="listaArchivos" class="mb-3 mt-3"></div>                         
-                    <button type="submit" id="btnSubirArchivo" class="btn btn-primary w-100" name="subirArchivo" disabled>                 
+                        </span>     
+                    </div>          
+                    <div id="listaArchivos" class="mb-3 mt-3"></div>          
+                    <button type="submit" id="btnSubirArchivo" class="btn btn-primary w-100" name="subirArchivo" disabled>          
                         <i class="fas fa-upload me-2"></i><?php echo $textos['marcar_entrega']; ?>
-                    </button>         
+                    </button>     
                 </form>
                 <?php if (!empty($mensajeResultado)): ?>
                     <div class="mt-3">
-                        <?php $mensajeResultado; ?>
+                        <?php echo $mensajeResultado; ?>
                     </div>
                 <?php endif; ?>
             </div>
@@ -451,9 +541,9 @@
         #mainContent .card .card-text, 
         #mainContent .card .stat-label,
         #mainContent .card .stat-value,
-        #mainContent .card h6,         
+        #mainContent .card h6,          
         #mainContent .card .text-muted,
-        #mainContent .card .alert {    
+        #mainContent .card .alert {     
             font-size: 0.8rem;
         }
         #mainContent .card .drop-zone__prompt {
@@ -510,7 +600,16 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const uploadForm = document.getElementById('uploadForm');
-        if (!uploadForm) return;
+        if (!uploadForm) {
+            const btnCancelar = document.querySelector('button[name="cancelarEntrega"]');
+            if (btnCancelar) {
+                const dropZone = document.getElementById('dropZone');
+                if(dropZone) {
+                    dropZone.style.pointerEvents = 'none';
+                }
+            }
+            return;
+        }
 
         const dropZone = document.getElementById('dropZone');
         const hiddenFileInput = document.getElementById('archivoActividad');
@@ -520,6 +619,21 @@
         const MAX_FILES = 5 - <?php echo count($archivosSubidos); ?>;
         
         let fileStore = new DataTransfer();
+        
+        const actividadEntregadaBit = <?php echo $actividadEntregadaBit; ?>;
+        const calificacion = <?php echo $calificacion === null ? 'null' : (float)$calificacion; ?>;
+
+        if (actividadEntregadaBit == 1 || (calificacion !== null && calificacion > 0)) {
+            if (dropZone) dropZone.style.pointerEvents = 'none';
+            if (btnSubirArchivo) {
+                 btnSubirArchivo.disabled = true;
+                 btnSubirArchivo.textContent = "Entrega Final Marcada";
+            }
+            if (dropZone && dropZone.querySelector('.drop-zone__prompt')) {
+                 dropZone.querySelector('.drop-zone__prompt').innerHTML = '<i class="fas fa-lock fa-3x text-danger mb-3"></i><br>La entrega final está marcada. No se permiten más archivos.';
+            }
+            return; 
+        }
 
         dropZone.addEventListener('click', () => {
             hiddenFileInput.click();

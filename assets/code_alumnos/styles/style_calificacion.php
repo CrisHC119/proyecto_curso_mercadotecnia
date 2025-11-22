@@ -58,6 +58,12 @@
         border-left: 5px solid var(--bs-primary);
         background-color: #ffffff;
     }
+    .card-calificacion:last-child {
+        border: 1px solid transparent; 
+        border-radius: 0.5rem;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
     #rubrica-flotante .card-header,
     #rubrica-abajo .card-header {
         background-color: #f8f9fa;
@@ -76,12 +82,11 @@
         padding-bottom: 0.1rem;
     }
     #rubrica-flotante {
-        position: fixed;
-        top: 265px;
-        right: 20px;
-        width: 340px;
+        position: sticky;
+        top: 100px; 
+        width: 100%; 
         z-index: 1010;
-        font-size: 1.2rem;
+        font-size: 1.1rem; 
         border: 1px solid #dee2e6;
         border-radius: 0.5rem;
         background-color: #fff;
@@ -91,7 +96,26 @@
         font-size: 1em; 
     }
     #rubrica-flotante table {
-        font-size: 1.1em;
+        font-size: 1.03em;
+        table-layout: fixed; 
+        width: 100%;
+        margin-top: 5px;
+    }
+    #rubrica-flotante thead th {
+        font-size: 0.75em;
+        line-height: 1.1; 
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.3rem !important;
+        white-space: nowrap;
+    }
+    #rubrica-flotante tbody td {
+        font-size: 1.05em;
+    }
+    #rubrica-flotante th,
+    #rubrica-flotante td {
+        padding: 0.3rem 0.2rem !important;
+        vertical-align: middle;
+        font-weight: 500;
     }
     #rubrica-abajo .card-header {
         font-size: 0.8em;
@@ -160,10 +184,6 @@
     body.light-mode #rubrica-abajo caption {
         color: #a0aec0;
     }
-    body.light-mode #rubrica-flotante table caption,
-    body.light-mode #rubrica-abajo table caption {
-        color: #ffffffff !important;
-    }
     body.light-mode #rubrica-flotante thead,
     body.light-mode #rubrica-abajo thead {
         border-bottom: 1px solid #4a5568;
@@ -182,10 +202,14 @@
         --bs-table-accent-bg: rgba(255, 255, 255, 0.04);
         color: inherit;
     }
-    body.light-mode #rubrica-flotante .table-hover > tbody > tr:hover > * {
+    body.light-mode .table-hover > tbody > tr:hover > * {
         --bs-table-accent-bg: rgba(255, 255, 255, 0.08);
         color: inherit;
     }
+    
+    /* ------------------------------------------- */
+    /* MEDIA QUERIES (Mobile) */
+    /* ------------------------------------------- */
     @media (max-width: 575.98px) {
         .card-calificacion {
             font-size: 1rem;
@@ -228,15 +252,5 @@
             font-size: 1.0rem;
             margin-bottom: 0.5rem;
         }
-    }
-    .card-calificacion {
-        max-width: 700px;
-        font-size: 1.1rem;
-        transition: transform 0.2s, box-shadow 0.2s;
-        margin: auto;
-        border: 1px solid transparent;
-        border-radius: 0.5rem;
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
 </style>
