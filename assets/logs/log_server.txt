@@ -772,3 +772,4 @@
 [2025-12-19 01:52:36] Inicio de sesión (Alumno): Cristian Hernandez de la Cruz (Número de control: 21380393)
 [2025-12-19 02:00:52] Cierre de sesión (21380393)
 [2025-12-19 02:01:03] Inicio de sesión (Alumno): Kris Dremmurr ? (Número de control: 21380400)
+[2025-12-19 02:07:42] Cierre de sesión (21380400)
