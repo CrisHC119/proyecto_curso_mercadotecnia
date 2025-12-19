@@ -1,3 +1,5 @@
+// ocultar_extension.js (eliminado)
+
 window.addEventListener("DOMContentLoaded", () => {
   let url = window.location.href;
   if (url.includes(".php")) {

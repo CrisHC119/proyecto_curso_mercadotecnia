@@ -1,4 +1,6 @@
 <script>
+    // script_login.php
+
     const formAlumno = document.getElementById('formAlumno');
     const formProfesor = document.getElementById('formProfesor');
     const switchFormBtn = document.getElementById('switchFormBtn');
@@ -22,7 +24,6 @@
             switchFormBtn.textContent = '<?php echo $textos['login_profesor']; ?>';
         }
     });
-
     function mostrarToast(mensaje, tipo = 'danger') {
         const toastEl = document.getElementById('liveToast');
         const toastMensaje = document.getElementById('toastMensaje');
@@ -33,36 +34,29 @@
         const bsToast = new bootstrap.Toast(toastEl);
         bsToast.show();
     }
-
     document.getElementById('togglePassword').addEventListener('click', function () {
         const input = document.getElementById('inputPassword5');
         const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
         input.setAttribute('type', type);
         this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
     });
-
     document.getElementById('togglePasswordProfesor').addEventListener('click', function () {
         const input = document.getElementById('inputPasswordProfesor');
         const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
         input.setAttribute('type', type);
         this.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
     });
-
     document.getElementById('nocontrol').addEventListener('input', function () {
     this.value = this.value.replace(/[^a-zA-Z0-9]/g, ''); 
     });
-
     document.getElementById('loginBtn').addEventListener('click', function () {
     const nocontrol = document.getElementById('nocontrol').value.trim();
     const password = document.getElementById('inputPassword5').value.trim();
-
     if (!nocontrol || !password) {
         mostrarToast('<?php echo $textos['login_campos']; ?>', 'warning');
         return;
     }
-
     document.getElementById('loadingOverlay').style.display = 'flex';
-
     fetch('assets/modelo/no_login/login_conexion.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -94,18 +88,14 @@
         mostrarToast('<?php echo $textos['login_error_2']; ?>', 'danger');
         });
     });
-
     document.getElementById('loginProfesorBtn').addEventListener('click', function () {
     const matricula = document.getElementById('matriculaProfesor').value.trim();
     const password = document.getElementById('inputPasswordProfesor').value.trim();
-
     if (!matricula || !password) {
         mostrarToast('<?php echo $textos['login_campos']; ?>', 'warning');
         return;
     }
-
     document.getElementById('loadingOverlay').style.display = 'flex';
-
     fetch('assets/modelo/no_login/login_conexion.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -131,16 +121,13 @@
     window.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('fade-in');
     });
-
     document.querySelectorAll('a[href]').forEach(link => {
         const url = new URL(link.href, window.location.href);
-
         if (url.hostname === window.location.hostname && !url.href.includes('#') && !link.target) {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             document.body.classList.remove('fade-in');
             document.body.classList.add('fade-out');
-
             setTimeout(() => {
             window.location.href = this.href;
             }, 500); 

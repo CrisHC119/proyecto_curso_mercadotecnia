@@ -1,3 +1,5 @@
+// logout_inactividad_profesor.js
+
 const tiempoMaximo = 60000;
 let temporizador;
 

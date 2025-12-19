@@ -1,7 +1,8 @@
+// night_mode.js (eliminado)
+
 const toggleModeBtn = document.getElementById('toggleMode');
 const modeIcon = document.getElementById('modeIcon');
 const body = document.body;
-
 function setMode(isDark) {
     if (isDark) {
         body.classList.remove('light-mode');
@@ -15,12 +16,10 @@ function setMode(isDark) {
         localStorage.setItem('theme', 'light');
     }
 }
-
 toggleModeBtn.addEventListener('click', () => {
     const isDark = !body.classList.contains('light-mode');
     setMode(!isDark);
 });
-
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setMode(savedTheme === 'dark');

@@ -1,6 +1,6 @@
 <?php
+    // contacto.php
     ob_start();
-    // Selecciona la pestaña que se encuentra
     $page_1 = '';
     $page_2 = '';
     $page_3 = 'active';

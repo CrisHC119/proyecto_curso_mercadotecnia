@@ -1,4 +1,5 @@
 <?php
+    // verificar_alumnos.php
     require_once __DIR__ . '/../conexion.php'; 
 
     if (!isset($_SESSION['id_usuario'])) {

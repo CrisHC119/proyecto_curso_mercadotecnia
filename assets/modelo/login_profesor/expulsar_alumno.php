@@ -1,76 +1,66 @@
 <?php
-// archivo: /assets/modelo/profesor/expulsar_alumno.php
+    // eliminar_usuario.php
+    session_start();
+    require_once '../conexion.php';
 
-session_start();
-require_once '../conexion.php';
+    header('Content-Type: application/json');
 
-header('Content-Type: application/json');
-
-// 1. Verificaciones de seguridad
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Método no permitido.']);
-    exit;
-}
-
-$id_profesor = $_SESSION['id_usuario'] ?? null;
-if (!$id_profesor) {
-    echo json_encode(['success' => false, 'message' => 'Sesión no válida. Inicie sesión de nuevo.']);
-    exit;
-}
-
-// 2. Obtener datos del formulario
-$id_usuario_expulsar = $_POST['id_usuario_expulsar'] ?? null;
-$password_profesor = $_POST['password'] ?? null;
-
-if (empty($id_usuario_expulsar) || empty($password_profesor)) {
-    echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos.']);
-    exit;
-}
-
-// 3. Verificar la contraseña del PROFESOR
-$stmtPass = $conn->prepare("SELECT pass FROM usuarios WHERE id_usuario = ?");
-$stmtPass->bind_param("i", $id_profesor);
-$stmtPass->execute();
-$resultPass = $stmtPass->get_result();
-
-if ($resultPass->num_rows === 1) {
-    $profesor = $resultPass->fetch_assoc();
-    if (!password_verify($password_profesor, $profesor['pass'])) {
-        echo json_encode(['success' => false, 'message' => 'La contraseña es incorrecta.']);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode(['success' => false, 'message' => 'Método no permitido.']);
         exit;
     }
-} else {
-    echo json_encode(['success' => false, 'message' => 'No se pudo verificar su identidad.']);
-    exit;
-}
 
-// ✅ 4. SI LA CONTRASEÑA ES CORRECTA, INICIAMOS LA TRANSACCIÓN
-$conn->begin_transaction();
+    $id_profesor = $_SESSION['id_usuario'] ?? null;
+    if (!$id_profesor) {
+        echo json_encode(['success' => false, 'message' => 'Sesión no válida. Inicie sesión de nuevo.']);
+        exit;
+    }
 
-try {
-    // Paso A: Eliminar de la tabla 'alumnos' primero
-    $stmtDeleteAlumnos = $conn->prepare("DELETE FROM alumnos WHERE id_usuario = ?");
-    $stmtDeleteAlumnos->bind_param("i", $id_usuario_expulsar);
-    $stmtDeleteAlumnos->execute();
+    $id_usuario_expulsar = $_POST['id_usuario_expulsar'] ?? null;
+    $password_profesor = $_POST['password'] ?? null;
 
-    // Paso B: Eliminar de la tabla 'usuarios' después
-    $stmtDeleteUsuarios = $conn->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
-    $stmtDeleteUsuarios->bind_param("i", $id_usuario_expulsar);
-    $stmtDeleteUsuarios->execute();
-    
-    // Si ambas operaciones se ejecutaron, confirmamos los cambios
-    $conn->commit();
-    echo json_encode(['success' => true]);
+    if (empty($id_usuario_expulsar) || empty($password_profesor)) {
+        echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos.']);
+        exit;
+    }
 
-} catch (Exception $e) {
-    // Si algo falló en cualquiera de los dos pasos, revertimos todo
-    $conn->rollback();
-    echo json_encode(['success' => false, 'message' => 'Error durante la expulsión. No se realizaron cambios.']);
-    // Opcional: registrar el error $e->getMessage() en un log del servidor
-}
+    $stmtPass = $conn->prepare("SELECT pass FROM usuarios WHERE id_usuario = ?");
+    $stmtPass->bind_param("i", $id_profesor);
+    $stmtPass->execute();
+    $resultPass = $stmtPass->get_result();
 
-$stmtPass->close();
-if (isset($stmtDeleteAlumnos)) $stmtDeleteAlumnos->close();
-if (isset($stmtDeleteUsuarios)) $stmtDeleteUsuarios->close();
-$conn->close();
+    if ($resultPass->num_rows === 1) {
+        $profesor = $resultPass->fetch_assoc();
+        if (!password_verify($password_profesor, $profesor['pass'])) {
+            echo json_encode(['success' => false, 'message' => 'La contraseña es incorrecta.']);
+            exit;
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'No se pudo verificar su identidad.']);
+        exit;
+    }
+
+    $conn->begin_transaction();
+
+    try {
+        $stmtDeleteAlumnos = $conn->prepare("DELETE FROM alumnos WHERE id_usuario = ?");
+        $stmtDeleteAlumnos->bind_param("i", $id_usuario_expulsar);
+        $stmtDeleteAlumnos->execute();
+
+        $stmtDeleteUsuarios = $conn->prepare("DELETE FROM usuarios WHERE id_usuario = ?");
+        $stmtDeleteUsuarios->bind_param("i", $id_usuario_expulsar);
+        $stmtDeleteUsuarios->execute();
+        
+        $conn->commit();
+        echo json_encode(['success' => true]);
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        echo json_encode(['success' => false, 'message' => 'Error durante la expulsión. No se realizaron cambios.']);
+    }
+
+    $stmtPass->close();
+    if (isset($stmtDeleteAlumnos)) $stmtDeleteAlumnos->close();
+    if (isset($stmtDeleteUsuarios)) $stmtDeleteUsuarios->close();
+    $conn->close();
 ?>

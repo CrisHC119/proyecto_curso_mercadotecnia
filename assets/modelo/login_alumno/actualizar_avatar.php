@@ -1,9 +1,8 @@
 <?php
+    // actualizar_avatar.php
     session_start();
-
     include_once __DIR__ . '/../conexion.php';
     $redirect_page = '/assets/code_alumnos/alumnos/perfil.php';
-
     if (!isset($_SESSION['id_usuario'])) {
         header("Location: ../../../index.php");
         exit;
@@ -17,10 +16,8 @@
         header("Location: " . $redirect_page);
         exit;
     }
-
     $id_usuario = $_SESSION['id_usuario'];
     $temp_file = $_FILES['nuevo_avatar']['tmp_name'];
-
     $stmt_nocontrol = $conn->prepare("SELECT nocontrol FROM alumnos WHERE id_usuario = ?");
     if (!$stmt_nocontrol) {
         $_SESSION['error_ajustes'] = "Error al preparar la consulta de nocontrol: " . $conn->error;
@@ -30,7 +27,6 @@
     $stmt_nocontrol->bind_param("i", $id_usuario);
     $stmt_nocontrol->execute();
     $resultado = $stmt_nocontrol->get_result();
-
     if ($resultado->num_rows === 0) {
         $_SESSION['error_ajustes'] = "No se pudo encontrar al usuario para obtener el número de control.";
         header("Location: " . $redirect_page);
@@ -39,27 +35,23 @@
     $fila = $resultado->fetch_assoc();
     $nocontrol_alumno = preg_replace("/[^a-zA-Z0-9_-]/", "", $fila['nocontrol']); 
     $stmt_nocontrol->close();
-
     if (empty($nocontrol_alumno)) {
         $_SESSION['error_ajustes'] = "El número de control obtenido no es válido.";
         header("Location: " . $redirect_page);
         exit;
     }
-
     const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
     if ($_FILES['nuevo_avatar']['size'] > MAX_FILE_SIZE_BYTES) {
         $_SESSION['error_ajustes'] = "El archivo es demasiado grande. El máximo es 2 MB.";
         header("Location: " . $redirect_page);
         exit;
     }
-
     $image_info = getimagesize($temp_file);
     if ($image_info === false) {
         $_SESSION['error_ajustes'] = "El archivo no es una imagen válida.";
         header("Location: " . $redirect_page);
         exit;
     }
-
     $mime = $image_info['mime'];
     $allowed_mimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; 
     if (!in_array($mime, $allowed_mimes)) {
@@ -67,7 +59,6 @@
         header("Location: " . $redirect_page);
         exit;
     }
-
     $extension = '';
     switch ($mime) {
         case 'image/jpeg': $extension = '.jpg'; break;
@@ -75,13 +66,10 @@
         case 'image/gif': $extension = '.gif'; break;
         case 'image/webp': $extension = '.webp'; break;
     }
-
     $target_dir = dirname(dirname(__DIR__)) . '/images/avatar/';
-
     $file_basename = "avatar_" . $nocontrol_alumno; 
     $new_filename_db = $file_basename . $extension; 
     $target_file_path = $target_dir . $new_filename_db;
-
     $old_files = glob($target_dir . $file_basename . ".*");
     if ($old_files) {
         foreach ($old_files as $file) {
@@ -90,7 +78,6 @@
             }
         }
     }
-
     if (!is_dir($target_dir)) {
         $_SESSION['error_ajustes'] = "Error: El directorio de destino no existe. (Ruta: " . htmlspecialchars($target_dir) . ")";
         header("Location: " . $redirect_page);
@@ -101,11 +88,9 @@
         header("Location: " . $redirect_page);
         exit;
     }
-
     if (move_uploaded_file($temp_file, $target_file_path)) {
         $stmt = $conn->prepare("UPDATE usuarios SET avatar = ? WHERE id_usuario = ?");
         $stmt->bind_param("si", $new_filename_db, $id_usuario);
-        
         if ($stmt->execute()) {
             $_SESSION['avatar'] = $new_filename_db;
             $_SESSION['success_ajustes'] = "Avatar actualizado correctamente.";
@@ -120,7 +105,6 @@
     } else {
         $_SESSION['error_ajustes'] = "Error desconocido al guardar el archivo de imagen en el servidor.";
     }
-
     $conn->close();
     header("Location: " . $redirect_page);
     exit;

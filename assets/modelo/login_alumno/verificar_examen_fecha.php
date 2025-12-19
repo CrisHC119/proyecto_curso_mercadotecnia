@@ -1,4 +1,5 @@
 <?php
+    // verificar_examen_fecha.php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/assets/modelo/conexion.php';
     date_default_timezone_set('America/Monterrey');
 

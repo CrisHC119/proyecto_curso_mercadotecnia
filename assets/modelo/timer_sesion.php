@@ -1,4 +1,5 @@
 <?php
+    // timer_sesion.php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/assets/modelo/conexion.php'; 
     $INACTIVITY_TIMEOUT_MS = 300000; 
 

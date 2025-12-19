@@ -13,7 +13,6 @@
 <div class="contenedor-cursos">
     <div id="mainContent">
         <h2 class="text-center mb-4"><?php echo $textos['tema_4.4']; ?></h2>
-
         <p class="justificado"><?php echo $textos['parrafo_0583']; ?></p>
         <p class="justificado"><?php echo $textos['parrafo_0584']; ?></p>
         <ul class="list-unstyled justificado mt-4">

@@ -1,4 +1,5 @@
 <?php
+    // timer_controller.php
     session_start();
     include_once __DIR__ . '/../../scripts/script_registrar_log.php';
     require_once '../conexion.php'; 
@@ -10,7 +11,6 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_SESSION['id_usuario']; 
 
-        // --- SECCIÓN PARA ACTUALIZAR DATOS PERSONALES ---
         if ($_POST['form_type'] === 'datos_personales') {
             $nombre = trim($_POST['nombre']);
             $apellido_p = trim($_POST['apellido_p']);
@@ -21,9 +21,7 @@
             $stmt->bind_param("ssssi", $nombre, $apellido_p, $apellido_m, $campus, $id);
 
             if ($stmt->execute()) {
-                // Actualizamos las variables de sesión con los nuevos datos
                 $_SESSION['nombre'] = $nombre;
-                // ✅ CORRECCIÓN: Usar los nombres de variable de sesión correctos
                 $_SESSION['apellido_p'] = $apellido_p; 
                 $_SESSION['apellido_m'] = $apellido_m;
                 $_SESSION['campus'] = $campus;
@@ -41,7 +39,6 @@
             $stmt->close();
         } 
         
-        // --- SECCIÓN PARA CAMBIAR CONTRASEÑA (sin cambios necesarios aquí) ---
         elseif ($_POST['form_type'] === 'cambio_contraseña') {
             $oldpass = trim($_POST['oldpass']);
             $newpass = trim($_POST['pass']);

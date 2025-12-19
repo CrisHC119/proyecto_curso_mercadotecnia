@@ -1,4 +1,5 @@
 <?php
+    //login.php
     ob_start();
     include_once __DIR__ . '/assets/code_general/verificar_session_encendido.php';
     include_once __DIR__ . '/assets/code_general/verificar_session_apagado.php';

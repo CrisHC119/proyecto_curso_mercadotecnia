@@ -1,4 +1,5 @@
 <?php
+    //register.php
     ob_start();
     $mostrarModalExito = false;
     if (isset($_GET['registro']) && $_GET['registro'] === 'exito') {
@@ -67,8 +68,8 @@
                                 name="nocontrol" 
                                 class="form-control" 
                                 maxlength="15"
-                                pattern="[A-Za-z0-9]{1,10}"
-                                title="Máximo 15 caracteres. Solo letras y números."
+                                pattern="(?![0]+$)[A-Za-z0-9]{1,15}"
+                                title="Máximo 15 caracteres. Solo letras y números. Debe ser un valor valido."
                                 required>
                         </div>
                     </div>

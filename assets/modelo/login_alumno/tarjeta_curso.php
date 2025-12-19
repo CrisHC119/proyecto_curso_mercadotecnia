@@ -1,11 +1,11 @@
 <?php
+    // tarjeta_curso.php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/assets/modelo/login_alumno/verificar_examen_fecha.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/assets/code_alumnos/styles/style_temas.php';
 ?>
 <div class="tarjeta-curso">
     <h2 class="text-center mb-3"><?php echo $textos['temario']; ?></h2>
     <div class="border-top border-primary my-3" style="height: 3px; width: 80%; margin: 0 auto;"></div>
-
     <div class="list-group tema-lista-custom">
         <a href="/assets/code_alumnos/index_alumnos.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item titulo-tema text-decoration-none text-reset">
             <i class="bi bi-book me-2"></i><?php echo $textos['tema_1']; ?>
@@ -23,26 +23,21 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.7.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_1.7']; ?></a>
         <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?></a>
         <a href="/assets/code_alumnos/temas_unidad/tema_1/T_1.A.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u1']; ?></a>
-        
         <?php
         $urlDestino_U1 = '/assets/code_alumnos/temas_unidad/tema_1/T_1_confirmar_examen.php?lang=' . $_SESSION['idioma'];
-        
         $linkHref_U1 = '#';
         $extraClass_U1 = 'disabled'; 
-
         if (!$examenRealizado_U1 && !empty($fechaDisponible_U1) && !empty($fechaLimite_U1)) {
             $zona = new DateTimeZone('America/Monterrey');
             $ahora = new DateTime('now', $zona);
             $inicio_U1 = new DateTime($fechaDisponible_U1, $zona);
             $fin_U1 = new DateTime($fechaLimite_U1, $zona);
-
             if ($ahora >= $inicio_U1 && $ahora <= $fin_U1) {
                 $linkHref_U1 = $urlDestino_U1;
                 $extraClass_U1 = ''; 
             }
         }
         ?>
-
         <a href="<?php echo $linkHref_U1; ?>"
            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center <?php echo $extraClass_U1; ?>"
            id="link-examen-1">
@@ -61,9 +56,7 @@
            </span>
         </a>
     </div>
-
     <div class="" style="height: 20px; width: 80%; margin: 0 auto;"></div>
-
     <div class="list-group tema-lista-custom">
         <div class="list-group-item titulo-tema">
             <i class="bi bi-diagram-3-fill me-2"></i><?php echo $textos['tema_2']; ?>
@@ -78,13 +71,10 @@
         <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.3.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-browser-chrome me-2"></i><?php echo $textos['tema_2.3']; ?></a>
         <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.Glosario.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-journal-text me-2"></i><?php echo $textos['tema_1.G']; ?></a>
         <a href="/assets/code_alumnos/temas_unidad/tema_2/T_2.A.php?lang=<?php echo $_SESSION['idioma'];?>" class="list-group-item list-group-item-action"><i class="bi bi-pen me-2"></i><?php echo $textos['actividad_u2']; ?></a>
-
         <?php
         $urlDestino_U2 = '/assets/code_alumnos/temas_unidad/tema_2/T_2_confirmar_examen.php?lang=' . $_SESSION['idioma'];
-        
         $linkHref_U2 = '#';
         $extraClass_U2 = 'disabled'; 
-
         if (!$examenRealizado_U2 && !empty($fechaDisponible_U2) && !empty($fechaLimite_U2)) {
             $zona = new DateTimeZone('America/Monterrey');
             $ahora = new DateTime('now', $zona);

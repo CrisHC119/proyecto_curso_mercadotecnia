@@ -1,5 +1,5 @@
+<!-- style_transicion.php (eliminado) -->
 <style>
-    /* Transición suave de opacidad */
     body {
         opacity: 0;
         transition: opacity 0.5s ease-in-out;

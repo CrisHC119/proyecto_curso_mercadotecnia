@@ -1,4 +1,5 @@
 <?php
+    // avatar_controller.php
     session_start();
     include_once __DIR__ . '/../conexion.php'; 
     $redirect_page = '../../code_profesor/menu_ajustes.php';

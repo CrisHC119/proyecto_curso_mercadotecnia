@@ -1,4 +1,5 @@
 <script>
+    // mapa_contacto.php
     var map = L.map('map').setView([<?php echo $lat; ?>, <?php echo $lng; ?>], 16);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'

@@ -1,3 +1,4 @@
+<!-- style_login.php -->
 <style>
     html, body {
         height: 100%;
@@ -16,7 +17,6 @@
     body.fade-in {
         opacity: 1;
     }
-
     body.fade-out {
         opacity: 0;
     }

@@ -15,7 +15,6 @@
         $url = $_SERVER['PHP_SELF'] . '?lang=' . $idioma;
         header("Location: $url");
         exit;
-        //Redirecciona a la misma página con el idioma establecido (No se pudo guardar en otro archivo jaja)
     }
 ?>
 </body>

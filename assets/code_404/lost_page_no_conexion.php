@@ -1,10 +1,10 @@
 <?php
-session_start(); 
-include_once __DIR__ . '/../code_index/navbar.php';
-include_once __DIR__ . '/../styles/style_lost_page.php';
+    session_start(); 
+    include_once __DIR__ . '/../code_index/navbar.php';
+    include_once __DIR__ . '/../styles/style_lost_page.php';
 
-$errorResumido = $_SESSION['error_db'] ?? 'Error desconocido';
-unset($_SESSION['error_db']);
+    $errorResumido = $_SESSION['error_db'] ?? 'Error desconocido';
+    unset($_SESSION['error_db']);
 ?>
 </head>
 <body>

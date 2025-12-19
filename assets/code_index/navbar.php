@@ -1,4 +1,5 @@
 <?php
+    //navbar.php
     ob_start();
     include_once __DIR__ . '/../code_general/verificar_session_encendido.php';
     include_once __DIR__ . '/../code_general/verificar_idioma.php';
@@ -77,4 +78,3 @@
         </li>
         </ul>
     </div>
-<script src="/assets/scripts/night_mode.js"></script>

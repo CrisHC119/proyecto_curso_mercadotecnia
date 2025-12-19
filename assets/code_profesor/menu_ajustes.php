@@ -48,12 +48,10 @@ $alumnos = [];
         $stmt_alumnos->close();
     }
     $timer_data = [
-        'timer_profesor_min' => 20, // Valor por defecto: 20 minutos
-        'timer_alumno_min' => 20   // Valor por defecto: 20 minutos
+        'timer_profesor_min' => 20,
+        'timer_alumno_min' => 20   
     ];
 
-    // Intentamos insertar la fila ID=1 si no existe, con valores por defecto (20 min)
-    // 20 minutos * 60 seg/min * 1000 ms/seg = 1,200,000 ms
     $conn->query("INSERT INTO timer_login (id, timer_profesor, timer_alumno) VALUES (1, 1200000, 1200000) ON DUPLICATE KEY UPDATE id=id");
 
     $stmt_timer = $conn->prepare("SELECT timer_profesor, timer_alumno FROM timer_login WHERE id = 1");
@@ -62,8 +60,6 @@ $alumnos = [];
         $resultado_timer = $stmt_timer->get_result();
         if ($resultado_timer->num_rows > 0) {
             $fila_timer = $resultado_timer->fetch_assoc();
-            // Convertimos de milisegundos a minutos para mostrar en el input
-            // 1 minuto = 60,000 milisegundos
             $timer_data['timer_profesor_min'] = $fila_timer['timer_profesor'] / 60000;
             $timer_data['timer_alumno_min'] = $fila_timer['timer_alumno'] / 60000;
         }
@@ -245,14 +241,14 @@ $alumnos = [];
                     echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
                             <i class="bi bi-check-circle-fill me-2"></i>' . $_SESSION['success_ajustes'] . '
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>';
+                        </div>';
                     unset($_SESSION['success_ajustes']);
                 }
                 if (isset($_SESSION['error_ajustes'])) {
                     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>' . $_SESSION['error_ajustes'] . '
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>';
+                        </div>';
                     unset($_SESSION['error_ajustes']);
                 }
             ?>
@@ -321,10 +317,10 @@ $alumnos = [];
                         <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
                             
                             <img src="/assets/images/avatar/<?php echo htmlspecialchars($avatar); ?>" 
-                                 alt="Avatar de <?php echo $nombre_completo; ?>" 
-                                 class="img-fluid rounded-circle mb-3 shadow-sm" 
-                                 id="avatarPreviewMain" 
-                                 style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #dee2e6;">
+                                alt="Avatar de <?php echo $nombre_completo; ?>" 
+                                class="img-fluid rounded-circle mb-3 shadow-sm" 
+                                id="avatarPreviewMain" 
+                                style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #dee2e6;">
                             
                             <h5 class="card-title mb-1"><?php echo $nombre_completo; ?></h5>
                             <p class="card-text text-muted mb-3">Profesor</p>
@@ -449,20 +445,113 @@ $alumnos = [];
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12 mb-4">
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h5 class="mb-0"><i class="bi bi-download"></i> Descargar Material</h5>
+                <div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-download"></i> Descargar Material</h5>
+            </div>
+            <div class="card-body d-flex flex-column gap-2 p-4">
+                <p class="text-muted small mb-2">Descargas rápidas de tus reportes actuales.</p>
+                <a href="download_pdf/exportar_alumnos_pdf.php" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Lista de Alumnos
+                </a>
+                <a href="download_pdf/exportar_calificaciones_act_pdf.php" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Calif. Actividades
+                </a>
+                <a href="download_pdf/exportar_calificaciones_examen_pdf.php" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Calif. Examen
+                </a>
+                <a href="download_pdf/exportar_calificaciones_pdf.php" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Calif. Finales
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm h-100 border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Zona de Eliminación</h5>
+            </div>
+            <div class="card-body d-flex flex-column align-items-center justify-content-center p-4 text-center">
+
+                <h5 class="card-title text-danger mt-2">Reiniciar Ciclo Escolar</h5>
+                <p class="card-text text-muted small">
+                    Esta acción archiva los datos actuales y limpia la base de datos para el nuevo semestre.
+                </p>
+                
+                <button type="button" class="btn btn-danger btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#modalReiniciarCiclo">
+                    <i class="bi bi-radioactive"></i> Iniciar Proceso de Reinicio
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalReiniciarCiclo" tabindex="-1" aria-labelledby="modalReiniciarCicloLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-danger">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalReiniciarCicloLabel">
+                    <i class="bi bi-shield-exclamation"></i> Confirmar Reinicio de Ciclo
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light border mb-4">
+                    <h6 class="alert-heading fw-bold text-dark"><i class="bi bi-cloud-arrow-down"></i> Paso 1: Archivos a respaldar</h6>
+                    <p class="mb-2 small text-muted">Estos son los archivos que se descargarán automáticamente al confirmar.</p>
+                    <div class="row g-2" id="listaDescargas">
+                        <div class="col-md-6">
+                            <a href="download_pdf/respaldar_alumnos.php" target="_blank" class="btn btn-outline-secondary w-100 btn-sm download-trigger"><i class="bi bi-download"></i>  Lista de Alumnos</a>
                         </div>
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center p-4">
-                            <p>Genera reportes y descarga listas de tus alumnos.</p>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalListaAlumnos">
-                                <i class="bi bi-file-earmark-pdf-fill"></i> Ver y Descargar Lista de Alumnos
-                            </button>
+                        <div class="col-md-6">
+                            <a href="download_pdf/exportar_calificaciones_act_pdf.php" target="_blank" class="btn btn-outline-secondary w-100 btn-sm download-trigger"><i class="bi bi-download"></i>  Calif. Actividades</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="download_pdf/exportar_calificaciones_examen_pdf.php" target="_blank" class="btn btn-outline-secondary w-100 btn-sm download-trigger"><i class="bi bi-download"></i>  Calif. Exámenes</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="download_pdf/exportar_calificaciones_pdf.php" target="_blank" class="btn btn-outline-secondary w-100 btn-sm download-trigger"><i class="bi bi-download"></i>  Calif. Finales</a>
                         </div>
                     </div>
                 </div>
+
+                <h6 class="fw-bold text-danger"><i class="bi bi-database-down"></i> Paso 2: Verificación de Seguridad</h6>
+                <p class="text-muted small">
+                    Para ejecutar esta acción, escribe tu contraseña y la palabra clave <strong>ELIMINARTODO</strong>.
+                </p>
+
+                <form action="../modelo/login_profesor/reiniciar_ciclo_controller.php" method="POST" id="formReiniciarCiclo">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="passwordConfirmarReinicio" name="password_confirmacion" placeholder="Contraseña" required>
+                        <label for="passwordConfirmarReinicio">Ingresa tu contraseña actual</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control border-danger text-danger fw-bold" 
+                               id="txtPalabraClave" 
+                               name="palabra_clave" 
+                               placeholder="ELIMINARTODO" 
+                               autocomplete="off" 
+                               onpaste="return false;" 
+                               ondrop="return false;"
+                               required>
+                        <label for="txtPalabraClave" class="text-danger">Escribe exactamente: ELIMINARTODO</label>
+                        <div class="form-text text-muted">No es posible copiar y pegar este texto.</div>
+                    </div>
+                </form>
             </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarReinicio" disabled>
+                    <i class="bi bi-trash-fill"></i> Confirmar y Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
     </main>
     <div class="modal fade" id="confirmAjustesModal" tabindex="-1" aria-labelledby="confirmAjustesModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -504,13 +593,13 @@ $alumnos = [];
                         <p>Selecciona una nueva imagen para tu perfil (Max. 2MB).</p>
                         
                         <img id="previewAvatarModal" class="img-fluid rounded-circle d-none" 
-                             alt="Vista previa del nuevo avatar" 
-                             style="width: 200px; height: 200px; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid #dee2e6;">
+                            alt="Vista previa del nuevo avatar" 
+                            style="width: 200px; height: 200px; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid #dee2e6;">
 
                         <input type="file" name="nuevo_avatar" class="form-control" 
-                               accept="image/png, image/jpeg, image/gif" 
-                               required id="inputAvatarFile">
-                               
+                            accept="image/png, image/jpeg, image/gif" 
+                            required id="inputAvatarFile">
+                            
                         <div class="text-danger small mt-2" id="avatarError" style="display: none;"></div>
                     </div>
                     <div class="modal-footer">
@@ -521,55 +610,6 @@ $alumnos = [];
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    <div class="modal fade" id="modalListaAlumnos" tabindex="-1" aria-labelledby="modalListaAlumnosLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalListaAlumnosLabel"><i class="bi bi-people-fill"></i> Lista de Alumnos Registrados</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>La siguiente tabla contiene todos los alumnos registrados. Puedes descargar esta lista como un PDF usando el botón al final.</p>
-                    
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover" id="tabla-lista-alumnos">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>No. Control</th> <th>Nombre(s)</th>
-                                    <th>Apellido Paterno</th>
-                                    <th>Apellido Materno</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($alumnos)): ?>
-                                    <tr>
-                                        <td colspan="5" class="text-center">No hay alumnos registrados.</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($alumnos as $alumno): ?>
-                                        <tr>
-                                            <td><?php echo $i++; ?></td>
-                                            <td><?php echo htmlspecialchars($alumno['nocontrol']); ?></td> <td><?php echo htmlspecialchars($alumno['nombres']); ?></td>
-                                            <td><?php echo htmlspecialchars($alumno['apellido_paterno']); ?></td>
-                                            <td><?php echo htmlspecialchars($alumno['apellido_materno']); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="btnDescargarAlumnosPDF" <?php echo empty($alumnos) ? 'disabled' : ''; ?>>
-                        <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
     <?php
@@ -583,3 +623,54 @@ $alumnos = [];
 <?php
     include_once __DIR__ . '/scripts/script_menu_ajustes_1.php';
 ?>
+<script>
+$(document).ready(function() {
+    const $passInput = $('#passwordConfirmarReinicio');
+    const $keywordInput = $('#txtPalabraClave');
+    const $btnConfirmar = $('#btnConfirmarReinicio');
+    const palabraRequerida = "ELIMINARTODO";
+
+    // Función para validar los campos
+    function validarReinicio() {
+        const pass = $passInput.val();
+        const palabra = $keywordInput.val();
+
+        // Verificar que haya contraseña y que la palabra coincida EXACTAMENTE
+        if (pass.length > 0 && palabra === palabraRequerida) {
+            $btnConfirmar.prop('disabled', false);
+            // Efecto visual opcional: input verde si es correcto
+            $keywordInput.removeClass('border-danger text-danger').addClass('border-success text-success');
+        } else {
+            $btnConfirmar.prop('disabled', true);
+            $keywordInput.removeClass('border-success text-success').addClass('border-danger text-danger');
+        }
+    }
+
+    // Escuchar eventos de teclado en ambos inputs
+    $passInput.on('input', validarReinicio);
+    $keywordInput.on('input keyup', validarReinicio);
+
+    // Lógica del botón "De momento descargar todo"
+    $btnConfirmar.click(function(e) {
+        e.preventDefault(); // Evita que el formulario se envíe realmente al controlador PHP
+
+        // 1. Simular validación visual
+        if ($keywordInput.val() !== palabraRequerida) return;
+
+        alert("Validación correcta. Iniciando descargas de seguridad...");
+
+        // 2. Disparar la descarga de todos los enlaces del Paso 1
+        $('.download-trigger').each(function(index) {
+            let url = $(this).attr('href');
+            // Usamos setTimeout para dar tiempo al navegador de procesar múltiples descargas
+            setTimeout(function() {
+                window.open(url, '_blank');
+            }, index * 500); // 500ms de diferencia entre cada descarga
+        });
+
+        // NOTA: Si quisieras que después de descargar SI borre, 
+        // tendrías que descomentar la siguiente línea:
+        // $('#formReiniciarCiclo').submit();
+    });
+});
+</script>

@@ -1,3 +1,4 @@
+<!-- style_navbar.php -->
 <style>
   body {
     padding-top: 70px;
@@ -143,14 +144,14 @@
   .mode-toggle {
       background: none;
       border: none;
-      color: #004a99; /* Color cambiado para que sea visible en modo claro */
+      color: #004a99;
       font-size: 1.3rem;
   }
   .mode-toggle:hover {
       color: #007bff;
   }
   .light-mode .mode-toggle {
-    color: #fff; /* Color para el modo oscuro */
+    color: #fff;
   }
   .light-mode .mode-toggle:hover {
     color: #ffc107;

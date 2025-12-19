@@ -1,4 +1,5 @@
 <?php
+    // logout.php
     session_start();
     include_once $_SERVER['DOCUMENT_ROOT'] . '/assets/modelo/conexion.php'; 
     include_once $_SERVER['DOCUMENT_ROOT'] . '/assets/scripts/script_registrar_log.php';

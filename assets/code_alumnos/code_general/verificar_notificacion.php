@@ -67,10 +67,23 @@
         $stmt_entregado_bit->close();
     }
 
+    $fila_fechas_maestra = $fechas_actividades[1] ?? null; 
+
     for ($i = 1; $i <= 5; $i++) {
-        if (isset($fechas_actividades[$i])) {
-            $fecha_inicial_act_str = $fechas_actividades[$i]['act_' . $i . '_fecha_inicial'];
-            $fecha_final_act_str = $fechas_actividades[$i]['act_' . $i . '_fecha_final'];
+        
+        // Verificamos si tenemos la fila maestra cargada
+        if ($fila_fechas_maestra) {
+            
+            // Construimos los nombres de las columnas dinámicamente
+            // Ejemplo: act_1_fecha_inicial, act_2_fecha_inicial...
+            $col_inicio = 'act_' . $i . '_fecha_inicial';
+            $col_final  = 'act_' . $i . '_fecha_final';
+            
+            // Obtenemos los valores DIRECTAMENTE de la fila maestra (fila 1)
+            $fecha_inicial_act_str = $fila_fechas_maestra[$col_inicio] ?? null;
+            $fecha_final_act_str = $fila_fechas_maestra[$col_final] ?? null;
+            
+            // Verificamos si ya entregó
             $actividad_entregada_finalmente = (($estado_entregado_bit[$i] ?? 0) == 1);
             
             if ($fecha_inicial_act_str && $fecha_final_act_str) {
@@ -78,7 +91,11 @@
                     $fecha_inicial_act = new DateTime($fecha_inicial_act_str);
                     $fecha_final_act = new DateTime($fecha_final_act_str);
                     
-                    if ($ahora >= $fecha_inicial_act && $ahora < $fecha_final_act) {
+                    // IMPORTANTE: Ajuste de medianoche para que no desaparezca hoy
+                    $fecha_final_act->setTime(23, 59, 59);
+
+                    // Comparamos fechas
+                    if ($ahora >= $fecha_inicial_act && $ahora <= $fecha_final_act) {
                         
                         if (!$actividad_entregada_finalmente) { 
                             $notificaciones_pendientes[] = [
@@ -91,6 +108,7 @@
                         }
                     }
                 } catch (Exception $e) {
+                    // Error silencioso o debug
                 }
             }
         }

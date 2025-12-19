@@ -1,4 +1,5 @@
 <?php
+    // verificar_profesor.php
     include_once __DIR__ . '/../conexion.php';
     $sql = "
     SELECT 

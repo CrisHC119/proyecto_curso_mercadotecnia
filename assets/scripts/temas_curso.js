@@ -1,3 +1,4 @@
+// temas_curso.php
 document.querySelectorAll('.accordion-button').forEach(button => {
     button.addEventListener('click', () => {
         const content = button.nextElementSibling;

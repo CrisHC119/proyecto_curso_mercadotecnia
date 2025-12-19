@@ -1,3 +1,6 @@
+<?php
+    //footer.php
+?>
         <footer class="bg-dark text-white pt-4 pb-3 mt-5">
             <div class="container text-center">
                 <p class="mb-2 fw-bold fs-5">TecNM Ciudad Victoria</p>

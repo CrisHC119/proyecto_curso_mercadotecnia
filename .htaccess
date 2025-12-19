@@ -1,6 +1,7 @@
+# .htaccess
+
 RewriteEngine On
 
-# Estas son las líneas que vamos a apagar temporalmente
 # RewriteCond %{HTTP_HOST} !^www\. [NC]
 # RewriteCond %{HTTPS}s ^on(s)|
 # RewriteRule ^(.*)$ http%1://www.%{HTTP_HOST}/$1 [R=301,L]
