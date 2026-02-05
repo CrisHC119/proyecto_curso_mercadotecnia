@@ -75,11 +75,14 @@
         }
     }
 
-    // --- 4. ASEGURAR EXISTENCIA DE FILA ---
+// --- 4. ASEGURAR EXISTENCIA DE FILA ---
     if (!$row) {
         // Creamos registro inicial U1
         $in = $conn->prepare("INSERT INTO alumnos_calificacion (id_usuario, tipo_examen_U1) VALUES (?, 1)");
-        $in->bind_param("ii", $id_usuario);
+        
+        // CORRECCIÓN: Usamos "i" porque solo hay un signo de interrogación en el SQL de arriba
+        $in->bind_param("i", $id_usuario);
+        
         $in->execute();
         $inicio_examen_db = null; 
     } else {
